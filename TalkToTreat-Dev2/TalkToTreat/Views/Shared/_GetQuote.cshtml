@@ -1,0 +1,265 @@
+﻿@model TalkToTreat.Models.Quote
+
+
+@{
+    ViewBag.Title = "Quote";
+}
+
+@using TalkToTreat.Models;
+@{
+
+    var AllCities = (List<Locations>)ViewBag.AllCities;
+    var countries = AllCities.GroupBy(d => new { d.CountryId, d.CountryName, d.Code }).Select(m => new { m.Key.CountryId, m.Key.CountryName, m.Key.Code });
+    var Treatment = (List<TalkToTreatService.Entities.Treatment>)ViewBag.TreatmentsForGetQuote;
+    var TreatmentRoot = Treatment.Where(a => a.ParentId == Guid.Empty).ToList();
+    var TreatmentSub = Treatment.Where(a => a.ParentId != Guid.Empty).ToList();
+}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6/jquery.min.js" type="text/javascript"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js" type="text/javascript"></script>
+<link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="Stylesheet" type="text/css" />
+
+<script type="text/javascript">
+    $(function () {
+        $("#Country").change(function () {
+            $("#City option").remove();
+            var id = $(this).val();
+
+            var ListMain =  @Html.Raw(Json.Encode(ViewBag.AllCities));
+            var List = JSON.parse(JSON.stringify(ListMain)).filter(function (entry) { return entry.CountryId == id; });
+
+            var mySelect = $('#City');
+            mySelect.append($('<option></option>').val("").html("City"));
+            $.each(List, function (index, item) {                
+                mySelect.append($('<option></option>').val(item.CityId).html(item.Name));
+            });
+        });
+
+        $("#TreatmentId").change(function () {
+            $("#SubTreatmentId option").remove();
+            var id = $(this).val();
+
+            var ListMain =  @Html.Raw(Json.Encode(ViewBag.TreatmentsForGetQuote));
+            var List = JSON.parse(JSON.stringify(ListMain)).filter(function (entry) { return entry.ParentId == id; });
+
+            var mySelect = $('#SubTreatmentId');
+            mySelect.append($('<option></option>').val("").html("Treatment Sub Type"));
+            $.each(List, function (index, item) {                
+                mySelect.append($('<option></option>').val(item.Id).html(item.Name));
+            });
+        });
+
+        $("#ConsiderTravelOrTreatmentIndiaCountry").change(function () {
+            $("#ConsiderTravelOrTreatmentIndiaCity option").remove();
+            var id = $(this).val();
+
+            var ListMain =  @Html.Raw(Json.Encode(ViewBag.AllCities));
+            var List = JSON.parse(JSON.stringify(ListMain)).filter(function (entry) { return entry.CountryId == id; });
+
+            var mySelect = $('#ConsiderTravelOrTreatmentIndiaCity');
+            mySelect.append($('<option></option>').val("").html("City"));
+            $.each(List, function (index, item) {               
+                mySelect.append($('<option></option>').val(item.CityId).html(item.Name));
+            });
+        });
+      
+    });
+
+    function AllowOnlyNumbers(e) {       
+        e = (e) ? e : window.event;
+        var clipboardData = e.clipboardData ? e.clipboardData : window.clipboardData;
+        var key = e.keyCode ? e.keyCode : e.which ? e.which : e.charCode;
+        var str = (e.type && e.type == "paste") ? clipboardData.getData('Text') : String.fromCharCode(key);
+        return (/^\d+$/.test(str));
+    }
+</script>
+
+<div class="row">
+
+    @using (Html.BeginForm("GetQuote", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+
+        <div class="col-lg-6">
+            <div class="form-group">
+                @Html.TextBoxFor(m => m.Name, new { placeholder = "Enter Name", required = "True", value = "", @class = "form-control", maxlength = 150 })
+                @Html.ValidationMessageFor(m => m.Name)
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="form-group">
+                <select class="form-control" id="Country" name="Country" required="True">
+                    <option value="" selected="selected">Country</option>
+                    @foreach (var item in countries)
+                    {
+                        <option value="@item.CountryId">@item.Code @item.CountryName</option>
+                    }
+                </select>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="form-group">
+                <select class="form-control" id="City" name="City" required="True">
+                    <option value="" selected="selected">City</option>
+                    @foreach (var item in AllCities)
+                    {
+                        <option value="@item.CityId">@item.Name</option>
+                    }
+                </select>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="form-group">
+                @Html.TextBoxFor(m => m.PhoneNo, new { placeholder = "Phone No", required = "True", value = "", @class = "form-control", maxlength = 10, onkeypress = "return AllowOnlyNumbers(event);" })
+                @Html.ValidationMessageFor(m => m.PhoneNo)
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="form-group">
+                @Html.TextBoxFor(m => m.Email, new { placeholder = "Email Id", required = "True", value = "", @class = "form-control", maxlength = 150 })
+                @Html.ValidationMessageFor(m => m.Email)
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="form-group">
+                <select class="form-control" id="TreatmentId" name="TreatmentId" required="True">
+                    <option value="" selected="selected">Treatment Type</option>
+                    @foreach (var item in TreatmentRoot)
+                    {
+                        <option value="@item.Id">@item.Name</option>
+                    }
+                </select>
+            </div>
+        </div>
+
+        <div class="col-lg-12">
+            <div class="form-group">
+                @Html.TextBoxFor(m => m.Subject, new { placeholder = "Subject", required = "True", value = "", @class = "form-control", maxlength = 150 })
+                @Html.ValidationMessageFor(m => m.Subject)
+            </div>
+        </div>
+
+        <div class="col-lg-12">
+            <div class="form-group">
+                @Html.TextAreaFor(m => m.Query, new { placeholder = "Query", required = "True", value = "", @class = "form-control", maxlength = 500 })
+                @Html.ValidationMessageFor(m => m.Query)
+            </div>
+        </div>
+
+        <div class="col-lg-12">
+            <div class="form-group">
+                <span class="upl-text">Upload Document :</span>
+                <input name="files" type="file" id="files" multiple="multiple" onchange="Filevalidation()" />
+            </div>
+        </div>
+
+        <div class="col-lg-12">
+            <input id="_1" type="checkbox">
+            <label class="drop" for="_1"> Additional Information  </label>
+
+            <div>
+
+
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <span class="get-tex">How soon do you plan on traveling for treatment?</span>
+                        <select class="form-control" id="TravelingForTreatmentTime" name="TravelingForTreatmentTime">
+                            <option value="" selected="selected">--Select--</option>
+                            <option value="In a week">In a week</option>
+                            <option value="In a month">In a month</option>
+                            <option value="In 6 months">In 6 months</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <span class="get-tex">What medical specialty treatment consultation are you looking for?</span>
+                        <select class="form-control" id="SubTreatmentId" name="SubTreatmentId">
+                            <option value="" selected="selected">Treatment Sub Type</option>
+                            @foreach (var item in TreatmentSub)
+                            {
+                                <option value="@item.Id">@item.Name</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <span class="get-tex">What procedure(s) are you interested in?</span>
+                        <select class="form-control" id="ProcedureInterestedIn" name="ProcedureInterestedIn">
+                            <option value="" selected="selected">--Select--</option>
+                            <option value="Surgery">Surgery</option>
+                            <option value="Online Consultation">Online Consultation</option>
+                            <option value="In person consultation">In person consultation</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="form-group">
+
+                        <span class="get-tex">Have you seen a doctor related to this procedure before?</span>
+                        <div class="clearfix" style="margin-top:0px;"></div>
+                        @Html.RadioButtonFor(s => s.SeenDoctorRelatedProcedure, 1) Yes
+                        @Html.RadioButtonFor(s => s.SeenDoctorRelatedProcedure, 0) No
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <span class="get-tex">Which country and city are you considering to travel to or treatment in India?</span>
+                        <select class="form-control" id="ConsiderTravelOrTreatmentIndiaCountry" name="ConsiderTravelOrTreatmentIndiaCountry">
+                            <option value="" selected="selected">Country</option>
+                            @foreach (var item in countries)
+                            {
+                                <option value="@item.CountryId">@item.Code @item.CountryName</option>
+                            }
+                        </select>
+
+                        <div class="clearfix" style="margin-bottom:5px;"></div>
+
+                        <select class="form-control" id="ConsiderTravelOrTreatmentIndiaCity" name="ConsiderTravelOrTreatmentIndiaCity">
+                            <option value="" selected="selected">City</option>
+                            @foreach (var item in AllCities)
+                            {
+                                <option value="@item.CityId">@item.Name</option>
+                            }
+                        </select>
+
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <span class="get-tex">How can our specialists/physicians best reach you?</span>
+                        <select class="form-control" id="SpecialistsReach" name="SpecialistsReach">
+                            <option value="" selected="selected">--Select--</option>
+                            <option value="Call">Call</option>
+                            <option value="Whatsapp">Whatsapp</option>
+                            <option value="Email">Email</option>
+                        </select>
+                    </div>
+                </div>
+
+
+            </div>
+
+        </div>
+        
+        <div class="clearfix" style="margin-bottom:20px;"></div>
+        <div class="col-lg-6">
+            <div class="form-group">
+                <button class="btn btn-main" type="submit">Get a Quote<i class="icofont-simple-right ml-2"></i></button>
+            </div>
+        </div>
+    }
+
+</div>
+
+        <script src="~/js/jquery.min.js"></script>
+       

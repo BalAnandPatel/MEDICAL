@@ -1,0 +1,62 @@
+﻿@model TalkToTreat.Models.Login
+@{
+    ViewBag.Title = "Login";
+}
+<script src="~/Scripts/jquery-3.4.1.min.js" type="text/javascript"></script>
+<script src="~/Scripts/jquery.validate.min.js" type="text/javascript"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js" type="text/javascript"></script>
+<style>
+
+    .field-validation-error {
+        color: red;
+    }
+</style>
+
+<section class="banner-area doctor-banner singhup-banner">
+    <div class="container">
+
+
+        <div class="row ">
+
+            <div class="col-md-5 text-left">
+                <div class="banner-text">
+                    <h3>Sign In as doctor</h3>
+                    <h2>We serve you with best quality hospitals</h2>
+
+                    <p style="color:coral;text-align:center"><b>@ViewBag.Invalid</b></p>
+                    <div class="appointment-form signin">
+                        @using (Html.BeginForm())
+                        {
+                            <div class="row">
+
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+
+                                        @Html.TextBoxFor(m => m.EmailId, new { data_bind = "value: EmailId", placeholder = "Enter User Name", required = "True", value = "", @class = "form-control", maxlength = 50, autocomplete = "off" })
+                                        @Html.ValidationMessageFor(m => m.EmailId)
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        @Html.PasswordFor(m => m.Password, new { maxlength = 50, @class = "form-control", placeholder = "Password", type = "Password", value = ViewBag.Selpwd, autocomplete = "off" })
+                                        @Html.ValidationMessageFor(m => m.Password)
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <button id="SignIn" class="btn btn-success succes-btn" type="submit" >Sign In<i class="icofont-simple-right ml-2"></i></button>
+                            <p class="already-register"> Don't have an account? <a class="" href="/Home/Register">Register <i class="icofont-simple-right ml-2"></i></a> </p>
+
+                            <p class="already-register"> Forgot your password? <a class="" href="/Home/ResetPassword">Reset Password <i class="icofont-simple-right ml-2"></i></a> </p>
+                        }
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 text-left">
+            </div>
+        </div>
+    </div>
+</section>

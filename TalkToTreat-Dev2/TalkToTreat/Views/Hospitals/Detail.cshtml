@@ -1,0 +1,139 @@
+﻿@model TalkToTreat.Models.Hospital
+@using TalkToTreat.Models;
+@{
+    ViewBag.Title = "Hospital";
+    var TreatmentsList = (List<Treatment>)ViewBag.TreatmentsList;
+    var doctors = (List<Doctors>)ViewBag.Doctors;
+}
+
+<section class="banner-area doctor-banner hospital">
+    <div class="container">
+        <div class="row ">
+            <div class="col-md-6 text-left">
+                <div class="banner-text">
+                    <h1> @Model.Name in @Model.Country</h1>
+                    <h6> @Model.ShortDescription </h6>
+                </div>
+            </div>
+            <div class="col-md-6 text-left">
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<section class="listing-sec hospital doctor-single">
+    <div class="gray-sec-light">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-4 col-md-3 col-xs-12">
+                    <div class="doctor-img-block-profile">
+                        <div class="doctor-img-block ">
+                            
+                                <img onerror="this.src='/Assets/images/hospitals/dummyhospital.jfif'" src="@Model.Image" alt="" class="hospital-main-img">
+                           
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-8 col-md-9 col-xs-12" style="box-shadow:none;">
+                    <div class="doctor-inner-box">
+                        <h4 class="mb-0"><a href="/Hospitals/Detail/@Model.Id">@Model.Name, @Model.City</a> </h4>
+                        <ul>
+                            <li style="margin-left:15px;"><img src="~/images/map-location.svg"> @Model.City,@Model.Country</li>
+                            <li><img src="~/images/no-of-bed.svg"> Number of Beds : @Model.NumberOfbeds </li>
+                            <li style="margin-left:15px;">  Est. @Model.EstablishmentYesr <img style="margin-left:60px;" width="25" src="~/images/est.svg" /> </li>
+                        </ul>
+                        <p class="max-lines">
+                            @Model.ShortDescription
+                        </p>
+
+                        <a href="/Home/Register" class="btn btn-warning ornagebutton">Book Appointment</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-6">
+                <div class="doctor-details mt-4 mt-lg-0">
+                    <h2>Introducing to @Model.Name</h2>
+                    <p> @Model.Description </p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-title">
+                    <h3>Infrastructure</h3>
+                    <div class="divider"></div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="edu-block">
+                    <p>Hospital is build over 10 lakh sq ft of space ,spread over 17 floors and two basements.</p>
+                    <p> It has 650 Critical Care Beds &amp; 22 Operating Theatres</p>
+                    <p> It can accommodates over 850  inpatient beds,</p>
+                </div>
+            </div>
+        </div>
+
+        @*<div class="row">
+            <div class="col-lg-12">
+                <div class="section-title">
+                    <h3>Team and Specialities</h3>
+                    <div class="divider"></div>
+                </div>
+            </div>
+        </div>*@
+        <div class="row team-and-specialities">
+            @*<div class="col-lg-12">
+                <div class="edu-block">
+                    <p>@Model.ShortDescription </p>
+                </div>
+            </div>*@
+            @foreach (var doc in doctors)
+            {
+                <div class="col-lg-3 col-sm-6 col-md-6 ">
+                    <div class="position-relative doctor-inner-box">
+                        <a href="~/Doctors/Detail/@doc.Id">
+                            <div class="content mt-3">
+                                <h4 class="mb-0"> @doc.Name </h4>
+                                <p>@doc.Department</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            }
+        </div>
+
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-title">
+                    <h3>Doctors by Treatment / Department</h3>
+                    <div class="divider"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row doctor-by-treatment">
+            @foreach (var trt in TreatmentsList)
+            {
+                <div class="col-lg-3 col-sm-6 col-md-6">
+                    <div class="position-relative doctor-inner-box">
+                        <div class="content mt-1">
+                            <a href="/doctorslist/@trt.Name/@Model.Country" title="@trt.Name.ToUpper()" class=""> <i class="icofont-check mr-2" style="color: #e12454"></i><span class="setTextWidth">@trt.Name.ToUpper()</span></a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+
+

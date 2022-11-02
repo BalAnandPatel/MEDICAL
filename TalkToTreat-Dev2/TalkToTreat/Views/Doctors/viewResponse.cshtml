@@ -1,0 +1,130 @@
+﻿@using BaseApiApp.Entities.Enum;
+
+@model TalkToTreat.Models.ViewResponseModel
+
+@{
+    ViewBag.Title = "AppointmentList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    string Searchvalue = "";
+    if (ViewBag.Searchvalue != null)
+    {
+        Searchvalue = ViewBag.Searchvalue;
+    }
+}
+<section class="banner-area doctor-banner hospital">
+    <div class="container">
+        <div class="row ">
+
+            <div class="col-md-6 text-left">
+                <div class="banner-text">
+                    <h3>Appointment detail</h3>                     
+                </div>
+            </div>
+            <div class="col-md-6 text-left">
+            </div>
+        </div>
+    </div>
+
+</section>
+<section class="section appoinmentlist outerappointmentlist">
+    <div class="container ">
+        <div class="row">
+            <div class="col-md-12">
+
+                <div class="content-page">
+                    <div class="content">
+                        <!-- Start Content-->
+                        <div class="container-fluid">
+                            <!-- start page title -->
+                            
+                            <div class="clearfix" style="padding-bottom:60px;"></div>
+                            <div class="row">
+                                <div class="col-12">
+
+
+                                    <div class="page-title-box box-in">
+                                        <table style="width: 100%; background-color: transparent;border:none;color:none;">
+                                            <tr class="bg-bl">
+                                                <td style="border:none;color:none;background-color:none; padding-left:10px;">
+                                                    <span> Subject :</span> @Model.Appointment.Subject
+                                                </td>
+                                            </tr>
+                                            <tr class="bg-gray">
+                                                <td style="padding-left:10px;">
+                                                    @{
+
+                                                        AppointmentStatus foo = (AppointmentStatus)Model.Appointment.Status;
+                                                    }
+                                                    <span class="text-orange"> Appointment Status  :</span> @foo.ToString()
+                                                </td>
+                                            </tr>
+                                            <tr class="bg-gray">
+                                                <td style="padding-left:10px;">
+                                                    <span class="text-orange">  Google Meet URL :</span> <a target="_blank" href="@Model.Appointment.GoogleMeetUrl">  @Model.Appointment.GoogleMeetUrl </a>
+                                                </td>
+                                            </tr>
+                                            <tr class="bg-gray2">
+                                                <td style="padding-left:10px; padding-top:8px;">
+                                                    <span class="text-orange"> Message :</span> @Model.Appointment.Body
+                                                </td>
+                                            </tr>
+                                            <tr class="bg-bl">
+                                                <td style="border:none;color:none;background-color:none; padding-left:10px; align-content:center; ">
+                                                    Patient details :-
+                                                </td>
+                                            </tr>
+                                            <tr class="bg-gray">
+                                                <td style="border:none;color:none;background-color:none; padding-left:10px;">
+                                                    <span> Patient Name :</span> @Model.name
+                                                </td>
+                                            </tr>
+                                            <tr class="bg-gray">
+                                                <td style="border:none;color:none;background-color:none; padding-left:10px;">
+                                                    <span> Patient Age :</span> @Model.age
+                                                </td>
+                                            </tr>
+                                            <tr class="bg-gray">
+                                                <td style="border:none;color:none;background-color:none; padding-left:10px;">
+                                                    <span> Patient Health Desc :</span> @Model.Remark
+                                                </td>
+                                            </tr>
+                                            @foreach (var item in Model.UserValletList)
+                                            {
+                                                <tr class="bg-gray">
+                                                    <td style="border:none;color:none;background-color:none; padding-left:10px;">
+                                                        <span> @item.FileName :</span> <a target="_blank" class="show-on-hover" style="color: forestgreen;" href="~/Assets/Images/UserDocuments/@item.FileUrl" download>Download </a>
+                                                    </td>
+                                                </tr>
+                                            }
+
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="clearfix" style="padding-bottom:60px;"></div>
+                            <div class="row">
+                                <div class="col-12">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<div class="modal fade" id="ModalPopUp" role="dialog">
+    <div class="modal-dialog err-pop" style="">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Reply</h3>
+                <button id="DivClose" type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body" style="text-align:center;">
+                <textarea></textarea>
+            </div>
+        </div>
+    </div>
+</div>

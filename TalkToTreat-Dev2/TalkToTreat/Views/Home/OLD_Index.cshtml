@@ -1,0 +1,397 @@
+﻿@using TalkToTreat.Models;
+@{
+    List<Treatment> Treatments = new List<Treatment>();
+    Treatments = ViewBag.Treatments;
+    List<Doctors> Doctors = new List<Doctors>();
+    Doctors = ViewBag.Doctors;
+    List<Hospital> Hospitals = new List<Hospital>();
+    Hospitals = ViewBag.Hospitals;
+    var selectedCity = Hospitals[0].City;
+    var DistinctCities = ViewBag.DistinctCities;
+}
+
+
+<style>
+    .doctor-img {
+        height: 65px;
+        width: 80px;
+        margin: 10px;
+    }
+</style>
+<section class="section doctors">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2 col-xs-12 text-center mob-hide pl-0">
+                <h4 class="sub-heading-block"> Country</h4>
+                <div class="row">
+                    <button class="country-selection w3-btn w3-red indiaselect" style="background-color: #fff;padding-left: 0px; " value="IN">
+                        <div class="country-icon"><img src="~/Assets/images/country/india-icon.svg" alt="India" title="India"></div> <h3 class="country-name">India</h3>
+                    </button>
+                </div>
+            </div>
+
+            <div class="col-md-10 col-xs-12 filtered-hospital" >
+                <div class="col-12 ml-5">
+                    <div class="btn-group btn-group-toggle">
+                        @foreach (var con in DistinctCities)
+                        {<h4 class="sub-heading-block pl-3 pr-3 cityhover" style="cursor:pointer"> @con</h4>
+                            @*<label class="btn btn-group-sm btn-small">
+                                <input type="radio" value="Delhi" />@con
+                            </label>*@
+                        }
+                    </div>
+                </div>
+                <div class="col-md-12 col-xs-12 filtered-hospital ">
+                    <div class="col-md-12 hospital-grid-column">
+                        @foreach (var hosp in Hospitals)
+                        {
+                            <div class="col-md-2 col-xs-6 col-md-offset-1 hospitalfor-column no-padding  ml-0 mr-0">
+                                <div class="card hospital-grid">
+                                    <div class="card-body">
+                                        <div class="hospital-icon6">
+                                            <a href="/Hospitals/Detail/@hosp.Id">
+                                                @*<img src="~/Assets/images/hospitals/jaypee.png" style="width:65px !important;height:30px" />*@
+                                                <img src="@hosp.Image"  style="width:65px !important;height:30px" >
+                                            </a>
+                                        </div> <h3 class="hospital-name">
+                                            <a href="/Hospitals/Detail/@hosp.Id">@hosp.Name</a>
+                                        </h3>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<br />
+<section class="section hospitals">
+    <div class="container">
+        <div class="row">
+            <div class="row justify-content-center">
+                <div class="text-center">
+                    <div class="section-title">
+                        <h3>Top Hospitals in @selectedCity for</h3>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+            <div class="row">
+                @foreach (var treat in Treatments)
+                {
+                    <div class="col-md-2 col-xs-4 hosp-column no-padding">
+                        <div class="card department-grid border-0">
+                            <div class="card-body p-0">
+                                <div class="department-icon6">
+                                    <a href="/Treatment/Detail/@treat.Id">
+                                        @*<img src="~/Assets/images/disease/Neurosurgery.png" height="95px" width="93px">*@
+                                        <img src="@treat.Image" alt="Best @treat.Name Hospitals in @selectedCity" height="90px" width="90px">
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <h3 class="dept-name"><a href="/Treatment/Detail/@treat.Id">@treat.Name</a></h3>
+                    </div>
+                }
+            </div>
+        </div>
+</section>
+ 
+
+<section class="section service-2">
+    <div class="container"> 
+        <div class="row">
+            @foreach (var doctor in Doctors)
+            {
+                <div class="col-lg-3 col-md-6 mt-2" style="border-radius: 6px; box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;">
+                    <div class="department-block mb-1">
+                        <div class="text-center">
+                            @if (!string.IsNullOrEmpty(doctor.Image))
+                            {
+                                <img src="~/Assets/images/team/@doctor.Image" alt="doctor-image" class="img-fluid w-100">
+                            }
+                            else
+                            { <img src="~/Assets/images/team/1.jfif" alt="" class="img-fluid w-50">
+                            }
+                        </div>
+                        <div class="content text-center">
+                            <h4 class="mt-4 mb-2 title-color"><a href="/Doctors/detail/@doctor.Id">@doctor.Name</a></h4>
+                            <p class="mb-4">@doctor.Department.</p>
+                            <a href="department-single.html" class="read-more mb-0">@doctor.Designation </a>
+                        </div>
+                    </div>
+                </div>
+            }
+            <div class="col-lg-2 col-md-4">
+                <div class="content mt-5">
+                    <a href="/Doctors/index" class="read-more">View All <i class="icofont-simple-right ml-2"></i></a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<section class="section service gray-bg">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-7 text-center">
+                <div class="section-title">
+                    <h2>Award winning patient care</h2>
+                    <div class="divider mx-auto my-4"></div>
+                    <p>Lets know moreel necessitatibus dolor asperiores illum possimus sint voluptates incidunt molestias nostrum laudantium. Maiores porro cumque quaerat.</p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4 col-md-6 col-sm-6">
+                <div class="service-item mb-4">
+                    <div class="icon d-flex align-items-center">
+                        <i class="icofont-laboratory text-lg"></i>
+                        <h4 class="mt-3 mb-3">Laboratory services</h4>
+                    </div>
+                    <div class="content">
+                        <p class="mb-4">Saepe nulla praesentium eaque omnis perferendis a doloremque.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-6">
+                <div class="service-item mb-4">
+                    <div class="icon d-flex align-items-center">
+                        <i class="icofont-heart-beat-alt text-lg"></i>
+                        <h4 class="mt-3 mb-3">Heart Disease</h4>
+                    </div>
+                    <div class="content">
+                        <p class="mb-4">Saepe nulla praesentium eaque omnis perferendis a doloremque.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-6">
+                <div class="service-item mb-4">
+                    <div class="icon d-flex align-items-center">
+                        <i class="icofont-tooth text-lg"></i>
+                        <h4 class="mt-3 mb-3">Dental Care</h4>
+                    </div>
+                    <div class="content">
+                        <p class="mb-4">Saepe nulla praesentium eaque omnis perferendis a doloremque.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-6">
+                <div class="service-item mb-4">
+                    <div class="icon d-flex align-items-center">
+                        <i class="icofont-crutch text-lg"></i>
+                        <h4 class="mt-3 mb-3">Body Surgery</h4>
+                    </div>
+                    <div class="content">
+                        <p class="mb-4">Saepe nulla praesentium eaque omnis perferendis a doloremque.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-6">
+                <div class="service-item mb-4">
+                    <div class="icon d-flex align-items-center">
+                        <i class="icofont-brain-alt text-lg"></i>
+                        <h4 class="mt-3 mb-3">Neurology Sargery</h4>
+                    </div>
+                    <div class="content">
+                        <p class="mb-4">Saepe nulla praesentium eaque omnis perferendis a doloremque.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-6">
+                <div class="service-item mb-4">
+                    <div class="icon d-flex align-items-center">
+                        <i class="icofont-dna-alt-1 text-lg"></i>
+                        <h4 class="mt-3 mb-3">Gynecology</h4>
+                    </div>
+                    <div class="content">
+                        <p class="mb-4">Saepe nulla praesentium eaque omnis perferendis a doloremque.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="section appoinment">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <div class="appoinment-content">
+                    <img src="~/Assets/images/about/img-3.jpg" alt="" class="img-fluid">
+                </div>
+            </div>
+            @Html.Partial("~/Views/Shared/_Enquiry.cshtml", new TalkToTreat.Models.Registration())
+        </div>
+    </div>
+</section>
+<section class="section testimonial-2 gray-bg">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-7">
+                <div class="section-title text-center">
+                    <h2>We served over 5000+ Patients</h2>
+                    <div class="divider mx-auto my-4"></div>
+                    <p>Lets know moreel necessitatibus dolor asperiores illum possimus sint voluptates incidunt molestias nostrum laudantium. Maiores porro cumque quaerat.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-12 testimonial-wrap-2">
+                <div class="testimonial-block style-2  gray-bg">
+                    <i class="icofont-quote-right"></i>
+
+                    <div class="testimonial-thumb">
+                        <img src="~/Assets/images/team/test-thumb1.jpg" alt="" class="img-fluid">
+                    </div>
+
+                    <div class="client-info ">
+                        <h4>Amazing service!</h4>
+                        <span>John Partho</span>
+                        <p>
+                            They provide great service facilty consectetur adipisicing elit. Itaque rem, praesentium, iure, ipsum magnam deleniti a vel eos adipisci suscipit fugit placeat.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="testimonial-block style-2  gray-bg">
+                    <div class="testimonial-thumb">
+                        <img src="~/Assets/images/team/test-thumb2.jpg" alt="" class="img-fluid">
+                    </div>
+
+                    <div class="client-info">
+                        <h4>Expert doctors!</h4>
+                        <span>Mullar Sarth</span>
+                        <p>
+                            They provide great service facilty consectetur adipisicing elit. Itaque rem, praesentium, iure, ipsum magnam deleniti a vel eos adipisci suscipit fugit placeat.
+                        </p>
+                    </div>
+
+                    <i class="icofont-quote-right"></i>
+                </div>
+
+                <div class="testimonial-block style-2  gray-bg">
+                    <div class="testimonial-thumb">
+                        <img src="~/Assets/images/team/test-thumb3.jpg" alt="" class="img-fluid">
+                    </div>
+
+                    <div class="client-info">
+                        <h4>Good Support!</h4>
+                        <span>Kolis Mullar</span>
+                        <p>
+                            They provide great service facilty consectetur adipisicing elit. Itaque rem, praesentium, iure, ipsum magnam deleniti a vel eos adipisci suscipit fugit placeat.
+                        </p>
+                    </div>
+
+                    <i class="icofont-quote-right"></i>
+                </div>
+
+                <div class="testimonial-block style-2  gray-bg">
+                    <div class="testimonial-thumb">
+                        <img src="~/Assets/images/team/test-thumb4.jpg" alt="" class="img-fluid">
+                    </div>
+
+                    <div class="client-info">
+                        <h4>Nice Environment!</h4>
+                        <span>Partho Sarothi</span>
+                        <p class="mt-4">
+                            They provide great service facilty consectetur adipisicing elit. Itaque rem, praesentium, iure, ipsum magnam deleniti a vel eos adipisci suscipit fugit placeat.
+                        </p>
+                    </div>
+                    <i class="icofont-quote-right"></i>
+                </div>
+
+                <div class="testimonial-block style-2  gray-bg">
+                    <div class="testimonial-thumb">
+                        <img src="~/Assets/images/team/test-thumb1.jpg" alt="" class="img-fluid">
+                    </div>
+
+                    <div class="client-info">
+                        <h4>Modern Service!</h4>
+                        <span>Kolis Mullar</span>
+                        <p>
+                            They provide great service facilty consectetur adipisicing elit. Itaque rem, praesentium, iure, ipsum magnam deleniti a vel eos adipisci suscipit fugit placeat.
+                        </p>
+                    </div>
+                    <i class="icofont-quote-right"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="section clients">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-7">
+                <div class="section-title text-center">
+                    <h2>Partners who support us</h2>
+                    <div class="divider mx-auto my-4"></div>
+                    <p>Lets know moreel necessitatibus dolor asperiores illum possimus sint voluptates incidunt molestias nostrum laudantium. Maiores porro cumque quaerat.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row clients-logo">
+            <div class="col-lg-2">
+                <div class="client-thumb">
+                    <img src="~/Assets/images/about/1.png" alt="" class="img-fluid">
+                </div>
+            </div>
+            <div class="col-lg-2">
+                <div class="client-thumb">
+                    <img src="~/Assets/images/about/2.png" alt="" class="img-fluid">
+                </div>
+            </div>
+            <div class="col-lg-2">
+                <div class="client-thumb">
+                    <img src="~/Assets/images/about/3.png" alt="" class="img-fluid">
+                </div>
+            </div>
+            <div class="col-lg-2">
+                <div class="client-thumb">
+                    <img src="~/Assets/images/about/4.png" alt="" class="img-fluid">
+                </div>
+            </div>
+            <div class="col-lg-2">
+                <div class="client-thumb">
+                    <img src="~/Assets/images/about/5.png" alt="" class="img-fluid">
+                </div>
+            </div>
+            <div class="col-lg-2">
+                <div class="client-thumb">
+                    <img src="~/Assets/images/about/6.png" alt="" class="img-fluid">
+                </div>
+            </div>
+            <div class="col-lg-2">
+                <div class="client-thumb">
+                    <img src="~/Assets/images/about/3.png" alt="" class="img-fluid">
+                </div>
+            </div>
+            <div class="col-lg-2">
+                <div class="client-thumb">
+                    <img src="~/Assets/images/about/4.png" alt="" class="img-fluid">
+                </div>
+            </div>
+            <div class="col-lg-2">
+                <div class="client-thumb">
+                    <img src="~/Assets/images/about/5.png" alt="" class="img-fluid">
+                </div>
+            </div>
+            <div class="col-lg-2">
+                <div class="client-thumb">
+                    <img src="~/Assets/images/about/6.png" alt="" class="img-fluid">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- footer Start -->

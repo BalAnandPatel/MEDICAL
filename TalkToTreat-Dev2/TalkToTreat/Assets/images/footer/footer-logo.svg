@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="193" height="48" viewBox="0 0 193 48">
+  <defs>
+    <pattern id="pattern" preserveAspectRatio="none" width="100%" height="100%" viewBox="0 0 64 72">
+      <image width="64" height="72" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABICAYAAABGOvOzAAAABHNCSVQICAgIfAhkiAAABRtJREFUeF7tmztyUzEUhpOChgY6Si4rIKwA09IAK8ANHTNAQR2zAmAFmB2EFZDsANgApqCHgoqG84HECKEj6epFbKwZTWJfvf7/PHR0dH347fjKwf9cDv8RAQshfSX1ptRPUtfm83BZjCZgEoQvpN4JIIWIpdTTkSyMJACJP5Z6KQHwjWm3GUHECALuGqlfnQHoq+kDaV1LTwJQd2wbOw8VVB6AqH2sTVez6EHAZaPCxwpwK118wRfTZmHI0rSkm1m0JgBpAUyz8xQQNELzE13MohUBRwZ4C1XGdLSdAoVpulvUEoC6I7VHEXXnOYDmlpRZXJMBN3MH9dvXEICqAk5T99dGna2dl66VOZ5KvegNgDmxw1SVEgKQDBK9rsx8Zog5rVrZr85o2FoqgdN3qRe8MW/I53c188whYDLA7isT4qTQChbcoiBdxnI1DG2CFFtuyT+nNZPlErAy4DR1f2nIqVV3sLhST2HrTsDCSEHbn1H3pdRNaqWZz0NSt13x/hDsml43AiYDPLatoe4nmcBSzVJStxrGfO6amhOQiuIA8kyqG8WlwKWep6SOhlk75283AphoJXVUOJorddevdCMAW3+riKpp5GXmmCN1d1ndCNgEJN8l9jZofCAWZGo36UJASPqtojjN/n0guVo2hAC2NkjpWUqBlPZTsRAI+RqwJ2CvAXsT2PuAHCdIILOUyl+20fUMr1nqzEr7NXWCNlz2c3dsnRCSU0qBlPZrRgAAV1K1cDk3QVEKpLRfNQGYRCwLZCfIPZ2VAintV0zAZGxbOxb7A+8MARxWkLiW/gI4Nn8ktSRBUSrJ0n6zNIBDEEVLfxEp4gBJRpYuaHS/WQRojUMHltFASuerIgCNWBmT8AeKLWgpjSdlZp65OwnmtFHa8v3aPOtCAIv8qEyeSn/FFuQ/U6WQeOAezmoJgHh7mQKpJzYtzoNXzkKQyCoiFdt0WwgAH3j8+OWeey9AhIdXx7nl5vfPOwELA1zbxs9yL0Y0LY0RAOuT0pFnPX0A86LiqfilKwEaaXwfI66mH8BR9Vj84o6/MwRoB7Q/wBri3TdXdoIA/BZS1wI34hd7i4VPcNP/W08AMYoGPHRbvXMEhPxF6CUs227nCUjdZ2w9Adh66PW71NtnO6MBeHv3mA5wPrOt5pSt14AckLE2ewK2fRvca0AlA3sTOA8mQFjqh6652eQaBZjMjuH+WmVoKMwW5r/lZQH1JCB2UBpGQOydIFJePM9NwszRAjTNv8Jz+z/pmRBhIj9w8RdPzpFFti5LM652hff7oNSTADzuWmpoEe/lexZJ+q1lYc7YFd5fB6VeBCBV7SczqTfBSggBOHPGUmDBg1JrAh7IIh5KDb1KD/vY+mkJQqXPZICnrvAgZxMaozUBWoKCQwsq38rRpXwLWLN+t1BLAPam/VyGRbT+DUFO7g//gufP0rRaAlgQqhVKS32W729L/dBI5UMBlDs0uT9UfT1nvloCmIuFPVcmbaEBmA7AYlsaz9HG2aUFAUxKZpYFqDcw8gwgaEtuWRjg2pix3F/uHAetCLATAhIitExt6rI1h0za5N5dJoloTQATpjy0m6d3FzgZice2tNzcXxK4bdCDADs2KhyLytim0Bi2xpXU2G6StaVlo3Ya9iTATpPy3rHLjdzX6Euw/+wzgoAcs/ABFG1pJSyMIsA1i7V8iG1pmA21VdQY5WU0AXYx2Lx/Ts/ZIUqEfC4JYFGTI2kI2TRHlzHgD9peU//8DNv8AAAAAElFTkSuQmCC"/>
+    </pattern>
+  </defs>
+  <g id="footer-logo" transform="translate(-145 -16)">
+    <g id="Group_30" data-name="Group 30" transform="translate(72.286 264)">
+      <rect id="logo" width="43" height="48" transform="translate(72.714 -248)" fill="url(#pattern)"/>
+      <text id="Talk_to_Treat" data-name="Talk to Treat" transform="translate(119.714 -217)" fill="#fff" font-size="25" font-family="SegoeUI-Bold, Segoe UI" font-weight="700"><tspan x="0" y="0">Talk to Treat</tspan></text>
+    </g>
+  </g>
+</svg>

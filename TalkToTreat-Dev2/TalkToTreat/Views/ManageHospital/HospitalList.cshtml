@@ -1,0 +1,286 @@
+﻿@model List<TalkToTreat.Models.Hospital>
+
+@{
+    ViewBag.Title = "HospitalList";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+
+    string Searchvalue = "";
+    if (ViewBag.Searchvalue != null)
+    {
+        Searchvalue = ViewBag.Searchvalue;
+    }
+}
+<script type="text/javascript">
+    $(function () {
+        $('#IssuedEmpName').autocomplete({
+            source: '@Url.Action("getitemData")',
+            change: function (event, u) {
+                //If the No match found" item is selected, clear the TextBox.
+                if (u.item == null) {
+                    //Clear the AutoComplete TextBox.
+                    $(this).val("");
+                    return false;
+                }
+            }
+        });
+      });
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#_indexdiv").show();
+
+        $(function () {
+            $("#btnPrint").click(function () {
+                var contents = $("#dvContents").html();
+                var frame1 = $('<iframe />');
+                frame1[0].name = "frame1";
+                frame1.css({ "position": "absolute", "top": "-1000000px" });
+                $("body").append(frame1);
+                var frameDoc = frame1[0].contentWindow ? frame1[0].contentWindow : frame1[0].contentDocument.document ? frame1[0].contentDocument.document : frame1[0].contentDocument;
+                frameDoc.document.open();
+                //Create a new HTML document.
+                frameDoc.document.write('<html><head><title></title>');
+                frameDoc.document.write('</head><body>');
+                //Append the external CSS file.
+                frameDoc.document.write('<link href="style.css" rel="stylesheet" type="text/css" />');
+                //Append the DIV contents.
+                frameDoc.document.write(contents);
+                frameDoc.document.write('</body></html>');
+                frameDoc.document.close();
+                setTimeout(function () {
+                    window.frames["frame1"].focus();
+                    window.frames["frame1"].print();
+                    frame1.remove();
+                }, 500);
+            });
+        });
+    });
+</script>
+
+<div class="content-page">
+    <div class="content">
+        <!-- Start Content-->
+        <div class="container-fluid">
+            <!-- start page title -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="page-title-box">
+                        <table style="width: 100%; background-color: transparent;border:none;color:none;">
+                            <tr>
+                                <td style="text-align: left;border:none;color:none;background-color:none">
+                                    <h4 class="panel-title" style="color:orange">Hospitals List</h4>
+                                </td>
+                                @*<td style="text-align:right;border:none;color:none;background-color:none">
+                                        <input type="button" id="btnPrint" value="Click Here to Printout" class="btn btn-success btn-quirk btn-wide mr5" style="color:brown;background-color:yellow" onclick="OnSubmit" />
+                                    </td>
+                                    <td style="text-align:left;border:none;color:none;background-color:none;padding-left:20px;">
+                                        @using (Html.BeginForm("GeneratePDF", "ManageDoctor", FormMethod.Post, new { target = "_blank" }))
+                                        {
+                                            <input type="submit" class="btn btn-success btn-quirk btn-wide mr5" value="Download PDF" id="btnloginpdf" />
+                                        }
+                                    </td>*@
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+               
+                <div class="col-12">
+                    <div class="card-box">
+                        <div class="text-right">
+                            @Html.ActionLink("Add Hospital", "Create", "ManageHospital", null, new { @class = "btn btn-success btn-quirk btn-wide mr5" })
+                        </div>
+                        @using (Html.BeginForm("HospitalList", "ManageHospital", FormMethod.Get, new { id = "basicForm", @class = "form-horizontal" }))
+                        {
+
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="product-name">Hospital <span class="text-danger"></span></label>
+                                        @Html.TextBox("Searchvalue", Searchvalue, new { id = "Searchvalue", @class = "form-control", placeholder = "Type here ...", required = true })
+                                        @*@Html.TextBox("Searchvalue", Searchvalue, new { @class = "form-control", placeholder = "Type Item / Product Name / Employee Name / Quantity to search..." })*@
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <div class="col-sm-9 col-sm-offset-8">
+                                    <input type="submit" class="btn btn-success btn-quirk btn-wide mr5" value="Search" />
+                                    @*@Html.ActionLink("Reset", "Index", null, new { @class = "btn btn-quirk btn-wide btn-default", style = "background-color:coral;" })*@
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div id="_indexdiv">
+                                <form id="form1">
+                                    <div id="dvContents">
+                                        <div class="table-responsive">
+                                            <table width="100%"  >
+                                                <tr>
+                                                    <td>
+                                                        <div class="panel-body">
+                                                            @{
+                                                                if (Model.Count() != 0)
+                                                                {
+                                                                    <table class="examplesansserif" style="width:100%;height:100%;border:2px solid #2574ab;border-collapse:collapse;background-color:white">
+                                                                        <thead>
+                                                                            <tr style="height:40px;background-color:#2574ab;color:white;font-family:Arial;">
+                                                                                                                                            <th style="border: 1px solid #2574ab;border-right: 1px solid white; font-size: 16px; width: 62%;border-collapse:collapse">Hospital Name</th>
+                                                                                
+                                                                                <th style="font-size:16px; border-bottom: 1px solid #2574ab; border-right: 1px solid white; width: 22%;border-collapse:collapse">City</th>
+
+                                                                                <th style="font-size:16px; border-bottom: 1px solid #2574ab; border-right: 1px solid white;text-align: center; width: 16%;border-collapse:collapse">Action</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            @foreach (var item in Model)
+                                                                            {
+                                                                            <tr style="height:30px;color:black">
+                                                                                <td style="border-bottom: 1px solid #2574ab; border-collapse:collapse"><img width="60px" height="60px" src="@item.Image" />  @Html.DisplayFor(modelItem => item.Name)</td>
+                                                                                <td style="border-bottom: 1px solid #2574ab; border-collapse:collapse">@Html.DisplayFor(modelItem => item.City)</td>
+                                                                                <td style="border-bottom: 1px solid #2574ab; border-collapse:collapse">
+                                                                                    <a class="show-on-hover" href="@Url.Action("Edit","ManageHospital")/@item.Id"><i class="mdi mdi-square-edit-outline action-icon"></i></a>
+                                                                                
+                                                                                    <a class="show-on-hover" href="@Url.Action("Delete","ManageHospital")/@item.Id" 
+                                                                                       ng-bootbox-confirm="You are about to Reject this Enquiry. Deleted record can`t be restored.">
+                                                                                    <i class="icon-trash action-icon text-danger"></i>
+                                                                                    </a>
+                                                                                 
+</td>
+                                                                            </tr>
+                                                                            }
+                                                                        </tbody>
+                                                                    </table>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <div>
+                                                                        <h4 class="text-center">No Data Found</h4>
+                                                                    </div>
+                                                                }
+                                                            }
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+
+                            <table style="width: 100%; background-color: white">
+                                <tr>
+                                    @{int number = Convert.ToInt32(ViewBag.MyPageNumber);
+                                        int firstnum = number * 10 + 1;
+                                        int lastnum = (number + 1) * 10;
+                                    }
+                                    @if (ViewBag.totalRecords > lastnum)
+                                    {
+                                        <td>Showing @firstnum to  @lastnum of @ViewBag.totalRecords entries</td>
+                                    }
+                                    else
+                                    {
+                                        <td style="text-align: left">Showing @firstnum to  @ViewBag.totalRecords of @ViewBag.totalRecords entries</td>
+                                    }
+
+                                    <td style="text-align: right">
+                                        @{decimal recordcount = Convert.ToDecimal(ViewBag.totalRecords);
+                                            decimal TotalPages = Math.Ceiling(recordcount / 10);
+                                            int NextData = ViewBag.NextData;
+                                        }
+                                        @if (TotalPages != 1)
+                                        {
+                                            if (TotalPages > 10)
+                                            {
+                                                <ul class="pagination pagination-rounded justify-content-end my-2">
+                                                    @if (ViewBag.PreviousData == 0)
+                                                    {
+
+                                                    }
+                                                    else
+                                                    {
+                                                        <li class="page-item">@Html.ActionLink(" ", "Hospitallist", new { pagenum = ViewBag.PreviousData - 15, PreviousData = ViewBag.PreviousData }, new { @class = "fa fa-angle-left" })</li>
+                                                    }
+                                                    @if (TotalPages < NextData)
+                                                    {
+                                                        NextData = Convert.ToInt32(TotalPages);
+                                                    }
+
+                                                    @for (int i = ViewBag.PreviousData; i < NextData; i++)
+                                                    {
+
+                                                        if (i == ViewBag.MyPageNumber)
+                                                        {
+                                                            <text>
+                                                                <li class="page-item active">@Html.ActionLink((i + 1).ToString(), "List", new { pagenum = i, Next = ViewBag.NextData, Previous = ViewBag.PreviousData })</li>
+                                                            </text>
+                                                        }
+                                                        else
+                                                        {
+                                                            <text>
+                                                                <li class="page-item">@Html.ActionLink((i + 1).ToString(), "List", new { pagenum = i, Next = ViewBag.NextData, Previous = ViewBag.PreviousData })</li>
+                                                            </text>
+                                                        }
+
+                                                    }
+                                                    @if (TotalPages > NextData)
+                                                    {
+                                                        <li class="page-item">@Html.ActionLink(" ", "Hospitallist", new { pagenum = ViewBag.NextData, NextData = ViewBag.NextData }, new { @class = "fa fa-angle-right" })</li>
+
+                                                    }
+                                                    else
+                                                    {
+
+                                                    }
+                                                </ul>
+                                            }
+                                            else
+                                            {
+                                                <ul class="pagination pagination-rounded justify-content-end my-2">
+                                                    @for (int i = 0; i < TotalPages; i++)
+                                                    {
+                                                        if (i == ViewBag.MyPageNumber)
+                                                        {
+                                                            <text>
+                                                                <li class="page-item active">@Html.ActionLink((i + 1).ToString(), "Hospitallist", new { pagenum = i })</li>
+                                                            </text>
+                                                        }
+                                                        else
+                                                        {
+                                                            <text>
+                                                                <li class="page-item">@Html.ActionLink((i + 1).ToString(), "Hospitallist", new { pagenum = i })</li>
+                                                            </text>
+                                                        }
+                                                    }
+                                                </ul>}
+                                        }
+                                    </td>
+                                </tr>
+                            </table>
+                        </div> <!-- end card-body-->
+                    </div> <!-- end card-->
+                </div> <!-- end col -->
+            </div>
+        </div>
+    </div>
+    <footer class="footer">
+        <div class="container-fluid">
+            <div class="row">
+
+            </div>
+        </div>
+    </footer>
+    <!-- end Footer -->
+
+</div>
+

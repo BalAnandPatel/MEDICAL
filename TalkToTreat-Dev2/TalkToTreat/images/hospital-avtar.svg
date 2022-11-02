@@ -1,0 +1,9 @@
+<svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 20" width="14" height="20">
+	<title>hospital-avtar</title>
+	<defs>
+		<image  width="10" height="16" id="img1" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAQCAMAAAAYoR5yAAAAAXNSR0IB2cksfwAAAGZQTFRFAAAA4Dgu4Dgu4Dgu4Dgu4Dgu6nZw87Ku4Dgu87Ov////4Dgu6nZv4Dgu9Lq398zK4Dgu87Cs4Dgu52Ja//394Dgu7YiC/vr64Dgu405F7IV/4Dgu4Dgu4Dgu4Dgu4Dgu4Dgu4DguxM3t+AAAACJ0Uk5TAE3D+nr///8+//+y//L///v/0v//Rv//yP//NK8liw/pXA1AY5MAAABuSURBVHicLc1HFoAgFEPRKMaCvRew7X+T8sE3yLmzAIhipeIIroRplqVMgJyFdhXMUVbaV5Wom8CmBtvAluj6wL7DME6iaRwwc1m1XhfOwMb9OHZu7sLQZ+TOiqwIpyLV6YmLvIJwP8/9E+8r+wH+kgYX315PlwAAAABJRU5ErkJggg=="/>
+	</defs>
+	<style>
+	</style>
+	<use id="Background" href="#img1" x="2" y="2"/>
+</svg>

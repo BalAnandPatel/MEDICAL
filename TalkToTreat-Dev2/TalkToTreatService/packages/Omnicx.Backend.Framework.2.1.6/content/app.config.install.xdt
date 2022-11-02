@@ -1,0 +1,15 @@
+﻿<?xml version="1.0"?>
+<configuration xmlns:xdt="http://schemas.microsoft.com/XML-Document-Transform">
+  <appSettings xdt:Transform="InsertIfMissing"></appSettings>
+  <appSettings>
+    <add key="AppCode" value="insert the AppCode here" xdt:Transform="InsertIfMissing" xdt:Locator="Match(key)" />
+    <add key="SSOUrl" value="insert the SSOUrl here"  xdt:Transform="InsertIfMissing" xdt:Locator="Match(key)"/>
+    <add key="OrgApiAurl" value="insert the OrgApiAurl here" xdt:Transform="InsertIfMissing" xdt:Locator="Match(key)"/>
+    <add key="AuthClientId" value="insert the AuthClientId here" xdt:Transform="InsertIfMissing" xdt:Locator="Match(key)"/>
+    <add key="AuthClientSecret" value="insert the AuthClientSecret here" xdt:Transform="InsertIfMissing" xdt:Locator="Match(key)"/>
+  </appSettings>
+  <system.web xdt:Transform="InsertIfMissing"></system.web>
+  <system.web>
+        <machineKey decryptionKey="insert your decryptionKey here" validation="SHA1" validationKey="insert your  validation key"  xdt:Transform="InsertIfMissing"/>
+  </system.web>
+</configuration>

@@ -1,0 +1,356 @@
+﻿@model List<TalkToTreat.Models.Appointment>
+
+@{
+    ViewBag.Title = "AppointmentList";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+
+    string Searchvalue = "";
+    if (ViewBag.Searchvalue != null)
+    {
+        Searchvalue = ViewBag.Searchvalue;
+    }
+}
+
+<div class="content-page">
+    <div class="content">
+        <!-- Start Content-->
+        <div class="container-fluid">
+            <!-- start page title -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="page-title-box">
+                        <table style="width: 100%; background-color: transparent;border:none;color:none;">
+                            <tr>
+                                <td style="text-align: left;border:none;color:none;background-color:none">
+                                    <h4 class="panel-title" style="color:orange">AppoitmentList</h4>
+                                </td>
+                                @*<td style="text-align:right;border:none;color:none;background-color:none">
+                                        <input type="button" id="btnPrint" value="Click Here to Printout" class="btn btn-success btn-quirk btn-wide mr5" style="color:brown;background-color:yellow" onclick="OnSubmit" />
+                                    </td>
+                                    <td style="text-align:left;border:none;color:none;background-color:none;padding-left:20px;">
+                                        @using (Html.BeginForm("GeneratePDF", "ManageDoctor", FormMethod.Post, new { target = "_blank" }))
+                                        {
+                                            <input type="submit" class="btn btn-success btn-quirk btn-wide mr5" value="Download PDF" id="btnloginpdf" />
+                                        }
+                                    </td>*@
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!-- end page title -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="card-box">
+                        @using (Html.BeginForm("AppointmentList", "ManageDoctor", FormMethod.Get, new { id = "basicForm", @class = "form-horizontal" }))
+                        {
+
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="product-name">
+                                            Name / Email / Location (country,city) / Doctor / Hospital<span class="text-danger"></span>
+                                        </label>
+                                        @Html.TextBox("Searchvalue", "", new { id = "Name", @class = "form-control", placeholder = "Type here ..." })
+                                        @*@Html.TextBox("Searchvalue", Searchvalue, new { @class = "form-control", placeholder = "Type Item / Product Name / Employee Name / Quantity to search..." })*@
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">Date From : </label>
+                                            <div class="col-sm-4">
+                                                @Html.TextBox("DateFrom", "{0:dd MMM yyyy}", new { @class = "form-control", placeholder = "dd/mm/yyyy",  type = "date" })
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">Date To : </label>
+                                            <div class="col-sm-4">
+                                                @Html.TextBox("DateTo", "{0:dd MMM yyyy}", new { @class = "form-control", placeholder = "dd/mm/yyyy",   type = "date" })
+                                            </div>
+                                        </div>
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <div class="col-sm-9 col-sm-offset-8">
+                                    <input type="submit" class="btn btn-success btn-quirk btn-wide mr5" value="Search" />
+                                    @Html.ActionLink("Reset", "Index", null, new { @class = "btn btn-quirk btn-wide btn-default", style = "background-color:coral;" })
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div id="_indexdiv">
+                                <form id="form1">
+                                    <div id="dvContents">
+                                        <div class="table-responsive">
+                                            <table width="95%" ; style="margin-left:20px;margin-top:-10px;">
+                                                <tr>
+                                                    <td>
+                                                        <div class="panel-body">
+                                                            @{
+                                                                if (Model.Count() != 0)
+                                                                {
+                                                                    <table class="examplesansserif" style="width:100%;height:100%;border:2px solid #2574ab;border-collapse:collapse;background-color:white">
+                                                                        <thead>
+                                                                        <tr style="height:40px;background-color:#2574ab;color:white;font-family:Arial;">
+                                                                            <th style="border: 1px solid #2574ab;border-right: 1px solid white; text-align: center; font-size: 16px; width: 12%;border-collapse:collapse">Name</th>
+                                                                            <th style="font-size:16px; border-bottom: 1px solid #2574ab; border-right: 1px solid white;text-align: center; width: 16%;border-collapse:collapse">EmailId</th>
+                                                                            <th style="font-size:16px; border-bottom: 1px solid #2574ab; border-right: 1px solid white;text-align: center; width: 16%;border-collapse:collapse">DoctorName</th>
+                                                                            <th style="font-size:16px; border-bottom: 1px solid #2574ab; border-right: 1px solid white;text-align: center; width: 10%;border-collapse:collapse">App Date</th>
+                                                                            <th style="font-size:16px; border-bottom: 1px solid #2574ab; border-right: 1px solid white;text-align: center; width: 10%;border-collapse:collapse">Req Date</th>
+                                                                            <th style="font-size:16px; border-bottom: 1px solid #2574ab; border-right: 1px solid white;text-align: center; width: 8%;border-collapse:collapse">MobileNo</th>
+                                                                            <th style="font-size:16px; border-bottom: 1px solid #2574ab; border-right: 1px solid white;text-align: center; width: 12%;border-collapse:collapse">Action</th> 
+                                                                        </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            @foreach (var item in Model)
+                                                                            {
+                                                                                <tr style="height:30px;color:black">
+                                                                                    <td style="border-bottom: 1px solid #2574ab; text-align: center;border-collapse:collapse">@Html.DisplayFor(modelItem => item.FullName)</td>
+                                                                                    <td style="border-bottom: 1px solid #2574ab; text-align: center;border-collapse:collapse">@Html.DisplayFor(modelItem => item.EmailId)</td>
+                                                                                    <td style="border-bottom: 1px solid #2574ab; text-align: center;border-collapse:collapse">@Html.DisplayFor(modelItem => item.DoctorName)</td>
+
+                                                                                    @if (item.Status == (int)BaseApiApp.Entities.Enum.AppointmentStatus.Scheduled)
+                                                                                    {
+                                                                                        <td style="border-bottom: 1px solid #2574ab; text-align: center;border-collapse:collapse">@item.AppointMentDate.ToString("dd/MM/yyyy HH:mm")</td>
+                                                                                    }
+                                                                                    else
+                                                                                    {
+                                                                                        <td style="border-bottom: 1px solid #2574ab; text-align: center;border-collapse:collapse">@item.AppointMentDate.ToString("dd/MM/yyyy")</td>
+                                                                                    }
+
+                                                                                    <td style="border-bottom: 1px solid #2574ab; text-align: center;border-collapse:collapse">@item.Created.ToString("dd/MM/yyyy")</td>
+
+                                                                                    <td style="border-bottom: 1px solid #2574ab; text-align: center;border-collapse:collapse">@Html.DisplayFor(modelItem => item.MobileNo)</td>
+                                                                                    <td style="border-bottom: 1px solid #2574ab; text-align: center;border-collapse:collapse;">
+                                                                                        @if (item.IsReplied)
+                                                                                        {
+                                                                                            <a class="show-on-hover" style="color: forestgreen;" href="@Url.Action("ReplytoCustomer","ManageDoctor")/@item.Id" title="View Reply">
+                                                                                                <i class="mdi mdi-arrow-right-bold-circle action-icon"></i>
+                                                                                            </a>
+                                                                                        }
+                                                                                        else
+                                                                                        {
+                                                                                            <a class="show-on-hover" style="color: deepskyblue;" href="@Url.Action("ReplytoCustomer","ManageDoctor")/@item.Id" title="Send Reply">
+                                                                                                <i class="mdi mdi-square-edit-outline action-icon"></i>
+                                                                                            </a>
+                                                                                        }
+                                                                                        @if (item.IsCancel)
+                                                                                        {
+                                                                                            <a class="show-on-hover" style="color: deepskyblue; cursor:pointer; " onclick="ViewRegion('@item.CancelRegion');" title="View Cancel Reason">
+                                                                                                <i class="mdi mdi-close-circle action-icon"></i>
+                                                                                            </a>
+                                                                                        }
+                                                                                        else
+                                                                                        {
+                                                                                            <a class="show-on-hover" style="color: deepskyblue; cursor:pointer; " onclick="CancelRegion('@item.Id');" title="Cancel Request">
+                                                                                                <i class="mdi mdi-close-box action-icon"></i>
+                                                                                            </a>
+                                                                                        }
+                                                                                    </td>
+                                                                                </tr>
+                                                                            }
+                                                                        </tbody>
+                                                                    </table>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <div>
+                                                                        <h4 class="text-center">No Data Found</h4>
+                                                                    </div>
+                                                                }
+                                                            }
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+
+                            <table style="width: 100%; background-color: white">
+                                <tr>
+                                    @{int number = Convert.ToInt32(ViewBag.MyPageNumber);
+                                        int firstnum = number * 15 + 1;
+                                        int lastnum = (number + 1) * 15;
+                                    }
+                                    @if (ViewBag.totalRecords > lastnum)
+                                    {
+
+                                        <td>Showing @firstnum to  @lastnum of @ViewBag.totalRecords entries</td>
+
+                                    }
+                                    else
+                                    {
+
+                                        <td style="text-align: left">Showing @firstnum to  @ViewBag.totalRecords of @ViewBag.totalRecords entries</td>
+                                    }
+
+                                    <td style="text-align: right">
+                                        @{decimal recordcount = Convert.ToDecimal(ViewBag.totalRecords);
+                                            decimal TotalPages = Math.Ceiling(recordcount / 15);
+                                            int NextData = ViewBag.NextData;
+                                        }
+                                        @if (TotalPages != 1)
+                                        {
+                                            if (TotalPages > 10)
+                                            {
+                                                <ul class="pagination pagination-rounded justify-content-end my-2">
+                                                    @if (ViewBag.PreviousData == 0)
+                                                    {
+
+                                                    }
+                                                    else
+                                                    {
+                                                        <li class="page-item">@Html.ActionLink(" ", "AppointmentList", new { pagenum = ViewBag.PreviousData - 15, PreviousData = ViewBag.PreviousData }, new { @class = "fa fa-angle-left" })</li>
+                                                    }
+                                                    @if (TotalPages < NextData)
+                                                    {
+                                                        NextData = Convert.ToInt32(TotalPages);
+                                                    }
+
+                                                    @for (int i = ViewBag.PreviousData; i < NextData; i++)
+                                                    {
+
+                                                        if (i == ViewBag.MyPageNumber)
+                                                        {
+                                                            <text>
+                                                                <li class="page-item active">@Html.ActionLink((i + 1).ToString(), "AppointmentList", new { pagenum = i, Next = ViewBag.NextData, Previous = ViewBag.PreviousData })</li>
+                                                            </text>
+                                                        }
+                                                        else
+                                                        {
+                                                            <text>
+                                                                <li class="page-item">@Html.ActionLink((i + 1).ToString(), "AppointmentList", new { pagenum = i, Next = ViewBag.NextData, Previous = ViewBag.PreviousData })</li>
+                                                            </text>
+                                                        }
+
+                                                    }
+                                                    @if (TotalPages > NextData)
+                                                    {
+                                                        <li class="page-item">@Html.ActionLink(" ", "AppointmentList", new { pagenum = ViewBag.NextData, NextData = ViewBag.NextData }, new { @class = "fa fa-angle-right" })</li>
+
+                                                    }
+                                                    else
+                                                    {
+
+                                                    }
+
+                                                </ul>
+                                            }
+                                            else
+                                            {
+                                                <ul class="pagination pagination-rounded justify-content-end my-2">
+                                                    @for (int i = 0; i < TotalPages; i++)
+                                                    {
+                                                        if (i == ViewBag.MyPageNumber)
+                                                        {
+                                                            <text>
+                                                                <li class="page-item active">@Html.ActionLink((i + 1).ToString(), "AppointmentList", new { pagenum = i+1 })</li>
+                                                            </text>
+                                                        }
+                                                        else
+                                                        {
+                                                            <text>
+                                                                <li class="page-item">@Html.ActionLink((i + 1).ToString(), "AppointmentList", new { pagenum = i+1 })</li>
+                                                            </text>
+                                                        }
+                                                    }
+                                                </ul>}
+                                        }
+                                    </td>
+                                </tr>
+
+                            </table>
+                        </div> <!-- end card-body-->
+                    </div> <!-- end card-->
+                </div> <!-- end col -->
+            </div>
+        </div>
+    </div>
+    <footer class="footer">
+        <div class="container-fluid">
+            <div class="row">
+
+            </div>
+        </div>
+    </footer>
+    <!-- end Footer -->
+
+</div>
+<div class="modal fade" id="ModalPopUp" role="dialog">
+    <div class="modal-dialog err-pop" style="">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5>Cancel Reason</h5>
+                <button id="DivClose" type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body" style="text-align:center;">
+                <span id="spanRegion"> </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="ModalPopUpCancel" role="dialog">
+    <div class="modal-dialog err-pop" style="">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5>Cancel Reason</h5>
+                <button id="DivClose" type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body" style="text-align:center;">
+                <input type="hidden" id="hndIdAppointment" value="" />
+
+                <textarea id="txtRegion" required="required" rows="3" cols="45"></textarea>
+
+                <br />
+                <br />
+                <input type="button" value="Save" class="btn btn-success succes-btn" onclick="SaveCancelRegion();" />
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    function CancelRegion(Id) {
+        $("#hndIdAppointment").val(Id);
+        $('#ModalPopUpCancel').modal('show');
+    }
+
+    function ViewRegion(region) {
+        $("#spanRegion").html(region);
+        $('#ModalPopUp').modal('show');
+    }
+
+    function SaveCancelRegion() {
+
+        $.ajax({
+            type: 'POST',
+            url: '/ManageDoctor/SaveCancelRequest/',
+            data: { Id: $("#hndIdAppointment").val(), CancelRegion: $("#txtRegion").val() },
+            success: function (result) {
+
+                $("#hndIdAppointment").val('');
+                $("#txtRegion").val('');
+
+                alert("Your appointment has been cancelled successfully.")
+                //$('#ModalPopUp').modal('hide');
+                location.reload();
+            }
+        });
+
+    }
+
+</script>

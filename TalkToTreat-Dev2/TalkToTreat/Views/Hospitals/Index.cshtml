@@ -1,0 +1,377 @@
+﻿@model  List<TalkToTreat.Models.Hospital>
+@using TalkToTreat.Models;
+@using System.Linq;
+@using System;
+@using System.Collections.Generic;
+@{
+    ViewBag.Title = "Hospitals";
+    string country = "";
+    if (string.IsNullOrEmpty(country))
+    {
+        country = "India";
+    }
+    var AllCities = (List<Locations>)ViewBag.AllCities;
+    var TreatmentsList = (List<Treatment>)ViewBag.TreatmentsList;
+    var countries = AllCities.GroupBy(d => new { d.CountryId, d.CountryName }).Select(m => new { m.Key.CountryId, m.Key.CountryName });
+    var DistinctCity = AllCities.GroupBy(d => new { d.CityId, d.Name,d.CountryId }).Select(m => new { m.Key.CityId, m.Key.Name, m.Key.CountryId });
+    if (string.IsNullOrEmpty(country))
+    {
+        AllCities = AllCities.Where(a => a.CountryName == country).ToList();
+        DistinctCity = AllCities.GroupBy(d => new { d.CityId, d.Name, d.CountryId }).Select(m => new { m.Key.CityId, m.Key.Name, m.Key.CountryId });
+    }
+}
+<script>
+
+    function desktopFilterSearchFunction(label_name) {
+        var inputVariable = label_name + '-Input';
+        var searchVariable = 'Search-' + label_name;
+        var input, filter, ul, li, a, i;
+        input = document.getElementById(inputVariable);
+        filter = input.value.toUpperCase();
+        ul = document.getElementById(searchVariable);
+        li = ul.getElementsByTagName("li");
+        for (i = 0; i < li.length; i++) {
+            a = li[i].getElementsByTagName("a")[0];
+            if (a.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                li[i].style.display = "";
+            }
+            else {
+                li[i].style.display = "none";
+            }
+        }
+    }
+
+    var CountryId = "";
+    var CityId = "";
+    var TreatMentId = "";
+    var HospitalId = "";
+    var BestHospital = "";
+
+
+    function updateCountry(Id, Name) {
+        
+        CountryId = Id;
+        $("#hndCountryId").val(Id);
+
+        if ($('#Search-By-Country > li#liCountry').length) {
+            $('#Search-By-Country > li#liCountry').remove();
+            $("#Search-By-Country").append('<li id="liCountry" >Selected Country -' + Name + '</li>');
+        }
+        else {
+            $("#Search-By-Country").append('<li id="liCountry" >Selected Country -' + Name + '</li>');
+        }
+
+        FilterHospital();
+      
+        $("#asubmenu1").attr('aria-expanded', 'false');        
+        $("#submenu1").removeClass("show");
+        $("#asubmenu1").removeClass("collapsed");
+
+        FilterCitysBasedOnCountry(Id);      
+
+    }
+
+    function updateCity(Id, Name) {
+        CityId = Id;
+        $("#hndCityId").val(Id);
+
+        if ($('#Search-By-Country > li#liCity').length) {
+            $('#Search-By-Country > li#liCity').remove();
+            $("#Search-By-Country").append('<li id="liCity" >Selected City -' + Name + '</li>');
+        }
+        else {
+            $("#Search-By-Country").append('<li id="liCity" >Selected City -' + Name + '</li>');
+        }
+
+        FilterHospital();
+
+        $("#asubmenu2").attr('aria-expanded', 'false');
+        $("#submenu2").removeClass("show");
+        $("#asubmenu2").removeClass("collapsed");
+
+    }
+    function updateTreatMent(Id, Name) {
+        TreatMentId = Id;
+        $("#hndTreatMentId").val(Id);
+
+        if ($('#Search-By-Country > li#liTreatMent').length) {
+            $('#Search-By-Country > li#liTreatMent').remove();
+            $("#Search-By-Country").append('<li id="liTreatMent" >Selected TreatMent -' + Name + '</li>');
+        }
+        else {
+            $("#Search-By-Country").append('<li id="liTreatMent" >Selected TreatMent -' + Name + '</li>');
+        }
+
+        FilterHospital();
+
+        $("#asubmenu3").attr('aria-expanded', 'false');
+        $("#submenu3").removeClass("show");
+        $("#asubmenu3").removeClass("collapsed");
+    }
+    function updateHospital(Id, Name) {
+        HospitalId = Id;
+        $("#hndHospitalId").val(Id);
+
+        if ($('#Search-By-Country > li#liHospital').length) {
+            $('#Search-By-Country > li#liHospital').remove();
+            $("#Search-By-Country").append('<li id="liHospital" >Selected Hospital -' + Name + '</li>');
+        }
+        else {
+            $("#Search-By-Country").append('<li id="liHospital" >Selected Hospital -' + Name + '</li>');
+        }
+
+        FilterHospital();
+
+        $("#asubmenu4").attr('aria-expanded', 'false');
+        $("#submenu4").removeClass("show");
+        $("#asubmenu4").removeClass("collapsed");
+    }
+    function updateBestHospital() {
+        BestHospital = true;
+        $("#hndBestHospitalId").val(true);
+
+        if ($('#Search-By-Country > li#liHospital').length) {
+            $('#Search-By-Country > li#liHospital').remove();
+            $("#Search-By-Country").append('<li id="liHospital" >Best Hospital</li>');
+        }
+        else {
+            $("#Search-By-Country").append('<li id="liHospital" >Best Hospital</li>');
+        }
+
+        FilterHospital();
+
+        $("#asubmenu5").attr('aria-expanded', 'false');
+        $("#submenu5").removeClass("show");
+        $("#asubmenu5").removeClass("collapsed");
+    }
+
+    function clearFilter() {
+
+        CountryId = "";
+        CityId = "";
+        TreatMentId = "";
+        HospitalId = "";
+        BestHospital = "";
+
+        $("#hndCountryId").val("");
+        $("#hndCityId").val("");
+        $("#hndTreatMentId").val("");
+        $("#hndHospitalId").val("");
+        $("#hndBestHospitalId").val("");
+
+        location.replace("/Hospitalslist");
+    }
+
+    function checkforText(requiredText) {
+        let found = false;
+        $("#Search-By-Country li").each((id, elem) => {
+            if (elem.innerText == requiredText) {
+                found = true;
+            }
+        });
+
+        return found;
+    }
+
+    function FilterHospital() {
+      
+        var country = CountryId;
+        var city = CityId;
+        var treat = TreatMentId;
+        var hosp = HospitalId;
+        var bestHospital = BestHospital;
+
+        $("#loadingDiv").show();
+
+        $.ajax({
+            type: 'POST',
+            url: '/Hospitals/Filter/',
+            data: { country: country, city: city, treat: treat, hosp: hosp, bestHospital: bestHospital },
+            success: function (result) {
+                if (result.length > 5) {
+                    $("#divHospitalList").html(result);
+                }
+                $("#loadingDiv").hide();
+            }
+        });
+    }
+
+    function FilterCitysBasedOnCountry(Id) {
+        $('#Search-By-City > li').hide();
+        $('#Search-By-City > #licity_' + Id).show();
+    }
+
+</script>
+
+<style>
+    a {
+        cursor: pointer;
+    }
+
+    li {
+        /* width: 100% !important;*/
+    }
+</style>
+
+<section class="banner-area doctor-banner hospital">
+    <div class="container">
+        <div class="row ">
+
+            <div class="col-md-6 text-left">
+                <div class="banner-text">
+
+                    <h1>
+                        Best Hospital in India
+                    </h1>
+                    <h6>	We guide you the best care in most reputed hospitals in the country and the excellent team of doctors at your service.</h6>
+
+                </div>
+            </div>
+            <div class="col-md-6 text-left">
+
+            </div>
+        </div>
+    </div>
+    </div>
+</section>
+
+<section class="listing-sec hospital">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-sm-4 col-md-3 col-xs-12">
+                <div id="sidebar-container" class="sidebar-expanded d-none d-md-block">
+                    <ul class="list-group">
+                        <a href="#" class="list-group-item list-group-item-action">
+                            <div class="d-flex w-100 justify-content-start align-items-center">
+                                <span class="menu-collapsed">Selected Filters</span>
+                            </div>
+                        </a>
+                        <div class="col-md-12">
+                            <ul class="to-h" id="Search-By-Country">
+                                <li>
+                                    <a style="color:red; float:right; height:auto; " onclick="clearFilter();">Reset Filter </a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <a href="#submenu1" id='asubmenu1' data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start">
+                            <div class="d-flex w-100 justify-content-start align-items-center">
+                                <span class="menu-collapsed">By Country</span>
+                                <span class="submenu-icon ml-auto"></span>
+                            </div>
+                        </a>
+
+                        <div id='submenu1' class="collapse sidebar-submenu">
+                            <input type="hidden" name="hndCountryId" value="" />
+                            @foreach (var con in countries)
+                            {
+                                <a class="list-group-item list-group-item-action text-black"
+                                   onclick="updateCountry('@con.CountryId','@con.CountryName')">@con.CountryName</a>
+                            }
+                        </div>
+                        <a href="#submenu2" id='asubmenu2' data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start">
+                            <div class="d-flex w-100 justify-content-start align-items-center">
+
+                                <span class="menu-collapsed">By City</span>
+                                <span class="submenu-icon ml-auto"></span>
+                            </div>
+                        </a>
+
+                        <div id='submenu2' class="collapse sidebar-submenu">
+                            <div class="sidebar-typo"> <input type="text" name="By-City" id="By-City-Input" onkeyup="desktopFilterSearchFunction(this.name)" placeholder="Search By City.." title="Type in a name"> </div>
+                            <input type="hidden" name="hndCityId" value="" />
+                            <ul class="force-overflow" id="Search-By-City">
+
+                                @foreach (var cit in DistinctCity)
+                                {
+                                    <li class="list-group-item list-group-item-action text-black" Id="licity_@cit.CountryId" >
+                                        <a onclick="updateCity('@cit.CityId','@cit.Name')">@cit.Name</a>
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+
+
+                        <a href="#submenu3" id='asubmenu3' data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start">
+                            <div class="d-flex w-100 justify-content-start align-items-center">
+                                <span class="menu-collapsed">By Treatment </span>
+                                <span class="submenu-icon ml-auto"></span>
+                            </div>
+                        </a>
+
+                        <div id='submenu3' class="collapse sidebar-submenu">
+                            <div class="sidebar-typo">
+                                <input type="text" name="By-Department" id="By-Department-Input"
+                                       onkeyup="desktopFilterSearchFunction(this.name)" placeholder="Search By Department.." title="Type in a name" />
+                            </div>
+                            <input type="hidden" name="hndTreatMentId" value="" />
+                            <ul class="force-overflow" id="Search-By-Department">
+
+                                @foreach (var trt in TreatmentsList)
+                                {
+                                    <li class="list-group-item list-group-item-action text-black">
+                                        <a onclick="updateTreatMent('@trt.Id','@trt.Name')">@trt.Name</a>
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+
+
+                        <a href="#submenu4" id='asubmenu4' data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action flex-column align-items-start">
+                            <div class="d-flex w-100 justify-content-start align-items-center">
+                                <span class="menu-collapsed">By Hospital  </span>
+                                <span class="submenu-icon ml-auto"></span>
+                            </div>
+                        </a>
+
+                        <div id='submenu4' class="collapse sidebar-submenu">
+                            <div class="sidebar-typo">
+                                <input type="text" name="By-Hospital" id="By-Hospital-Input"
+                                       onkeyup="desktopFilterSearchFunction(this.name)" placeholder="Search By Hospital.." title="Type in a name" />
+                            </div>
+                            <input type="hidden" name="hndHospitalId" value="" />
+                            <ul class="force-overflow" id="Search-By-Hospital">
+
+                                @foreach (var hos in Model.OrderBy(a => a.Name))
+                                {
+                                    <li class="list-group-item list-group-item-action text-black">
+                                        <a onclick="updateHospital('@hos.Id','@hos.Name')">@hos.Name</a>
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+
+
+                        <a href="#submenu5" id='asubmenu5' data-toggle="collapse" aria-expanded="false" 
+                           class="list-group-item list-group-item-action flex-column align-items-start" style="display:none">
+                            <div class="d-flex w-100 justify-content-start align-items-center">
+                                <span class="menu-collapsed">Best Hospital  </span>
+                                <span class="submenu-icon ml-auto"></span>
+                            </div>
+                        </a>
+                        <input type="hidden" name="hndBestHospitalId" value="" />
+                        <div id='submenu5' class="collapse sidebar-submenu" style="display:none">
+                            <ul style="margin:0px; padding:0px;">
+
+                                <li class="list-group-item list-group-item-action text-black">
+                                    <a onclick="updateBestHospital()">Best Hospitals in India</a>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </ul>
+                </div>
+            </div>
+            <div class="col-sm-8 col-md-9 col-xs-12" id="divHospitalList" >
+                @Html.Partial("~/Views/Hospitals/_HospitalListPartial.cshtml", Model)
+            </div>
+
+        </div>
+
+    </div>
+    </div>
+
+</section>
+
+

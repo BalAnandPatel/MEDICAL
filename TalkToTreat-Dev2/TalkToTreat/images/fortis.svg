@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 26.0.3, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 129 60" style="enable-background:new 0 0 129 60;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:none;}
+	.st1{fill:url(#fortis_00000159458040450184568030000014260947497340623000_);}
+</style>
+<pattern  y="54" width="243" height="90" patternUnits="userSpaceOnUse" id="pattern" viewBox="0 -90 243 90" style="overflow:visible;">
+	<g>
+		<rect y="-90" class="st0" width="243" height="90"/>
+		
+			<image style="overflow:visible;enable-background:new    ;" width="243" height="90" xlink:href="ECA9EDB1.png"  transform="matrix(1 0 0 -1 0 0)">
+		</image>
+	</g>
+</pattern>
+<pattern  id="fortis_00000080919220228170365650000008656275000756493994_" xlink:href="#pattern" patternTransform="matrix(0.5309 0 0 -0.5333 -3701.6667 -10248.1338)">
+</pattern>
+<rect id="fortis" y="6" style="fill:url(#fortis_00000080919220228170365650000008656275000756493994_);" width="129" height="48"/>
+</svg>

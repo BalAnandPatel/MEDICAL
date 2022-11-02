@@ -1,0 +1,45 @@
+﻿@model List<TalkToTreat.Models.Doctors>
+
+@if (Model != null && Model.Count() > 0)
+{
+    foreach (var doctor in Model)
+    {
+
+        <div class="row doctor-inner-box">
+            <div class="col-md-3 text-center">
+                @if (!string.IsNullOrEmpty(doctor.Image))
+                {
+                    doctor.Image = doctor.Image.Replace("http://talktotreat.roovea.com/Assets/images/Doctors/", "");
+                }
+
+                <img src="~/Assets/images/Doctors/@doctor.Image" 
+                     onerror="this.src ='@(doctor.Gender? "/images/Doctor-avatart-list.png" :"/images/Doctor-avatart-listF.png")'" 
+                     alt="doctor-image" class="img-fluid w-100 docimg">
+
+
+            </div>
+            <div class="col-md-9">
+                <h4 class="mb-0"><a href="/Doctors/ConsultOnline/@doctor.Id">@doctor.Name</a></h4>
+                <p>@doctor.Department</p>
+
+                <span class="secondary-heading-md margin5-bottom uppercase">
+                    <img height="20" width="14" src="~/images/hospital-avtar.svg">
+                    <a href="/Hospitals/Detail/@doctor.HospitalId" title="@doctor.Hospital" alt="@doctor.Hospital"> @doctor.Hospital</a>
+                </span>
+
+                <p class="desig"><img height="20" width="14" src="/images/year.svg">  @doctor.Designation, @doctor.YearsofExp years of Experience</p>
+                <p class="max-lines">
+                    @doctor.Description
+                </p>
+                <a href="/Doctors/Detail/@doctor.Id" class="btn btn-success succes-btn">View Profile</a>
+                <a href="/Doctors/ConsultOnline/@doctor.Id" class="btn btn-warning ornagebutton">Book Appointment</a>
+
+            </div>
+        </div>
+
+    }
+}
+else
+{
+    <span style="font-size: 20px; margin-top: 15px; display:flex;">No record found</span>
+}

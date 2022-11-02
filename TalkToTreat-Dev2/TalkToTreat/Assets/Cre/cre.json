@@ -1,0 +1,18 @@
+{
+  "web": {
+    "client_id": "101092104183-pn490q2ep4bm2v3u0qq9ipm8429p531e.apps.googleusercontent.com",
+    "project_id": "test-calendar-361916",
+    "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+    "token_uri": "https://oauth2.googleapis.com/token",
+    "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+    "client_secret": "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",
+    "redirect_uris": [
+      "http://localhost:5297",
+      "http://127.0.0.1/authorize/",
+      "http://localhost/authorize/"
+    ],
+    "javascript_origins": [
+      "http://localhost:5297"
+    ]
+  }
+}

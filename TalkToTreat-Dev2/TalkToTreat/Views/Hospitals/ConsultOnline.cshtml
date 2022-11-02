@@ -1,0 +1,132 @@
+﻿@model  TalkToTreat.Models.Doctors
+@using TalkToTreat.Models;
+@using System.Linq;
+@using System;
+@using System.Collections.Generic;
+@{
+    ViewBag.Title = "Doctors";
+    var appointmentmodel = new TalkToTreat.Models.Appointment();
+    appointmentmodel.DoctorId = Model.Id;
+    if (Model.YearsofExp == null || Model.YearsofExp == 0)
+    {
+        Model.YearsofExp= 1;
+    }
+
+    var AllCities = (List<Locations>)ViewBag.AllCities;
+    var countries = AllCities.GroupBy(d => new { d.CountryId, d.CountryName }).Select(m => new { m.Key.CountryId, m.Key.CountryName });
+}
+
+
+<section class="banner-area doctor-banner">
+    <div class="container">
+        <div class="row ">
+
+            <div class="col-md-6 text-left">
+                <div class="banner-text">
+                    <h3>Doctor</h3>
+                    <h1>
+                        Best Doctors in India</h3>
+                        <h6>	We provide a wide range of creative services adipisicing elit. Autem maxime rem modi eaque, voluptate. Beatae officiis neque </h6>
+
+                </div>
+            </div>
+
+
+            <div class="col-md-6 text-left">
+
+            </div>
+
+
+
+        </div>
+
+
+
+    </div>
+    </div>
+</section>
+
+
+<section class="listing-sec doctor-single" style="padding-bottom:0;">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-sm-4 col-md-3 col-xs-12">
+
+                <div class="doctor-img-block-profile">
+
+                    <div class="profile-img-block ">
+                        @if (!string.IsNullOrEmpty(Model.Image))
+                        {
+                            Model.Image = Model.Image.Replace("https://talktotreat.com/Assets/images/Doctors/", "");
+                        }
+
+                        @if (!string.IsNullOrEmpty(Model.Image))
+                        {
+                            <img src="~/Assets/images/Doctors/@Model.Image">
+                        }
+                        else
+                        {
+                            <img src="~/images/Doctor-avatart-list.svg">
+                        }
+                    </div>
+
+
+                    <div class="info-block ">
+                        <h4 class="mb-0">@Model.Name</h4>
+                        <p>@Model.Department</p>
+
+                        <ul class="list-inline mt-4 doctor-social-links">
+                            <li class="list-inline-item"><a href="#"><i class="fa fa-facebook"></i></a></li>
+                            <li class="list-inline-item"><a href="#"><i class="fa fa-twitter"></i></a></li>
+                            <li class="list-inline-item"><a href="#"><i class="fa fa-skype"></i></a></li>
+                            <li class="list-inline-item"><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                            <li class="list-inline-item"><a href="#"><i class="fa fa-pinterest"></i></a></li>
+                        </ul>
+                    </div>
+                </div> 
+            </div>
+            <div class="col-sm-8 col-md-9 col-xs-12">
+
+                <div class="row"> 
+                    <div class="col-lg-12 col-md-12">
+                        <div class="doctor-details mt-4 mt-lg-0">
+
+                            <div class="row doctor-inner-box"> 
+                                <h4 class="mb-0"><a href="/Doctors/Detail/@Model.Id">Introducing to @Model.Name</a></h4>
+                                <p>@Model.Department</p>
+
+                                <span class="secondary-heading-md margin5-bottom uppercase"> <img height="20px" width="20px" src="~/images/hospital-avtar.svg"> <a href="/hospitals/@Model.Hospital" title="@Model.Hospital" alt="@Model.Hospital"> @Model.Hospital</a></span>
+                                <p class="desig">@Model.Designation , @Model.YearsofExp years of Experience</p>
+                            </div>
+
+                            <div class="divider my-4"></div> 
+                            <p>
+                                @Model.Description
+                            </p> 
+
+                            @if (Model.Cost > 0)
+                            {<h5 style="font-weight:bold;">Consultation Fees Rs. @Model.Cost.ToString("0.##")  /-</h5>}
+
+                        </div>
+                    </div>
+                </div> 
+            </div> 
+        </div>
+
+    </div>
+    </div>
+
+</section>
+ 
+<section class="appoint-page-form">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6"></div>
+            @Html.Partial("~/Views/Shared/_ConsolutOnline.cshtml", appointmentmodel)
+        </div>
+    </div> 
+</section>
+
+
+

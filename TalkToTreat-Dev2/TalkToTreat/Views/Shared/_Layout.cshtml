@@ -1,0 +1,799 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+@{
+    string Name = "";
+    string username = "";
+    string userid = "";
+    string user_image = "";
+    if (Session["userdetails"] != null)
+    {
+        string userdetails = null;
+        string[] details = null;
+        userdetails = Session["userdetails"].ToString();
+        details = userdetails.Split('(', '&', '#', '$', ')');
+        Name = details[10];
+        username = details[5];
+        userid = details[0];
+        user_image = details[15];
+    }
+    if (Session["userdoctor"] != null)
+    {
+        string userdetails = null;
+        string[] details = null;
+        userdetails = Session["userdoctor"].ToString();
+        details = userdetails.Split('(', '&', '#', '$', ')');
+        Name = details[10];
+        username = details[5];
+        userid = details[0];
+        user_image = details[15];
+    }
+}
+<head>
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Basic usage demo">
+    <meta name="author" content="David Deutsch">
+    <title>
+        Talk to Treat
+    </title>
+
+
+
+    <!-- Stylesheets -->
+
+
+    <link rel="stylesheet" href="~/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="~/css/talkto-treat.css">
+    <link href="~/AdminAssets/libs/bootstrap-datepicker/bootstrap-datepicker.min.css" rel="stylesheet" />
+
+    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+    <script src="~/js/jquery.min.js"></script>
+
+    <link rel="icon" type="image/x-icon" href="https://talktotreat.com/images/fabicon.png" sizes="32x32">
+
+    <script>
+        function setCookie(cname, cvalue, exdays) {
+            const d = new Date();
+            d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+            let expires = "expires=" + d.toUTCString();
+            document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+        }
+
+        function getCookie(cname) {
+            let name = cname + "=";
+            let decodedCookie = decodeURIComponent(document.cookie);
+            let ca = decodedCookie.split(';');
+            for (let i = 0; i < ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                    return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }
+
+        function Filevalidation() {
+            var fi = document.getElementById('file');
+            // Check if any file is selected.
+            if (fi.files.length > 0) {
+                for (const i = 0; i <= fi.files.length - 1; i++) {
+                    const fsize = fi.files.item(i).size;
+                    const file = Math.round((fsize / 1024));
+                    // The size of the file.
+                    if (file >= 5120) {
+                        alert("File too Big, please select a file less than 5mb");
+                        $('#file').val('');
+                    }
+                }
+            }
+        }
+
+    </script>
+
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&family=Poppins:ital,wght@0,100;0,300;0,400;0,500;1,100;1,200&display=swap" rel="stylesheet">
+
+</head>
+<body>
+
+    <!-- LOADING AREA START ===== -->
+    <div class="loading-area" id="loadingDiv" style="display:none" >
+        <div class="loading-box"></div>
+        <div class="loading-pic">
+            <div class="cssload-wrap">
+                <div class="cssload-container">
+                    <span class="cssload-dots"></span>
+                    <span class="cssload-dots"></span>
+                    <span class="cssload-dots"></span>
+                    <span class="cssload-dots"></span>
+                    <span class="cssload-dots"></span>
+                    <span class="cssload-dots"></span>
+                    <span class="cssload-dots"></span>
+                    <span class="cssload-dots"></span>
+                    <span class="cssload-dots"></span>
+                    <span class="cssload-dots"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- LOADING AREA  END ====== -->
+
+
+
+
+
+    <header id="myHeader">
+        <div class="top-row">
+            <div class="container">
+                <div class="topbar">
+                    <div class="topbar-left">
+                        @if (string.IsNullOrEmpty(Session["userdoctor"] as string))
+                        {
+                            <a class="navbar-brand mr-auto" href="/Home/Index">
+                                <img src="~/images/logo.svg" />
+                            </a>
+                        }
+                        else
+                        { <a class="navbar-brand mr-auto">
+                                <img src="~/images/logo.svg" />
+                            </a>
+                        }
+
+                                <div class="backlayer"></div>
+                        </div>
+                    <div class="topbar-right d-flex">
+                        <div class="call-to-action">
+                            <font class="">Call us for any question</font>
+                            <h4>+91-9560960088</h4>
+                        </div>
+                        <div class="call-to-action email ml-3  ml-lg-4">
+                            <font class="">Talk to our support team</font>
+                            <h4>support@talktotreat.com</h4>
+                        </div>
+
+                        <div class="d-none d-md-block ml-4  ml-lg-5">
+                            @if (string.IsNullOrEmpty(Session["userdoctor"] as string))
+                            {
+                                <a href="/Home/GetQuote" class="btn btn-warning header-ornagebutton">Get Quote</a>
+                            }
+                        </div>
+
+
+                        <div class="d-none d-md-block ml-4  ml-lg-5">
+                            <div id="google_translate_element"></div>
+                        </div>
+
+
+
+                        <div class="d-block d-md-none">
+                            <button type="button" class="navbar-toggler">
+                                <img src="~/images/menu-bar.svg" />
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 col-xs-8">
+                    @if (string.IsNullOrEmpty(Session["userdoctor"] as string))
+                    {
+                        <div class="search-area">
+                            <input type="text" class="searchTerm" id="search_find_new" placeholder="Search by disease, procedure, doctor or hospital">
+                            <button class="search-button"> <img src="~/images/search.svg"> </button>
+                        </div>
+                    }
+                    <div class="medicine-searchbox-dropdown" id="searchDiv" style="display:none">
+                        <div class="style-1" id="Search-By-CityOuter" style="overflow-y:hidden;">
+                            <ul class="force-overflow" id="Item">
+                                <li class="item-row">
+
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="col-md-4 col-xs-4 d-block d-md-none">
+
+                    @if (string.IsNullOrEmpty(Session["userdoctor"] as string))
+                    {
+                        <a href="/Home/GetQuote" class="btn btn-warning header-ornagebutton">Get Quote</a>
+                    }
+                </div>
+
+                <div class="col-md-9 text-right">
+                    <nav class="navbar navbar-expand-sm  navbar-light">
+
+
+                        <ul class="navbar-nav float-right" id="navbarCollapse">
+
+
+                            <li class="nav-item hidden-md">
+                                <a class="nav-link" href="index.html"><img src="~/images/footer-logo.svg" width="150" alt="" class="img-fluid"></a>
+                                <img class="menu-close-bar" src="~/images/menu-close.svg" />
+
+                            </li> 
+                            @if (string.IsNullOrEmpty(Session["userdoctor"] as string))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/Home/Index">Home</a>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link " href="/Doctorslist">Doctors </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/Hospitalslist">Hospitals </a>
+                                </li>
+                                <li class="nav-item dropdown position-static" id="megaMenu">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Treatments
+                                    </a>
+                                    <div class="dropdown-menu rounded-0 bg-light w-100 border-0 m-0 p-0 shadow-sm" aria-labelledby=".navbar-brand img">
+                                        @{ Html.RenderAction("MegaMenu", "Treatment"); }
+                                    </div>
+                                </li>
+                            }
+
+                            @if (Session["userdetails"] != null)
+                            {
+                                <li class="dropdown notification-list nav-item">
+                                    <a class="nav-link dropdown-toggle nav-user mr-0 waves-effect waves-light" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                                        <i class="fe-user"></i>
+                                        <span class="pro-user-name ml-1">
+                                            @Name <i class="mdi mdi-chevron-down"></i>
+                                        </span>
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-right profile-dropdown text-left">
+                                        <!-- item-->
+                                        <div class="dropdown-header noti-title">
+                                            <a href="~/User/Index" class="text-overflow m-0">
+                                                <i class="fe-info"></i>
+                                                <span>Profile</span>
+                                            </a>
+                                        </div>
+                                        <div class="dropdown-divider"></div>
+                                        <!-- item-->
+                                        <div class="dropdown-header">
+                                            <a href="~/User/Healthwallet" class="text-overflow m-0">
+                                                <i class="fe-file"></i>
+                                                <span>Health Wallet</span>
+                                            </a>
+                                        </div>
+                                        <div class="dropdown-divider"></div>
+                                        <div class="dropdown-header">
+                                            <a href="~/User/AppointmentList" class="text-overflow m-0">
+                                                <i class="fe-inbox"></i>
+                                                <span>Appointment</span>
+                                            </a>
+                                        </div>
+                                        <div class="dropdown-divider"></div>
+                                        <!-- item-->
+                                        <div class="dropdown-header">
+                                            <a href="~/Login/Logout" class="text-overflow m-0">
+                                                <i class="fe-log-out"></i>
+                                                <span>Logout</span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </li>
+
+                            }
+                            else if (Session["userdoctor"] != null)
+                            {
+
+                                var doctorDetails = Session["userdoctor"].ToString();
+                                var details = doctorDetails.Split('(', '&', '#', '$', ')');
+                                string doctorId = details[0];
+
+                                <li class="dropdown notification-list nav-item">
+                                    <a class="nav-link dropdown-toggle nav-user mr-0 waves-effect waves-light" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                                        <i class="fe-user"></i>
+                                        <span class="pro-user-name ml-1">
+                                            @Name <i class="mdi mdi-chevron-down"></i>
+                                        </span>
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-right profile-dropdown text-left">
+                                        <div class="dropdown-header noti-title">
+                                            <a href="~/Doctors/Detail/@doctorId" class="text-overflow m-0">
+                                                <i class="fe-inbox"></i>
+                                                <span>Profile</span>
+                                            </a>
+                                        </div>
+                                        <div class="dropdown-divider"></div>
+
+                                        <div class="dropdown-header noti-title">
+                                            <a href="~/Doctors/AppointmentList" class="text-overflow m-0">
+                                                <i class="fe-inbox"></i>
+                                                <span>Appointment</span>
+                                            </a>
+                                        </div>
+                                        <div class="dropdown-divider"></div>
+
+                                        <div class="dropdown-header">
+                                            <a href="~/Login/Logout" class="text-overflow m-0">
+                                                <i class="fe-log-out"></i>
+                                                <span>Logout</span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </li>
+                            }
+                            else
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/Home/Register">Register </a>
+                                </li>
+
+                                <li class="nav-item dropdown position-static" id="dropmenu">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navLogin" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Login </a>
+
+                                    <div class="dropdown-menu rounded-0 bg-light border-0 m-0 p-0 shadow-sm">
+                                        <ul class="menu-n">
+                                            <li><a href="/Home/login">Login As User</a></li>
+                                            <li><a href="/Home/loginDoctor">Login As Doctor</a></li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            }
+
+
+                            <li class="nav-item dropdown position-static" id="dropmenu">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Help </a>
+
+                                <div class="dropdown-menu rounded-0 bg-light border-0 m-0 p-0 shadow-sm">
+                                    <ul class="menu-n">
+                                        <li><a href="/Home/About">About Us</a></li>
+                                        <li><a href="/Home/service">Services</a></li>
+                                    </ul>
+                                </div>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    @RenderBody()
+
+    <footer class="footer section gray-bg text-center">
+        <div class="container">
+
+
+
+
+            <div class="footer-btm py-4">
+
+                <div class="row">
+
+                    <div class="col-md-12">
+                        <div class="text-center">
+                            <ul class="foot-menu">
+                                <li><a href="~/Pages/TermsAndConditions">Terms &amp; Conditions</a></li>
+                                <li><a href="~/Pages/PrivacyPolicy">Privacy Policy</a></li>
+                                <li><a href="~/Pages/CompanySupport">Company Support </a></li>
+                                <li><a href="~/Pages/FAQuestions">FAQ</a></li>
+                                <li><a href="~/Pages/CompanyLicence">Company Licence</a></li>
+                            </ul>
+
+
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="d-md-flex flex-md-wrap justify-content-center align-items-center">
+
+                            <ul class="foot-c">
+                                <li><a href="mailto:support@talktotreat.com"><i class="fa fa-envelope"></i> support@talktotreat.com</a></li>
+                                <li><a href="tel:+91-9560960088"><i class="fa fa-phone"></i> +91-9560960088</a></li>
+                            </ul>
+
+                            <div class="social-bx">
+                                <ul class="list-inline footer-socials">
+                                    <li class="list-inline-item"><a href="https://www.linkedin.com/company/talktotreat"><i class="fa fa-linkedin talktotreat-socialicon"></i></a></li>
+                                    <li class="list-inline-item"><a href="https://www.facebook.com/Talk-To-Treat-100223699397576"><i class="fa fa-facebook talktotreat-socialicon"></i></a></li>
+                                    <li class="list-inline-item"><a href="https://twitter.com/Talk2Treat"><i class="fa fa-twitter talktotreat-socialicon"></i></a></li>
+                                    <li class="list-inline-item"><a href="https://www.instagram.com/talk2treat"><i class="fa fa-instagram talktotreat-socialicon"></i></a></li>
+                                </ul>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="copyright">
+                            © Copyright Reserved to <a href="#" target="_blank"><span class="text-color">Talk to Treat</span></a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
+<!-- javascript -->
+
+<script src="~/js/owl.carousel.js"></script>
+<script src="~/js/bootstrap.min.js"></script>
+
+<script src="~/AdminAssets/libs/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+<script>
+    $(document).ready(function () {
+
+        $(".owl-cities").owlCarousel({
+            pagination: false,
+            margin: 10,
+            nav: true,
+            loop: false,
+            responsive: {
+                0: {
+                    items: 1
+                },
+                600: {
+                    items: 2
+                },
+                767: {
+                    items: 3
+                },
+                1000: {
+                    items: 4
+                }
+            }
+
+        });
+
+        $("#owl-top-hospitals").owlCarousel({
+            pagination: true,
+            margin: 10,
+            nav: true,
+            loop: true,
+
+            responsive: {
+                0: {
+                    items: 1
+                },
+                600: {
+                    items: 2
+                },
+                991: {
+                    items: 3
+                },
+                1200: {
+                    items: 5
+                }
+            }
+        });
+
+        $("#owl-treatment").owlCarousel({
+            pagination: false,
+            margin: 10,
+            nav: true,
+            loop: true,
+            responsive: {
+                0: {
+                    items: 1
+                },
+                600: {
+                    items: 1
+                },
+                767: {
+                    items: 2
+                },
+                991: {
+                    items: 2
+                },
+                1200: {
+                    items: 3
+                }
+            }
+        });
+
+        $("#owl-servicesne").owlCarousel({
+            pagination: false,
+            margin: 10,
+            nav: true,
+            loop: true,
+            responsive: {
+                0: {
+                    items: 1
+                },
+                600: {
+                    items: 2
+                },
+                991: {
+                    items: 3
+                },
+                1200: {
+                    items: 4,
+                    loop: false
+                }
+            }
+        });
+
+        $("#owl-partners").owlCarousel({
+            pagination: false,
+            margin: 10,
+            nav: true,
+            loop: true,
+            responsive: {
+                0: {
+                    items: 1
+                },
+                600: {
+                    items: 2
+                },
+                767: {
+                    items: 3
+                },
+                991: {
+                    items: 4
+                },
+                1200: {
+                    items: 6,
+
+                }
+            }
+        });
+
+
+        $("#owl-how").owlCarousel({
+            pagination: false,
+            margin: 10,
+            nav: true,
+            loop: true,
+            responsive: {
+                0: {
+                    items: 1
+                },
+                600: {
+                    items: 1
+                },
+                767: {
+                    items: 0
+                },
+                991: {
+                    items: 0
+                },
+                1200: {
+                    items: 0,
+
+                }
+            }
+        });
+
+
+
+
+        $("#owl-demo").owlCarousel({
+            pagination: false,
+            margin: 10,
+            nav: true,
+            loop: true,
+            responsive: {
+                0: {
+                    items: 1
+                },
+                600: {
+                    items: 2
+                },
+                991: {
+                    items: 4
+                },
+                1200: {
+                    items: 5,
+                    loop: false
+                }
+            }
+
+        });
+        $("#owl-demo2").owlCarousel({
+            pagination: false,
+            margin: 10,
+            nav: true,
+            loop: true,
+            responsive: {
+                    0: {
+                        items: 1
+                    },
+                    600: {
+                        items: 2
+                    },
+                    991: {
+                        items: 3
+                    },
+                    1200: {
+                        items: 4,
+
+                    }
+                }
+        });
+        $("#owl-demo3").owlCarousel({
+            pagination: false,
+            margin: 10,
+            nav: true,
+            loop: true,
+            responsive: {
+                0: {
+                    items: 1
+                },
+                767: {
+                    items: 2
+                },
+                991: {
+                    items: 2
+                },
+                1200: {
+                    items: 3,
+
+                }
+            }
+        });
+    });
+
+    $(document).ready(function () {
+        var owlh = $('#cities_India');
+        $('#cities_India .item a').click(function () {
+            owlh.trigger('next.owl.carousel');
+        });
+        $('#cities_India .item a').click(function () {
+            owlh.trigger('prev.owl.carousel');
+        });
+    });
+
+    $(document).ready(function () {
+        $(".navbar-toggler").click(function () {
+            $(".navbar-nav").toggle();
+            $(".backlayer").css("display", "block")
+
+        });
+    });
+
+    $(document).ready(function () {
+        $(".menu-close-bar").click(function () {
+            $(".backlayer").css("display", "none")
+            $(".navbar-nav").css("display", "none")
+        });
+    });
+</script>
+
+<script>
+    $(document).ready(function () {
+        $("#SubscribeBTN").click(function () {
+            var SubscribeEmailId = $('#SubscribeEmailId').val();
+            $.ajax({
+                type: 'POST',
+                data: { emailId: SubscribeEmailId },
+                url: '/Register/Subscribe',
+                success: function (result) {
+                    alert("you are successfully Subscribed !")
+                },
+                error: function (request, status, error) {
+                    alert(error);
+                }
+            });
+        });
+    });
+</script>
+
+<script>
+    $(document).ready(function () {
+
+        $("#search_find_new").keyup(function () {
+            $("#Item").empty();
+            $("#searchDiv").css("display", "none");
+            var search_find_new = $("#search_find_new").val();
+            if (search_find_new.length < 2) {
+                return;
+            }
+            $.ajax({
+                type: 'POST',
+                data: { text: search_find_new },
+                url: '/Home/GetItems',
+                timeout: 4000,
+                success: function (result) {
+                    //alert(result);
+
+                    console.log(result);
+
+                    $("#Item").empty();
+                    $("#searchDiv").css("display", "block");
+                    var domainurl = window.location.origin;
+                    $.each(result, function (i, state) {
+                        $("#Item").append('<li class= "item-row"><div class="row"><div class="col-md-12"><ul><li><span> <a href="' + domainurl + '/' + state.Text + '">' + state.Value + '</a> </span></li></ul> </div> </div > </li >');
+                    });
+                    if (result.length == 0) {
+                        $("#Item").append('<li class= "item-row" ><div class="row"><div class="col-md-12"><ul><li><span> No result found.</span></li></ul> </div> </div > </li >');
+                    }
+
+                },
+                error: function (request, status, error) {
+                    //alert(request.responseText);
+                }
+            });
+        });
+    });
+    $(document).click(function () {
+        $("#Item").empty();
+        $("#searchDiv").css("display", "none");
+    });
+</script>
+
+<script>
+    window.onscroll = function () { myFunction() };
+
+    var header = document.getElementById("myHeader");
+    var sticky = header.offsetTop;
+
+    function myFunction() {
+        if (window.pageYOffset > sticky) {
+            header.classList.add("sticky");
+        } else {
+            header.classList.remove("sticky");
+        }
+    }
+</script>
+
+<script>
+    // Hide submenus
+    $('#body-row .collapse').collapse('hide');
+
+    // Collapse/Expand icon
+    $('#collapse-icon').addClass('fa-angle-double-left');
+
+    // Collapse click
+    $('[data-toggle=sidebar-colapse]').click(function () {
+        SidebarCollapse();
+    });
+
+    function SidebarCollapse() {
+        $('.menu-collapsed').toggleClass('d-none');
+        $('.sidebar-submenu').toggleClass('d-none');
+        $('.submenu-icon').toggleClass('d-none');
+        $('#sidebar-container').toggleClass('sidebar-expanded sidebar-collapsed');
+
+        // Treating d-flex/d-none on separators with title
+        var SeparatorTitle = $('.sidebar-separator-title');
+        if (SeparatorTitle.hasClass('d-flex')) {
+            SeparatorTitle.removeClass('d-flex');
+        } else {
+            SeparatorTitle.addClass('d-flex');
+        }
+
+        // Collapse/Expand icon
+        $('#collapse-icon').toggleClass('fa-angle-double-left fa-angle-double-right');
+    }
+</script>
+
+
+<script type="text/javascript">
+    function googleTranslateElementInit() {
+        new google.translate.TranslateElement({ pageLanguage: 'en' }, 'google_translate_element');
+    }
+</script>
+
+<script>
+    //var $loading = $('#loadingDiv').hide();
+    //$(document)
+    //    .ajaxStart(function () {
+    //        $loading.show();
+    //    })
+    //    .ajaxStop(function () {
+    //        $loading.hide();
+    //    });
+</script>

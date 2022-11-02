@@ -1,0 +1,70 @@
+﻿@model List<TalkToTreat.Models.Services>
+@{
+    ViewBag.Title = "Service";
+}
+
+<script>
+    $(document).ready(function () {
+        //alert('');
+        var ele = $(document).scrollTop().valueOf();
+        $("html").scrollTop(parseInt(ele - 220));
+    });
+
+</script>
+
+
+<section class="banner-area doctor-banner services-banner">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-left">
+                <div class="banner-text">
+                    
+                    <h1>
+                        Latest and High technology services
+                    </h1>
+                    <h6>	We provide a wide range of creative services  </h6>
+
+                </div>
+            </div>
+            <div class="col-md-6 text-left">
+
+            </div>
+        </div>
+    </div>
+</section>
+@foreach (var service in Model)
+{
+    <section class="listing-sec hospital" id="@service.Id.ToString()">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-sm-12 col-md-12 col-xs-12">
+
+                    <div class="row doctor-inner-box services-box">
+                        <div class="col-md-5 text-center">
+                            <img src="~/Assets/images/services/@Path.GetFileName(service.Image)" />
+                            @*<img src="~/Assets/images/services/@service.Image.Replace("https://talktotreat.com/images/", "")" />*@
+                        </div>
+                        <div class="col-md-7">
+                            <span>@service.Name </span>
+                            <h3>@service.Name </h3>
+                            <p class="">  @Html.Raw(service.Description) </p>
+                            <a href="/Home/Register" class="btn btn-success succes-btn">Book Appointment</a>
+                        </div>
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div>
+    </section>
+}
+
+
+<script>
+    $(window).on('load', function () {
+        var ele = $(document).scrollTop().valueOf();
+        $("html").scrollTop(parseInt(ele - 120));
+    });
+</script>

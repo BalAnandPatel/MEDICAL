@@ -1,0 +1,742 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+@{
+    string Name = "";
+    string username = "";
+    string userid = "";
+    string user_image = "";
+    if (Session["userdetails"] != null)
+    {
+        string userdetails = null;
+        string[] details = null;
+        userdetails = Session["userdetails"].ToString();
+        details = userdetails.Split('(', '&', '#', '$', ')');
+        Name = details[10];
+        username = details[5];
+        userid = details[0];
+        user_image = details[15];
+    }
+}
+<head>
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Basic usage demo">
+    <meta name="author" content="David Deutsch">
+    <title>
+        Talk to Treat
+    </title>
+
+    <!-- Stylesheets -->
+
+    <link rel="stylesheet" href="~/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="~/css/talkto-treat.css">
+    <link href="~/AdminAssets/libs/bootstrap-datepicker/bootstrap-datepicker.min.css" rel="stylesheet" />
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+
+    <script src="~/js/jquery.min.js"></script>
+
+
+
+    <script>
+        function setCookie(cname, cvalue, exdays) {
+            const d = new Date();
+            d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+            let expires = "expires=" + d.toUTCString();
+            document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+        }
+
+        function getCookie(cname) {
+            let name = cname + "=";
+            let decodedCookie = decodeURIComponent(document.cookie);
+            let ca = decodedCookie.split(';');
+            for (let i = 0; i < ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                    return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&family=Poppins:ital,wght@0,100;0,300;0,400;0,500;1,100;1,200&display=swap" rel="stylesheet">
+
+</head>
+<body>
+    <header id="myHeader">
+        <div class="top-row">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-2 col-xs-12  ">
+                        <a class="navbar-brand mr-auto" href="/Home/Index"><img src="~/images/logo.svg" /></a>
+                        <button type="button" class="navbar-toggler hidden-md" style="float:right; margin-top:9px;">
+                            <img src="~/images/menu-bar.svg" />
+                        </button>
+                        <div class="backlayer"></div>
+                    </div>
+                    <div class="col-md-2"></div>
+                    <div class="col-md-3 hidden-xs call-to-action">
+                        <font class="dis-none">Call us for any question</font>
+                        <h4>+91-9560960088</h4>
+                    </div>
+                    <div class="col-md-3 hidden-xs call-to-action email">
+                        <font class="dis-none">Talk to our support team</font>
+                        <h4>support@talktotreat.com</h4>
+                    </div>
+                    <div class="col-md-2 hidden-xs "> <a href="/Home/Register" class="btn btn-warning ornagebutton">Get Quote</a> </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 col-xs-8">
+                    <div class="search-area">
+                        <input type="text" class="searchTerm" id="search_find_new" placeholder="Search by disease, procedure, doctor or hospital">
+                        <button class="search-button"> <img src="~/images/search.svg"> </button>
+                    </div>
+
+                    <div class="medicine-searchbox-dropdown" id="searchDiv" style="display:none">
+                        <div class="style-1" id="Search-By-City">
+                            <ul class="force-overflow" id="Item">
+                                <li class="item-row">
+
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    @*<div class="form-group" id="searchDiv">
+                            <div class="col-sm-4">
+                                <ul id="Item">
+                                </ul>
+                            </div>
+                        </div>*@
+                </div>
+                <div class="col-md-4 col-xs-4 hidden-md">
+                    <a href="" class="btn btn-warning ornagebutton">Get Quote</a>
+                </div>
+                <div class="col-md-9 text-right">
+                    <nav class="navbar navbar-expand-sm  navbar-light">
+
+                        <!-- Links -->
+                        <ul class="navbar-nav float-right" id="navbarCollapse">
+
+
+                            <li class="nav-item hidden-md">
+                                <a class="nav-link" href="index.html"><img src="~/images/footer-logo.svg" width="150" alt="" class="img-fluid"></a>
+                                <img class="menu-close-bar" src="~/images/menu-close.svg" />
+
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/Home/Index">Home</a>
+                            </li>
+                            <!-- Dropdown -->
+                            <!-- <li class="nav-item dropdown">
+        <a class="nav-link " href="/Home/About">About US</a>
+    </li>-->
+                            <li class="nav-item dropdown">
+                                <a class="nav-link " href="/Doctorslist">Doctors </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/Hospitalslist">Hospitals </a>
+                            </li>
+                            <!-- <li class="nav-item">
+         <a class="nav-link" href="/Home/service">Services </a>
+     </li>-->
+
+                            <li class="nav-item dropdown position-static" id="megaMenu">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Treatments
+                                </a>
+                                <div class="dropdown-menu rounded-0 bg-light w-100 border-0 m-0 p-0 shadow-sm" aria-labelledby=".navbar-brand img">
+                                    @{ Html.RenderAction("MegaMenu", "Treatment"); }
+                                </div>
+                            </li>
+
+                            @if (Session["userdetails"] != null)
+                            {
+                                <li class="dropdown notification-list nav-item">
+                                    <a class="nav-link dropdown-toggle nav-user mr-0 waves-effect waves-light" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                                        <i class="fe-user"></i>
+                                        <span class="pro-user-name ml-1">
+                                            @Name <i class="mdi mdi-chevron-down"></i>
+                                        </span>
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-right profile-dropdown text-left">
+                                        <!-- item-->
+                                        <div class="dropdown-header noti-title">
+                                            <a href="~/User/Index" class="text-overflow m-0">
+                                                <i class="fe-info"></i>
+                                                <span>Profile</span>
+                                            </a>
+                                        </div>
+                                        <div class="dropdown-divider"></div>
+                                        <!-- item-->
+                                        <div class="dropdown-header">
+                                            <a href="~/User/Healthwallet" class="text-overflow m-0">
+                                                <i class="fe-file"></i>
+                                                <span>Health Wallet</span>
+                                            </a>
+                                        </div>
+                                        <div class="dropdown-divider"></div>
+                                        <div class="dropdown-header">
+                                            <a href="~/User/AppointmentList" class="text-overflow m-0">
+                                                <i class="fe-inbox"></i>
+                                                <span>Appointment</span>
+                                            </a>
+                                        </div>
+                                        <div class="dropdown-divider"></div>
+                                        <!-- item-->
+                                        <div class="dropdown-header">
+                                            <a href="~/Login/Logout" class="text-overflow m-0">
+                                                <i class="fe-log-out"></i>
+                                                <span>Logout</span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </li>
+                            }
+                            else
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/Home/Register">Register </a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/Home/login">Login </a>
+                                </li>
+                                <li class="nav-item dropdown position-static" id="dropmenu">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Help </a>
+
+                                    <div class="dropdown-menu rounded-0 bg-light border-0 m-0 p-0 shadow-sm">
+                                        <ul class="menu-n">
+                                            <li><a href="/Home/About">About Us</a></li>
+                                            <li><a href="/Home/service">Services</a></li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            }
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    @RenderBody()
+
+    <footer class="footer section gray-bg text-center">
+        <div class="container">
+            @* <div class="row">
+            <div class="col-lg-4 mr-auto col-xs-12">
+                <div class="widget mb-5 mb-lg-0">
+                    <div class="logo mb-4">
+                        <img src="~/images/footer-logo.svg" alt="" class="img-fluid">
+                    </div>
+                    <p>Tempora dolorem voluptatum nam vero assumenda voluptate, facilis ad eos obcaecati tenetur veritatis eveniet distinctio possimus.</p>
+
+
+                </div>
+            </div>
+
+            <div class="col-lg-2 col-md-6 col-xs-6">
+                <div class="widget mb-5 mb-lg-0">
+                    <h4 class="text-capitalize mb-3">Department</h4>
+                    <div class="divider mb-4 footer-menu-header"></div>
+
+                    <ul class="list-unstyled footer-menu lh-35">
+                        <li><a href="~/Pages/Surgery">Surgery </a></li>
+                        <li><a href="~/Pages/WomenHealth">Wome's Health</a></li>
+                        <li><a href="~/Pages/Radiology">Radiology</a></li>
+                        <li><a href="~/Pages/Cardioc">Cardioc</a></li>
+                        <li><a href="~/Pages/Medicine">Medicine</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-lg-2 col-md-6 col-xs-6">
+                <div class="widget mb-5 mb-lg-0">
+                    <h4 class="text-capitalize mb-3">Support</h4>
+                    <div class="divider mb-4 footer-menu-header"></div>
+
+                    <ul class="list-unstyled footer-menu lh-35">
+                        <li><a href="~/Pages/TermsAndConditions">Terms &amp; Conditions</a></li>
+                        <li><a href="~/Pages/PrivacyPolicy">Privacy Policy</a></li>
+                        <li><a href="~/Pages/CompanySupport">Company Support </a></li>
+                        <li><a href="~/Pages/FAQuestions">FAQuestions</a></li>
+                        <li><a href="~/Pages/CompanyLicence">Company Licence</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-6 col-xs-12">
+                <div class="widget widget-contact mb-5 mb-lg-0">
+                    <h4 class="text-capitalize mb-3">Get in Touch</h4>
+                    <div class="divider mb-4 footer-menu-header"></div>
+
+                    <div class="footer-contact-block mb-4">
+                        <div class="icon d-flex align-items-center">
+                            <i class="fa fa-envelope mr-3"></i>
+                            <span class="h6 mb-0">Support Available for 24/7</span>
+                        </div>
+                        <h4 class="mt-2"><a href="tel:+23-345-67890">Support@talktotreat.com</a></h4>
+                    </div>
+
+                    <div class="footer-contact-block">
+                        <div class="icon d-flex align-items-center">
+                            <i class="fa fa-support mr-3"></i>
+                            <span class="h6 mb-0">Mon to Fri : 08:30 - 18:00</span>
+                        </div>
+                        <h4 class="mt-2"><a href="tel:+91-9560960088">+91-9560960088</a></h4>
+                    </div>
+                </div>
+            </div>
+        </div>*@
+
+            
+
+            <div class="footer-btm py-4 mt-5">
+
+
+                <div class="row">
+
+                    
+                    <div class="col-md-12">
+                        <div class="row">
+                            <ul class="foot-menu">
+                                <li><a href="~/Pages/TermsAndConditions">Terms &amp; Conditions</a></li>
+                                <li><a href="~/Pages/PrivacyPolicy">Privacy Policy</a></li>
+                                <li><a href="~/Pages/CompanySupport">Company Support </a></li>
+                                <li><a href="~/Pages/FAQuestions">FAQ</a></li>
+                                <li><a href="~/Pages/CompanyLicence">Company Licence</a></li>
+                            </ul>
+
+
+                        </div>
+                    </div>
+
+                   
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-3"></div>
+                            <ul class="foot-c col-md-5">
+                                <li><a href="mailto:Support@talktotreat.com"><i class="fa fa-envelope"></i> Support@talktotreat.com</a></li>
+                                <li><a href="tel:+91-9560960088"><i class="fa fa-phone"></i> +91-9560960088</a></li>
+                            </ul>
+
+                            <div class="social-bx col-md-2">
+                                <ul class="list-inline footer-socials">
+                                    <li class="list-inline-item"><a href="https://www.linkedin.com/company/talktotreat"><i class="fa fa-linkedin talktotreat-socialicon"></i></a></li>
+                                    <li class="list-inline-item"><a href="https://www.facebook.com/Talk-To-Treat-100223699397576"><i class="fa fa-facebook talktotreat-socialicon"></i></a></li>
+                                    <li class="list-inline-item"><a href="https://twitter.com/Talk2Treat"><i class="fa fa-twitter talktotreat-socialicon"></i></a></li>
+                                    <li class="list-inline-item"><a href="https://www.instagram.com/talk2treat"><i class="fa fa-instagram talktotreat-socialicon"></i></a></li>
+                                </ul>
+
+                            </div>
+                            <div class="col-md-2"></div>
+                        </div>
+                    </div>
+                   
+
+                     
+                        <div class="col-md-12">
+                            <div class="copyright">
+                                © Copyright Reserved to <a href="#" target="_blank"><span class="text-color">Talk to Treat</span></a>
+                            </div>
+                            </div>
+                    
+
+
+
+                </div>
+
+
+                @*<div class="row align-items-center justify-content-between">
+            <div class="col-lg-6">
+                <div class="copyright">
+                    © Copyright Reserved to <span class="text-color">Talk to Treat</span> by <a href="https://Roovea.com/" target="_blank">Roovea</a>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="subscribe-form text-lg-right mt-5 mt-lg-0">
+                    <form action="#" class="subscribe">
+                        <input type="text" class="form-control" id="SubscribeEmailId" Name="SubscribeEmailId" placeholder="Your Email address">
+                        <a href="#" id="SubscribeBTN" class="btn btn-main-2 btn-round-full">Subscribe</a>
+                    </form>
+                </div>
+                </div>
+                    </div>*@
+
+                <div class="row">
+                    <div class="col-lg-4">
+                        <a class="backtop js-scroll-trigger reveal" href="#top">
+                            <i class="icofont-long-arrow-up"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+            </footer>
+
+
+        </body>
+        </html>
+        <!-- javascript -->
+
+        <script src="~/js/owl.carousel.js"></script>
+        <script src="~/js/bootstrap.min.js"></script>
+
+        <script src="~/AdminAssets/libs/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+        <script>
+            $(document).ready(function ()
+            {
+
+                $(".owl-cities").owlCarousel({
+                    pagination: false,
+                    margin: 10,
+                    nav: true,
+                    loop: false,
+                    responsive: {
+                        0: {
+                            items: 1
+                        },
+                        600: {
+                            items: 3
+                        },
+                        1000: {
+                            items: 4
+                        }
+                    }
+
+                });
+
+
+
+                $("#owl-top-hospitals").owlCarousel({
+                    pagination: true,
+                    margin: 10,
+                    nav: true,
+                    loop: true,
+
+                    responsive: {
+                        0: {
+                            items: 2
+                        },
+                        600: {
+                            items: 3
+                        },
+                        1000: {
+                            items: 5
+                        }
+                    }
+                });
+
+
+                $("#owl-treatment").owlCarousel({
+                    pagination: false,
+                    margin: 10,
+                    nav: true,
+                    loop: true,
+                    responsive: {
+                        0: {
+                            items: 1
+                        },
+                        600: {
+                            items: 3
+                        },
+                        1000: {
+                            items: 4
+                        }
+                    }
+                });
+
+               
+
+
+                    $("#owl-servicesne").owlCarousel({
+                        pagination: false,
+                        margin: 10,
+                        nav: true,
+                        loop: true,
+                        responsive: {
+                            0: {
+                                items: 1
+                            },
+                            600: {
+                                items: 2
+
+                            },
+                            1000: {
+                                items: 4,
+                                loop: false,
+                            }
+                        }
+                    });
+
+
+
+                $("#owl-partners").owlCarousel({
+                    pagination: false,
+                    margin: 10,
+                    nav: true,
+                    loop: true,
+                    responsive: {
+                        0: {
+                            items: 1
+                        },
+                        600: {
+                            items: 2
+                        },
+                        1000: {
+                            items: 6
+                        }
+                    }
+                });
+
+
+                $("#owl-demo").owlCarousel({
+                    pagination: false,
+                    margin: 10,
+                    nav: true,
+                    loop: true,
+                    responsive: {
+                        0: {
+                            items: 1
+                        },
+                        600: {
+                            items: 3
+                        },
+                        1000: {
+                            items: 5
+                        }
+                    }
+
+                });
+                $("#owl-demo2").owlCarousel({
+                    pagination: false,
+                    margin: 10,
+                    nav: true,
+                    loop: true,
+                    responsive: {
+                        0: {
+                            items: 1
+                        },
+                        600: {
+                            items: 3
+                        },
+                        1000: {
+                            items: 4
+                        }
+                    }
+                });
+                $("#owl-demo3").owlCarousel({
+                    pagination: false,
+                    margin: 10,
+                    nav: true,
+                    loop: true,
+                    responsive: {
+                        0: {
+                            items: 1
+                        },
+                        768: {
+                            items: 2
+                        },
+                        1000: {
+                            items: 3
+                        }
+                    }
+                });
+
+                //$("#owl-demo4").owlCarousel({
+                //    pagination: false,
+                //    margin: 10,
+                //    nav: true,
+                //    loop: true,
+                //    responsive: {
+                //        0: {
+                //            items: 2
+                //        },
+                //        600: {
+                //            items: 2
+                //        },
+                //        1000: {
+                //            items: 2
+                //        }
+                //    }
+                //});
+
+
+            });
+
+
+            $(document).ready(function () {
+                    var owlh = $('#cities_India');
+                    $('#cities_India .item a').click(function () {
+                        owlh.trigger('next.owl.carousel');
+                    });
+                    $('#cities_India .item a').click(function () {
+                        owlh.trigger('prev.owl.carousel');
+                    });
+
+            })
+
+             
+ 
+
+            $(document).ready(function ()
+            {
+                $(".navbar-toggler").click(function ()
+                {
+                    $(".navbar-nav").toggle();
+
+                    $(".backlayer").css("display", "block")
+
+                });
+            });
+
+            $(document).ready(function ()
+            {
+                $(".menu-close-bar").click(function ()
+                {
+
+                    $(".backlayer").css("display", "none")
+                    $(".navbar-nav").css("display", "none")
+
+
+                });
+            });
+        </script>
+
+
+        <script>
+            $(document).ready(function ()
+            {
+                $("#SubscribeBTN").click(function ()
+                {
+                    var SubscribeEmailId = $('#SubscribeEmailId').val();
+                    $.ajax({
+                        type: 'POST',
+                        data: { emailId: SubscribeEmailId },
+                        url: '/Register/Subscribe',
+                        success: function (result)
+                        {
+                            alert("you are successfully Subscribed !")
+                        },
+                        error: function (request, status, error)
+                        {
+                            alert(error);
+                        }
+                    });
+                });
+            });
+        </script>
+
+
+
+        <script>
+            $(document).ready(function ()
+            {
+
+                $("#search_find_new").keyup(function ()
+                {
+                    $("#Item").empty();
+                    $("#searchDiv").css("display", "none");
+                    var search_find_new = $("#search_find_new").val();
+                    if (search_find_new.length < 2)
+                    {
+                        return;
+                    }
+                    $.ajax({
+                        type: 'POST',
+                        data: { text: search_find_new },
+                        url: '/Home/GetItems',
+                        timeout: 4000,
+                        success: function (result)
+                        {
+                            $("#Item").empty();
+                            $("#searchDiv").css("display", "block");
+                            var domainurl = window.location.origin;
+                            $.each(result, function (i, state)
+                            {
+
+                                //$("#Item").append('<li><a href="' + domainurl +'/'+state.Text + '">' + state.Value + '</a></li>');
+                                $("#Item").append('<li class= "item-row" ><div class="row"><div class="col-md-12"><ul class><li><span> <a href="' + domainurl + '/' + state.Text + '">' + state.Value + '</a></dd></li></ul> </div> </div > </li >');
+
+                            });
+                        },
+                        error: function (request, status, error)
+                        {
+                            //alert(request.responseText);
+                        }
+                    });
+                });
+            });
+            $(document).click(function ()
+            {
+                $("#Item").empty();
+            });
+        </script>
+
+        <script>
+            window.onscroll = function () { myFunction() };
+
+            var header = document.getElementById("myHeader");
+            var sticky = header.offsetTop;
+
+            function myFunction() {
+                if (window.pageYOffset > sticky) {
+                    header.classList.add("sticky");
+                } else {
+                    header.classList.remove("sticky");
+                }
+            }
+        </script>
+
+ <script>
+     // Hide submenus
+     $('#body-row .collapse').collapse('hide');
+
+     // Collapse/Expand icon
+     $('#collapse-icon').addClass('fa-angle-double-left');
+
+     // Collapse click
+     $('[data-toggle=sidebar-colapse]').click(function () {
+         SidebarCollapse();
+     });
+
+     function SidebarCollapse() {
+         $('.menu-collapsed').toggleClass('d-none');
+         $('.sidebar-submenu').toggleClass('d-none');
+         $('.submenu-icon').toggleClass('d-none');
+         $('#sidebar-container').toggleClass('sidebar-expanded sidebar-collapsed');
+
+         // Treating d-flex/d-none on separators with title
+         var SeparatorTitle = $('.sidebar-separator-title');
+         if (SeparatorTitle.hasClass('d-flex')) {
+             SeparatorTitle.removeClass('d-flex');
+         } else {
+             SeparatorTitle.addClass('d-flex');
+         }
+
+         // Collapse/Expand icon
+         $('#collapse-icon').toggleClass('fa-angle-double-left fa-angle-double-right');
+     }
+ </script>
+
+  

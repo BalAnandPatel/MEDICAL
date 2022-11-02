@@ -1,0 +1,129 @@
+﻿@model  List<TalkToTreat.Models.Doctors>
+@using TalkToTreat.Models;
+@using System.Linq;
+@using System;
+@using System.Collections.Generic;
+@{
+    ViewBag.Title = "Doctors";
+    string country = "";
+    if (string.IsNullOrEmpty(country))
+    {
+        country = "India";
+    }
+    var AllCities = (List<Locations>)ViewBag.AllCities;
+    var TreatmentsList = (List<Treatment>)ViewBag.TreatmentsList;
+    var HospitalsList = (List<Hospital>)ViewBag.Hospitals;
+    var countries = AllCities.GroupBy(d => new { d.CountryId, d.CountryName }).Select(m => new { m.Key.CountryId, m.Key.CountryName });
+    var DistinctCity = AllCities.GroupBy(d => new { d.CityId, d.Name }).Select(m => new { m.Key.CityId, m.Key.Name });
+    if (string.IsNullOrEmpty(country))
+    {
+        AllCities = AllCities.Where(a => a.CountryName == country).ToList();
+        DistinctCity = AllCities.GroupBy(d => new { d.CityId, d.Name }).Select(m => new { m.Key.CityId, m.Key.Name });
+    }
+
+} 
+<script>
+
+    function desktopFilterSearchFunction(label_name) {
+        var inputVariable = label_name + '-Input'; var searchVariable = 'Search-' + label_name; var input, filter, ul, li, a, i; input = document.getElementById(inputVariable); filter = input.value.toUpperCase(); ul = document.getElementById(searchVariable); li = ul.getElementsByTagName("li"); for (i = 0; i < li.length; i++) {
+            a = li[i].getElementsByTagName("a")[0]; if (a.innerHTML.toUpperCase().indexOf(filter) > -1) { li[i].style.display = ""; } else { li[i].style.display = "none"; }
+        }
+    }
+</script>
+
+<section class="section doctors">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-6 text-center">
+                <div class="section-title">
+                    <h3>Best Doctors in @country</h3>
+                    <div class="divider mx-auto my-4"></div>
+                    <p>We provide a wide range of creative services adipisicing elit. Autem maxime rem modi eaque, voluptate. Beatae officiis neque </p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4 col-md-3 col-xs-12"> 
+                <div class="clearfix filter-panel sidebar-main">
+                    <a href="/doctors" style="float:right;">Reset Filter <i class="fa fa-close" aria-hidden="true"></i> </a> <div id="accordion">
+                        <h3 class="sidebar-heading"> By Country </h3>
+                        <ul id="Search-By-Country">
+                            @foreach (var con in countries)
+                            {
+                                <li> <a href="/doctorslist/india">@con.CountryName</a> </li>
+
+                            }
+                        </ul> <h3 class="sidebar-heading"> By City  <a href="/doctorslist/india" style="font-size: 15px;float: right;margin: 6px;"><i class="fa fa-close" aria-hidden="true"></i> </a> </h3> <div class="sidebar-typo"> <input type="text" name="By-City" id="By-City-Input" onkeyup="desktopFilterSearchFunction(this.name)" placeholder="Search By City.." title="Type in a name"> </div>
+                        <ul id="Search-By-City">
+
+                            @foreach (var cit in DistinctCity)
+                            {
+                                <li> <a href="/doctorslist/@country/@cit.Name">@cit.Name</a> </li>
+
+                            }
+                        </ul> <h3 class="sidebar-heading"> By Department  <a href="/doctorslist/india" style="font-size: 15px;float: right;margin: 6px;"><i class="fa fa-close" aria-hidden="true"></i> </a> </h3> <div class="sidebar-typo"> <input type="text" name="By-Department" id="By-Department-Input" onkeyup="desktopFilterSearchFunction(this.name)" placeholder="Search By Department.." title="Type in a name"> </div>
+
+                        <ul id="Search-By-Department">
+
+                            @foreach (var trt in TreatmentsList)
+                            {
+                                <li> <a href="/doctorslist/@trt.Name/@country">@trt.Name</a> </li>
+
+                            }
+                        </ul>
+                        <h3 class="sidebar-heading"> By Hospital  <a href="/doctorslist/india" style="font-size: 15px;float: right;margin: 6px;"><i class="fa fa-close" aria-hidden="true"></i> </a> </h3> <div class="sidebar-typo"> <input type="text" name="By-Hospital" id="By-Hospital-Input" onkeyup="desktopFilterSearchFunction(this.name)" placeholder="Search By Hospital.." title="Type in a name"> </div>
+                        <ul id="Search-By-Hospital">
+                            @foreach (var hos in HospitalsList)
+                            {
+                                <li> <a href="/doctorslist/@country/@hos.Name">@hos.Name</a> </li>
+
+                            }
+                                                                                                                                                                                                          
+                        </ul>
+                    </div> <div class="side-doc-block hide-for-mobile"> <h4 class="sectionSubHeading"> <strong>BEST HOSPITALS</strong> </h4> <ul class="side-doc"> <li><a href="/hospitals/india">Best Hospitals in India</a></li> </ul> </div>
+                </div>
+            </div>
+            <div class="col-sm-8 col-md-9 col-xs-12 shuffle-wrapper portfolio-gallery">
+                @foreach (var doctor in Model)
+                {
+                    if (doctor.YearsofExp == 0)
+                    {
+                        doctor.YearsofExp = 1;
+                    }
+                    <div class="col-lg-12 col-sm-12 col-md-12 mb-4 shuffle-item">
+                        <div class="position-relative doctor-inner-box">
+                            <div class="doctor-profile col-sm-12">
+                                <div class="row col-lg-12 col-sm-12 col-md-12">
+                                    <div class="doctor-img text-right">
+                                        @if (!string.IsNullOrEmpty(doctor.Image))
+                                        {<img src="~/Assets/images/team/@doctor.Image" alt="doctor-image" class="img-fluid w-100">
+                                        }
+                                        else
+                                        {<img src="~/Assets/images/team/1.jfif" alt="doctor-image" class="img-fluid w-100">
+                                        }
+
+                                        <span class="text-right mr-0">
+                                            <p class="mr-4">
+                                                <a href="/Doctors/ConsultOnline/@doctor.Id" class="btn btn-main-2 btn-round-full mt-3">Make an Appoinment</a>
+                                            </p>
+                                            <p class="enquiry-support-text mr-4">At hospital | Tele-consult</p>
+                                        </span>
+                                    </div>
+                                    <div class="content mt-3 ml-4">
+                                        <h4 class="mb-0"><a href="/Doctors/Detail/@doctor.Id">@doctor.Name</a></h4>
+                                        <p>@doctor.Department</p>
+                                        <span class="secondary-heading-md margin5-bottom uppercase"> <img height="20px" width="20px" src="~/Assets/images/hospital.png" /> <a href="/hospitals/@doctor.Hospital" title="@doctor.Hospital" alt="@doctor.Hospital"> @doctor.Hospital</a></span>
+                                        <p>@doctor.Designation , @doctor.YearsofExp years of Experience</p>
+                                        <p class="max-lines">@doctor.Description <a href="/Doctors/Detail/@doctor.Id">View Detail</a></p>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+
+    </div>
+</section>

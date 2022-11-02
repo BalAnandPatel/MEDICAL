@@ -1,0 +1,158 @@
+﻿@model TalkToTreat.Models.Hospital
+@using TalkToTreat.Models;
+@{
+    ViewBag.Title = "Hospital";
+    var TreatmentsList = (List<Treatment>)ViewBag.TreatmentsList;
+    var doctors = (List<Doctors>)ViewBag.Doctors;
+}
+
+<section class="page-title bg-1">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="block text-center">
+                    <span class="text-white">Hospital Details</span>
+                    <h1 class="text-capitalize text-lg">@Model.Name</h1>
+
+                    <ul class="list-inline breadcumb-nav">
+                        <li class="list-inline-item"><a href="index.html" class="text-white">Home</a></li>
+                        <li class="list-inline-item"><span class="text-white">/</span></li>
+                        <li class="list-inline-item"><a href="#" class="text-white-50">Hospital Details</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<section class="section doctor-single">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 col-md-6">
+                <div class="doctor-img-block">
+                    <img src="@Model.Image" alt="" class="img-fluid w-100"> 
+                    <div class="info-block mt-4">
+                        <h4 class="mb-0">@Model.Name</h4> 
+                        <ul class="list-inline mt-4 doctor-social-links">
+                            <li class="list-inline-item"><a href="#"><i class="icofont-facebook"></i></a></li>
+                            <li class="list-inline-item"><a href="#"><i class="icofont-twitter"></i></a></li>
+                            <li class="list-inline-item"><a href="#"><i class="icofont-skype"></i></a></li>
+                            <li class="list-inline-item"><a href="#"><i class="icofont-linkedin"></i></a></li>
+                            <li class="list-inline-item"><a href="#"><i class="icofont-pinterest"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div> 
+            <div class="col-lg-8 col-md-6">
+                <div class="doctor-details mt-4 mt-lg-0">
+                    <h2 class="text-md">Introducing to @Model.Name</h2>
+                    <div class="divider my-4"></div>
+                    <div class="content mt-3 ml-4">
+                        <h4 class="mb-0"><a href="/Hospitals/Detail/@Model.Id">@Model.Name</a></h4>
+                        <p>
+                            <span class="secondary-heading-md margin5-bottom uppercase">
+                                <img height="20px" width="20px" src="~/Assets/images/establishment.png" /> @Model.EstablishmentYesr
+                            </span>
+                        </p> <p>
+                            <span class="secondary-heading-md margin5-bottom uppercase">
+                                <img height="20px" width="20px" src="~/Assets/images/hospital.png" />   @Model.City,@Model.Country 
+                            </span>
+                        </p> <p>
+                            <span class="secondary-heading-md margin5-bottom uppercase">
+                                <img height="20px" width="20px" src="~/Assets/images/beds.png" /> @Model.NumberOfbeds
+                            </span>
+                        </p> <p>
+                            <span class="secondary-heading-md margin5-bottom uppercase">
+                                <img height="20px" width="20px" src="~/Assets/images/certificate.png" /> @Model.Type
+                            </span>
+                        </p>
+                    </div>
+                    <p>@Model.Description</p> 
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section doctor-qualification gray-bg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="section-title">
+                    <h3>Infrastructure</h3>
+                    <div class="divider my-4"></div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="edu-block">
+                    <p>Hospital is build over 10 lakh sq ft of space ,spread over 17 floors and two basements.</p>
+                    <p> It has @Model.NumberOfbeds Critical Care Beds & 22 Operating Theatres</p>
+                    <p> It can accommodates over @(Model.NumberOfbeds + 200)  inpatient beds,</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section doctor-qualification gray-bg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="section-title">
+                    <h3>Team and Specialities</h3>
+                    <div class="divider my-4"></div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="edu-block">
+                    <p> @Model.Name  Hospital is the only hospital in @Model.City,@Model.Country  with a Full Time Specialist System (FTSS) ensuring easy availability and access to dedicated specialists exclusively attached the hospital </p>
+                </div>
+            </div>
+            @foreach (var doc in doctors)
+            {
+                <div class="col-lg-3 col-sm-6 col-md-6 mb-4 shuffle-item shuffle-item--visible" >
+                    <div class="position-relative doctor-inner-box">
+                        <a href="~/Doctors/Detail/@doc.Id">
+                            <div class="content mt-3">
+                                <h4 class="mb-0"> @doc.Name </h4>
+                                <p>@doc.Department</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            }
+
+
+        </div>
+    </div>
+</section>
+<section class="section doctor-qualification gray-bg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="section-title">
+                    <h3>Doctors by Treatment / Department</h3>
+                    <div class="divider my-4"></div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            @foreach (var trt in TreatmentsList)
+            { 
+                <div class="col-lg-3 col-sm-6 col-md-6 mb-2 shuffle-item shuffle-item--visible">
+                    <div class="position-relative doctor-inner-box"> 
+                            <div class="content mt-1">
+                                <a href="/doctorslist/@trt.Name/@Model.Country"> <i class="icofont-check mr-2" style="color: #e12454"></i>@trt.Name</a> 
+                            </div> 
+                    </div>
+                </div>
+            } 
+        </div>
+    </div>
+</section>

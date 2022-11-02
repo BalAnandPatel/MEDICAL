@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 26.0.3, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 110 60" style="enable-background:new 0 0 110 60;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:none;}
+	.st1{fill:url(#jaypee_00000088835163654400785070000007183188976649505426_);}
+</style>
+<pattern  y="53" width="216" height="90" patternUnits="userSpaceOnUse" id="pattern" viewBox="0 -90 216 90" style="overflow:visible;">
+	<g>
+		<rect y="-90" class="st0" width="216" height="90"/>
+		
+			<image style="overflow:visible;enable-background:new    ;" width="216" height="90" xlink:href="4EB8BC30.png"  transform="matrix(1 0 0 -1 0 0)">
+		</image>
+	</g>
+</pattern>
+<pattern  id="jaypee_00000101817504793330173570000009375449912040034986_" xlink:href="#pattern" patternTransform="matrix(0.5093 0 0 -0.5111 -3925.6665 -10057.6895)">
+</pattern>
+<rect id="jaypee" y="7" style="fill:url(#jaypee_00000101817504793330173570000009375449912040034986_);" width="110" height="46"/>
+</svg>

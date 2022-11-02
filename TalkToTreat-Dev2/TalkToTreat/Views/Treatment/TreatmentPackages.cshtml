@@ -1,0 +1,275 @@
+﻿@using TalkToTreat.Models;
+@model List<TalkToTreat.Models.CountryWiseTreatmentPackages>
+
+<!-- <section class="whitebackground cost-to-compare-section">
+    <div class="container">
+        <div class="row justify-content-center">
+
+            <div class="col-lg-4 text-left" style="padding-top: 20px; margin-bottom: 30px;">
+                <h4 style="font-size:20px; font-weight:bold;">
+                    <span class="text-green">
+                        Treatment Costs for
+                        <span id="treatment-name">@ViewBag.SelectedTreatment</span>
+                    </span>
+                </h4>
+            </div>
+            <div class="col-lg-8 text-right" style="margin-bottom:30px;">
+
+                <select id="ddCountry" class="whitedropdown" onchange="countryChanged()">
+                    <option value="" selected="selected">Change Country</option>
+                </select>
+
+
+                <select id="ddCity" class="whitedropdown" onchange="cityChanged()">
+                    <option value="" selected="selected">Change City</option>
+                </select>
+
+                <select id="ddH" class="whitedropdown" onchange="hospitalChanged()">
+                    <option value="" selected="selected">Change Hospital</option>
+                </select>
+
+                <select id="ddTreatment" class="whitedropdown" onchange="treatmentChanged()">
+                    <option value="" selected="selected">Change Treatment</option>
+                </select>
+            </div>
+            <div class="col-lg-12" id="citywisetreatments">
+
+                @foreach (var country in Model)
+                {
+                    foreach (var city in country.Cities)
+                    {
+                        foreach (var key in city.TreatmentPackages.Keys)
+                        {
+                            foreach (var treatment in city.TreatmentPackages[key])
+                            {
+                                <div class="col-md-2" for="treatment_@string.Join("_", country.Country.Split(" ", StringSplitOptions.RemoveEmptyEntries))_@string.Join("_", city.City.Split(" ", StringSplitOptions.RemoveEmptyEntries))_@key">
+                                    <div class="card inner-box text-center">
+                                        @*<img title="@hospital.Name" src="~/Assets/images/hospitals/@Path.GetFileName(hospital.IconImage)" style="max-height: 90px;background-color:lightgray;" class="card-img-top" />*@
+                                        <img title="@treatment.HospitalName" src="~/Assets/images/hosptial-logo/@Path.GetFileName(treatment.HospitalIconImage)" style="" class="card-img-top" />
+                                        <div class="card-body">
+                                            <p>
+                                                <span>Starting at</span>
+                                                <br />
+                                                <span>Only</span>
+                                                <span><strong>$@treatment.MinCost</strong></span>
+                                            </p>
+                                            <div>
+                                                <button class="btn btn-success succes-btn">Book Now</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        }
+                    }
+                }
+            </div>
+        </div>
+    </div>
+
+</section>-->
+
+<script>
+    var CountryWiseTreatmentPackages =@Html.Raw(Json.Encode(Model));
+    var selectedCountry = getCookie("selectedcountry");
+    if (!selectedCountry)
+    {
+        selectedCountry = CountryWiseTreatmentPackages[0].Country;
+    }
+    var selectedCity = getCookie("selectedcity");
+    if (!selectedCity)
+    {
+        selectedCity = CountryWiseTreatmentPackages[0].Cities[0].City;
+    }
+    var selectedTreatmentName = '@ViewBag.selectedTreatment';
+
+    var setSelectedTreatment=function()
+    {
+        for (var i = 0; i < CountryWiseTreatmentPackages.length; i++)
+        {
+            for (var j = 0; j < CountryWiseTreatmentPackages[i].Cities.length; j++)
+            {
+                for (const [key, value] of Object.entries(CountryWiseTreatmentPackages[i].Cities[j].TreatmentPackages))
+                {
+                    if (value.length > 0)
+                    {
+                        for (var k = 0; k < value.length; k++)
+                        {
+                            if (value[k].TreatmentName == selectedTreatmentName)
+                            {
+                                return key;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return '';
+    }
+
+    var selectedTreatment = setSelectedTreatment();
+
+    function treatmentChanged()
+    {
+        selectedCountry = $('#ddCountry').val();
+        selectedCity = $('#ddCity').val();
+        selectedTreatment = $('#ddTreatment').val();
+        loadTreatments(selectedCountry, selectedCity, selectedTreatment);
+    }
+
+    function cityChanged()
+    {
+        selectedCountry = $('#ddCountry').val();
+        selectedCity = $('#ddCity').val();
+        selectedTreatment = $('#ddTreatment').val();
+        loadTreatmentList(selectedCountry, selectedCity, selectedTreatment);
+    }
+
+    function countryChanged()
+    {
+        selectedCountry = $('#ddCountry').val();
+        selectedCity = $('#ddCity').val();
+
+        loadCityList(selectedCountry, selectedCity);
+    }
+
+    var loadTreatments = function (selectedCountry, selectedCity, selectedTreatment)
+    {
+        $('#citywisetreatments').html('');
+        var html = '';
+        for (var i = 0; i < CountryWiseTreatmentPackages.length; i++)
+        {
+            if (CountryWiseTreatmentPackages[i].Country == selectedCountry)
+            {
+                for (var j = 0; j < CountryWiseTreatmentPackages[i].Cities.length; j++)
+                {
+                    var city = CountryWiseTreatmentPackages[i].Cities[j].City;
+                    if (city == selectedCity)
+                    {
+                        for (const [key, value] of Object.entries(CountryWiseTreatmentPackages[i].Cities[j].TreatmentPackages))
+                        {
+                            if (value.length > 0)
+                            {
+                                if (key == selectedTreatment)
+                                {
+                                    for (var k = 0; k < value.length; k++)
+                                    {
+                                        html += '<div class="col-md-3"><div class="card inner-box text-center"><img title="';
+                                        html += value[k].HospitalName;
+                                        html += '" src="/Assets/images/hosptial-logo/';
+                                        html += value[k].HospitalIconImage.substring(value[k].HospitalIconImage.lastIndexOf('/')+1)
+                                        html += '" style="padding:10px;width:60%;margin:auto;" class="card-img-top" /><div class="card-body"><p><span>Starting at</span><br /><span>Only</span><span><strong>$';
+                                        html += value[k].MinCost;
+                                        html += '</strong></span></p><div><button class="btn btn-success succes-btn">Book Now</button></div></div></div></div>';
+
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        $('#citywisetreatments').html(html);
+        var treatmentName = '';
+        if (selectedTreatment) {
+            treatmentName = $('#ddTreatment option:selected').text();
+        }
+        $('#treatment-name').html(treatmentName);
+
+
+    }
+
+    var loadTreatmentList = function (selectedCountry, selectedCity, selectedTreatment)
+    {
+        var ddTreatment = document.getElementById('ddTreatment');
+        ddTreatment.innerHTML = '';
+        ddTreatment.options[ddTreatment.options.length] = new Option('Change Treatment', '', true);
+        for (var i = 0; i < CountryWiseTreatmentPackages.length; i++)
+        {
+            if (CountryWiseTreatmentPackages[i].Country == selectedCountry)
+            {
+                for (var j = 0; j < CountryWiseTreatmentPackages[i].Cities.length; j++)
+                {
+                    var city = CountryWiseTreatmentPackages[i].Cities[j].City;
+                    if (city == selectedCity)
+                    {
+                        for (const [key, value] of Object.entries(CountryWiseTreatmentPackages[i].Cities[j].TreatmentPackages))
+                        {
+                            if (value.length > 0)
+                            {
+                                if (key == selectedTreatment)
+                                {
+                                    ddTreatment.options[ddTreatment.options.length] = new Option(value[0].TreatmentName, key, false, true);
+                                }
+                                else
+                                {
+                                    ddTreatment.options[ddTreatment.options.length] = new Option(value[0].TreatmentName, key);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        $('#ddTreatment').val(selectedTreatment);
+        treatmentChanged();
+    }
+
+    var loadCityList = function (selectedCountry, selectedCity)
+    {
+        var ddCity = document.getElementById('ddCity');
+        ddCity.innerHTML = '';
+        ddCity.options[ddCity.options.length] = new Option('Change City', '',true);
+        for (var i = 0; i < CountryWiseTreatmentPackages.length; i++)
+        {
+            if (CountryWiseTreatmentPackages[i].Country == selectedCountry)
+            {
+                for (var j = 0; j < CountryWiseTreatmentPackages[i].Cities.length; j++)
+                {
+                    var city = CountryWiseTreatmentPackages[i].Cities[j].City;
+                    if (city == selectedCity)
+                    {
+                        ddCity.options[ddCity.options.length] = new Option(city, city, false, true);
+                    }
+                    else
+                    {
+                        ddCity.options[ddCity.options.length] = new Option(city, city);
+                    }
+                }
+            }
+        }
+
+        loadTreatmentList(selectedCountry, selectedCity, selectedTreatment);
+    }
+
+    var loadCountryList = function (selectedCountry)
+    {
+        var ddCountry = document.getElementById('ddCountry');
+        ddCountry.innerHTML = '';
+        ddCountry.options[ddCountry.options.length] = new Option('Change Country', '',true);
+        for (var i = 0; i < CountryWiseTreatmentPackages.length; i++)
+        {
+            var country = CountryWiseTreatmentPackages[i].Country;
+            if (selectedCountry == country)
+            {
+                ddCountry.options[ddCountry.options.length] = new Option(country, country,false,true);
+            }
+            else
+            {
+                ddCountry.options[ddCountry.options.length] = new Option(country, country);
+            }
+        }
+
+        loadCityList(selectedCountry, selectedCity);
+    }
+
+    $(function ()
+    {
+        loadCountryList(selectedCountry);
+    });
+
+
+</script>

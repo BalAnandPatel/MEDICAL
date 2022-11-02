@@ -1,0 +1,33 @@
+﻿@model TalkToTreat.Models.Menu
+
+<div id="accordion" class="verticalmenu">
+    @foreach (var item in Model.Items)
+    {
+        <div class="card">
+            <div class="card-header" id="headingOne">
+                <div class="mb-0">
+                    <a class="float-left nav-link @if (item.IsActive) { <text>active</text>}" href="/Treatment/Detail/@item.Id">@item.Title</a>
+                    <a class="float-right nav-link" data-toggle="collapse" data-target="#left-menu-@item.Id" aria-expanded="@item.IsExpanded.ToString().ToLower()" aria-controls="left-menu-@item.Id">
+                        @*<i class="fa fa-angle-right"></i>
+                            <i class="fa fa-angle-down"></i>*@
+                        <i class="fa fa-angle-down" title="Expand"></i>
+                        <i class="fa fa-times-circle" aria-hidden="true" title="Collapse"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div id="left-menu-@item.Id" class="collapse @if(item.IsExpanded) { <text>show</text>}" aria-labelledby="headingOne" data-parent="#accordion">
+                <div class="card-body">
+                    <ul class="nav flex-column ml-3">
+                        @foreach (var subItem in item.Items)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link @if (subItem.IsActive) { <text>active</text>}" href="/Treatment/Detail/@subItem.Id">@subItem.Title</a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+    }
+</div>

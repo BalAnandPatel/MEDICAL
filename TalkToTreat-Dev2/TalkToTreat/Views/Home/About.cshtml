@@ -1,0 +1,340 @@
+﻿@using TalkToTreat.Models;
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{
+
+    var testimonial = ViewBag.Testimonials as List<Testimonial>;
+}
+
+<section class="banner-area doctor-banner aboutus-banner">
+    <div class="container">
+        <div class="row ">
+
+            <div class="col-md-10 text-left">
+                <div class="banner-text">
+                    <h3>ABOUT US</h3>
+                    <h1>
+                        Just an appointment away from world-class medical treatment
+                    </h1>
+                    <h6>	You will not have to look back for anything for your medical tour. Talk about your medical concern and get ready to be treated. </h6>
+
+                </div>
+            </div>
+            <div class="col-md-6 text-left">
+
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+<section class="treatment-sec1 workprocess">
+
+    <div class="container">
+        <div class="row mt-4">
+            <div class="col-md-4">
+                <h3> <span class="text-green">  Work Process</span> How it Works?</h3>
+            </div>
+            <div class="col-md-5">You just have to follow a few steps to get access to internationally acclaimed medical facilities.</div>
+            <div class="col-md-3"><a href="" class="btn btn-success succes-btn">Book Appointment</a></div>
+        </div>
+
+
+        <div class="row mt-3">
+            <div class="col-md-4">
+                <div class="row best-hostpital-div">
+                    <div class="col-md-3">
+                        <img src="~/images/online-professional.svg">
+                    </div>
+                    <div class="col-md-9">
+                        <h4>Select a Treatment</h4>
+                        <p>Choose the preferred treatment from the wide range of treatments available globally.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="row best-hostpital-div">
+                    <div class="col-md-3">
+                        <img src="~/images/get-instant-appointmemnt.svg">
+                    </div>
+                    <div class="col-md-9">
+                        <h4>Get an Appointment</h4>
+                        <p>Choose the preferred time slot as per your time zone and get an instant appointment</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="row best-hostpital-div">
+                    <div class="col-md-3">
+                        <img src="~/images/leave-feedback.svg">
+                    </div>
+                    <div class="col-md-9">
+                        <h4>Leave a Feedback</h4>
+                        <p>Your feedback is our way to become better for you. Any scope of improvement is always welcome.</p>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+
+</section>
+
+@{ Html.RenderAction("OurServices", "Home");}
+
+<section class="aboutus-sec">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row patient-care-box-area about-content-area">
+                    <div class="col-md-12">
+                        <h3>All about Talk To Treat</h3>
+                        <p>
+                            Over a period of time India has become one of the top most destination for medical tourism. It is all cause of the affordable medical coverage and best doctor panel(s) that India has to offer at just one tenth of the price that it might be availed at any other part of the world. In India, there is a plethora of the range of treatment and procedural options, the best quality of therapy and best medical infrastructure and skilled manpower to perform and with zero wait time, and beyond that the advantages can be enlisted endlessly when India is considered as a medical destination. But with great advantages comes some challenges too like,
+                        </p>
+
+                        <ul>
+                            <li>How to choose the right doctor?</li>
+                            <li>How to choose the right place for the treatment?</li>
+                            <li>How to get the VISA and related permission?</li>
+                            <li>How and when to travel?</li>
+                            <li>Where to accommodate?</li>
+                            <li>How to manage the pre and post treatment services?</li>
+
+                        </ul>
+                        <p>
+                            The answer to all the questions is “Talk to Treat”!! A one stop solution for all the medical needs in India. When a patient starts sourcing for the different aspects of their medical travel, they face a lot of confusion and trickery financially. With “Talk to Treat” the patients are able to source the right Doctor, hospital and other facilities on the basis of real time reviews and experiences shared by other patients.
+                        </p>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="why-choose-sec">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-7">
+                <h2>Why Choose Talk to Treat?</h2>
+                <p>Cause you deserve the best treatment at best the price and at the best location.</p>
+
+                <div class="row best-hostpital-div">
+                    <div class="col-md-2">
+                        <img src="~/images/best-hospital.svg" />
+                    </div>
+                    <div class="col-md-8">
+                        <h4>Best Hospitals with Best Facilities</h4>
+                        <p>We get you all the world class hospitals and facilities from all over the world at one place.</p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-2">
+                        <img src="~/images/best-hospital.svg" />
+                    </div>
+                    <div class="col-md-8">
+                        <h4>Highly experienced Doctors</h4>
+                        <p>We bring you closer to the top professional doctors from around the world.</p>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-md-5 text-right whychoose-img"> <img src="~/images/why-choose-img.svg" /> </div>
+        </div>
+    </div>
+</section>
+
+<section class="aboutus-sec">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row patient-care-box-area about-content-area">
+                    <div class="col-md-12">
+
+                        <h3>Why Talk to Treat?</h3>
+
+                        <p>Talk to Treat is a one-of-a-kind medical tourism facilitator who has taken an initiative of bringing the best possible health care plans, facilities and doctors from all over India on one digital platform. This platform will enable the health-seekers to do all kinds of bookings at one place without knocking many doors. A concept which is going to keep the entire medical experience wholesome, clean, and value based healthcare eliminating the grey areas of unfair pricing at different levels. The booking bandwidth is as broad as the following covering all the aspects possible related to medical need.</p>
+
+                        <ol>
+                            <li>Appointment booking: Sail through the pool of Doctors and Hospitals along with justified reviews from patients from all over the world and book the right facility, virtual or physical, with zero wait time.</li>
+                            <li>Tests booking: Book the prescribed tests with our partner labs providing prompt and most accurate reports.</li>
+                            <li>Treatment booking: Book the set or customizable treatment packages as per the prescription and medical need. </li>
+                            <li>Medication booking: Book all the medications required for the treatment at one place and avail the best discounts.</li>
+                            <li>Post treatment consultation booking: Book the post treatment consultations as and when required virtual or physical.</li>
+                        </ol>
+
+
+                        <p>As one of the upcoming Medical Tourism facilities with all sort of health aide we aim to provide the best possible medical facilities and treatment packages as compared to any of the Western and Europeans countries.</p>
+
+                        <p>With the best possible infrastructure and medical facilities available in the country along with competitive prices patients can get medical treatment done in the lowest prices making us your healthcare partners.</p>
+
+                        <p>As per the Indian belief of “Atithi Devo Bhava” we believe in taking personal care of everything for our health-seeking guests from start to end. We will avail a 24*7 help where we will stand by for any need and emergency during your entire medical journey in India.</p>
+
+                        <p>At Talk to Treat, we are not just focused on Modern medicine but a decent amalgamation of modern, holistic and alternative treatment which is focused on the overall wellbeing of the health-seeking individuals along with the root cause treatment.</p>
+
+                        <p>Talk to Treat provides you the right consultancy to recognize the root cause of the illnesses, followed by availing the best possible medical attention including travel, surgery assistance, medication and more.</p>
+
+                        <p>Contact us right now for the best Indian medical experience ever!!</p>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<section class="need-an-emergecy">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <h4>+91-9560960088</h4>
+                <h3>Book Your   <span class="text-green"><br> Appointment Today</span></h3>
+            </div>
+            <div class="col-md-6 text-right"> <a href="" class="btn btn-warning ornagebutton">Get Quote</a> </div>
+        </div>
+    </div>
+</section>
+
+
+
+<section class="section appoinment-sec">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <div class="appoinment-content">
+
+                </div>
+            </div>
+
+            @Html.Partial("~/Views/Shared/_Enquiry.cshtml", new TalkToTreat.Models.Registration())
+
+        </div>
+    </div>
+</section>
+
+
+
+<section class="treatment-sec1 testimonoals">
+
+    <div class="container">
+        <div class="row">
+
+            <div class="col-md-12 text-center">
+                <h3 class="text-green">Patient Testimonials</h3>
+                <h4>We have <span class="text-orange"> Served</span> over 5000+ Patients successfully and counting</h4>
+            </div>
+            <div class="col-md-12">
+                <div id="owl-demo3" class="owl-carousel owl-theme">
+
+                    @foreach (var testimmonialItem in testimonial)
+                    {
+                        <div class="item grey-bord testim-box">
+                            <div class="testim-img">
+                                <img src="~/Assets/images/Testimonial/@testimmonialItem.Image" />
+                            </div>
+                            <div class="testim-content">
+                                <h5>@testimmonialItem.Name</h5>
+                                <p>@testimmonialItem.Treatment</p>
+                                <p>@testimmonialItem.City</p>
+                                <span class="quotes1" style="font-size:12px;" >
+                                    @testimmonialItem.Description.Substring(0, 70)
+                                    ...
+                                </span>
+                                <div class="test-read"><a href="/Home/Testimonial">Read Full Story</a></div>
+                            </div>
+                        </div>
+                    }
+
+                    @*<div class="item">
+
+                            <div class="row">
+                                <div class="col-md-4 text-center">
+                                    <img src="~/images/testimonial1.svg">
+
+                                    <p>Neha Kumari</p>
+                                    <h5>Modern Service!</h5>
+
+                                </div>
+                                <div class="col-md-8">
+                                    <span class="quotes">
+                                        They provide great service facilty consectetur adipisicing elit. Itaque rem, praesentium, iure, ipsum magnam deleniti a vel eos adipisci suscipit fugit placeat.
+                                    </span>
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div class="item">
+                            <div class="row">
+                                <div class="col-md-4 text-center">
+                                    <img src="~/images/testimonial2.svg">
+
+                                    <p>Neha Kumari</p>
+                                    <h5>Modern Service!</h5>
+
+                                </div>
+                                <div class="col-md-8">
+                                    <span class="quotes">
+                                        They provide great service facilty consectetur adipisicing elit. Itaque rem, praesentium, iure, ipsum magnam deleniti a vel eos adipisci suscipit fugit placeat.
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="item">
+                            <div class="row">
+                                <div class="col-md-4 text-center">
+                                    <img src="~/images/testimonial1.svg">
+
+                                    <p>Neha Kumari</p>
+                                    <h5>Modern Service!</h5>
+
+                                </div>
+                                <div class="col-md-8">
+                                    <span class="quotes">
+                                        They provide great service facilty consectetur adipisicing elit. Itaque rem, praesentium, iure, ipsum magnam deleniti a vel eos adipisci suscipit fugit placeat.
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="item">
+                            <div class="row">
+                                <div class="col-md-4 text-center">
+                                    <img src="~/images/testimonial2.svg">
+
+                                    <p>Neha Kumari</p>
+                                    <h5>Modern Service!</h5>
+
+                                </div>
+                                <div class="col-md-8">
+                                    <span class="quotes">
+                                        They provide great service facilty consectetur adipisicing elit. Itaque rem, praesentium, iure, ipsum magnam deleniti a vel eos adipisci suscipit fugit placeat.
+                                    </span>
+                                </div>
+                            </div>
+                        </div>*@
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+@Html.Partial("_OurPartners")
+

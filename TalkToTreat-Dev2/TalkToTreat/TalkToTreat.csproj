@@ -1,0 +1,1415 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Microsoft.Extensions.Configuration.UserSecrets.5.0.0\build\netstandard2.0\Microsoft.Extensions.Configuration.UserSecrets.props" Condition="Exists('..\packages\Microsoft.Extensions.Configuration.UserSecrets.5.0.0\build\netstandard2.0\Microsoft.Extensions.Configuration.UserSecrets.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{30A5EDA3-746B-471D-8383-420DAE54A698}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>TalkToTreat</RootNamespace>
+    <AssemblyName>TalkToTreat</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <Use64BitIISExpress />
+    <IISExpressSSLPort>44347</IISExpressSSLPort>
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AutoMapper, Version=3.3.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.3.3.0\lib\net40\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="AutoMapper.Net4, Version=3.3.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.3.3.0\lib\net40\AutoMapper.Net4.dll</HintPath>
+    </Reference>
+    <Reference Include="BouncyCastle.Crypto, Version=1.8.6.0, Culture=neutral, PublicKeyToken=0e99375e54769942">
+      <HintPath>..\packages\BouncyCastle.1.8.6.1\lib\BouncyCastle.Crypto.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Apis, Version=1.57.0.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.1.57.0\lib\net45\Google.Apis.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Apis.Auth, Version=1.57.0.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.Auth.1.57.0\lib\net461\Google.Apis.Auth.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Apis.Auth.PlatformServices, Version=1.57.0.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.Auth.1.57.0\lib\net461\Google.Apis.Auth.PlatformServices.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Apis.Calendar.v3, Version=1.57.0.2759, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.Calendar.v3.1.57.0.2759\lib\net45\Google.Apis.Calendar.v3.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Apis.Core, Version=1.57.0.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.Core.1.57.0\lib\net45\Google.Apis.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Apis.PlatformServices, Version=1.57.0.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.1.57.0\lib\net45\Google.Apis.PlatformServices.dll</HintPath>
+    </Reference>
+    <Reference Include="itextsharp, Version=5.5.13.2, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\packages\iTextSharp.5.5.13.2\lib\itextsharp.dll</HintPath>
+    </Reference>
+    <Reference Include="JetBrains.Annotations, Version=2020.3.0.0, Culture=neutral, PublicKeyToken=1010a0d8d6380325, processorArchitecture=MSIL">
+      <HintPath>..\packages\JetBrains.Annotations.2020.3.0\lib\net20\JetBrains.Annotations.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=5.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.5.0.0\lib\net461\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=3.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.3.6.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Extensions.Configuration, Version=5.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Configuration.5.0.0\lib\net461\Microsoft.Extensions.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Configuration.Abstractions, Version=5.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Configuration.Abstractions.5.0.0\lib\net461\Microsoft.Extensions.Configuration.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Configuration.Binder, Version=5.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Configuration.Binder.5.0.0\lib\net461\Microsoft.Extensions.Configuration.Binder.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Configuration.CommandLine, Version=5.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Configuration.CommandLine.5.0.0\lib\net461\Microsoft.Extensions.Configuration.CommandLine.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Configuration.EnvironmentVariables, Version=5.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Configuration.EnvironmentVariables.5.0.0\lib\net461\Microsoft.Extensions.Configuration.EnvironmentVariables.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Configuration.FileExtensions, Version=5.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Configuration.FileExtensions.5.0.0\lib\net461\Microsoft.Extensions.Configuration.FileExtensions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Configuration.Json, Version=5.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Configuration.Json.5.0.0\lib\net461\Microsoft.Extensions.Configuration.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Configuration.UserSecrets, Version=5.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Configuration.UserSecrets.5.0.0\lib\net461\Microsoft.Extensions.Configuration.UserSecrets.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.DependencyInjection, Version=5.0.0.2, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.DependencyInjection.5.0.2\lib\net461\Microsoft.Extensions.DependencyInjection.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions, Version=5.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.DependencyInjection.Abstractions.5.0.0\lib\net461\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.FileProviders.Abstractions, Version=5.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.FileProviders.Abstractions.5.0.0\lib\net461\Microsoft.Extensions.FileProviders.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.FileProviders.Physical, Version=5.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.FileProviders.Physical.5.0.0\lib\net461\Microsoft.Extensions.FileProviders.Physical.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.FileSystemGlobbing, Version=5.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.FileSystemGlobbing.5.0.0\lib\net461\Microsoft.Extensions.FileSystemGlobbing.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Hosting.Abstractions, Version=5.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Hosting.Abstractions.5.0.0\lib\net461\Microsoft.Extensions.Hosting.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Localization, Version=5.0.10.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Localization.5.0.10\lib\net461\Microsoft.Extensions.Localization.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Localization.Abstractions, Version=5.0.10.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Localization.Abstractions.5.0.10\lib\net461\Microsoft.Extensions.Localization.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Logging, Version=5.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Logging.5.0.0\lib\net461\Microsoft.Extensions.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Logging.Abstractions, Version=5.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Logging.Abstractions.5.0.0\lib\net461\Microsoft.Extensions.Logging.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Options, Version=5.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Options.5.0.0\lib\net461\Microsoft.Extensions.Options.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Options.ConfigurationExtensions, Version=5.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Options.ConfigurationExtensions.5.0.0\lib\net461\Microsoft.Extensions.Options.ConfigurationExtensions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Primitives, Version=5.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Primitives.5.0.0\lib\net461\Microsoft.Extensions.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.Logging, Version=1.1.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.Logging.1.1.2\lib\net451\Microsoft.IdentityModel.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.Tokens, Version=5.1.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.Tokens.5.1.2\lib\net451\Microsoft.IdentityModel.Tokens.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Nito.AsyncEx.Context, Version=5.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Nito.AsyncEx.Context.5.1.0\lib\netstandard2.0\Nito.AsyncEx.Context.dll</HintPath>
+    </Reference>
+    <Reference Include="Nito.AsyncEx.Coordination, Version=5.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Nito.AsyncEx.Coordination.5.1.0\lib\netstandard2.0\Nito.AsyncEx.Coordination.dll</HintPath>
+    </Reference>
+    <Reference Include="Nito.AsyncEx.Tasks, Version=5.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Nito.AsyncEx.Tasks.5.1.0\lib\netstandard2.0\Nito.AsyncEx.Tasks.dll</HintPath>
+    </Reference>
+    <Reference Include="Nito.Collections.Deque, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Nito.Collections.Deque.1.1.0\lib\netstandard2.0\Nito.Collections.Deque.dll</HintPath>
+    </Reference>
+    <Reference Include="Nito.Disposables, Version=2.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Nito.Disposables.2.2.0\lib\net461\Nito.Disposables.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Collections.Immutable, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Collections.Immutable.6.0.0\lib\net461\System.Collections.Immutable.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.Annotations, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ComponentModel.Annotations.5.0.0\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Diagnostics.DiagnosticSource, Version=5.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Diagnostics.DiagnosticSource.5.0.0\lib\net46\System.Diagnostics.DiagnosticSource.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.IdentityModel.Tokens.Jwt, Version=5.1.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IdentityModel.Tokens.Jwt.5.1.2\lib\net451\System.IdentityModel.Tokens.Jwt.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.4.3.0\lib\net462\System.IO.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Linq.Dynamic.Core, Version=1.2.9.0, Culture=neutral, PublicKeyToken=0f07ec44de6ac832, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Linq.Dynamic.Core.1.2.9\lib\net46\System.Linq.Dynamic.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Memory.4.5.4\lib\net461\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net" />
+    <Reference Include="System.Net.Http, Version=4.1.1.3, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Net.Http.4.3.4\lib\net46\System.Net.Http.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reflection.Metadata, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Reflection.Metadata.6.0.0\lib\net461\System.Reflection.Metadata.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.4.3.0\lib\net462\System.Runtime.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.6.0.0\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Algorithms, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.Algorithms.4.3.1\lib\net463\System.Security.Cryptography.Algorithms.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Encoding, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.Encoding.4.3.0\lib\net46\System.Security.Cryptography.Encoding.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Primitives, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.Primitives.4.3.0\lib\net46\System.Security.Cryptography.Primitives.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.X509Certificates, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.X509Certificates.4.3.0\lib\net461\System.Security.Cryptography.X509Certificates.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Text.Encodings.Web, Version=5.0.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Text.Encodings.Web.5.0.1\lib\net461\System.Text.Encodings.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Text.Json, Version=5.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Text.Json.5.0.0\lib\net461\System.Text.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+    </Reference>
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.7\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.7\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="TalkToTreatService">
+      <HintPath>..\TalkToTreatService\bin\Debug\TalkToTreatService.dll</HintPath>
+    </Reference>
+    <Reference Include="Twilio, Version=5.71.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Twilio.5.71.0\lib\net451\Twilio.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Abstractions, Version=5.11.1.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.Abstractions.5.11.1\lib\net47\Unity.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Container, Version=5.11.1.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.Container.5.11.1\lib\net47\Unity.Container.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Mvc, Version=5.11.1.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.Mvc.5.11.1\lib\net47\Unity.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="Volo.Abp.Core, Version=4.4.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Volo.Abp.Core.4.4.3\lib\netstandard2.0\Volo.Abp.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Volo.Abp.ObjectMapping, Version=4.4.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Volo.Abp.ObjectMapping.4.4.3\lib\netstandard2.0\Volo.Abp.ObjectMapping.dll</HintPath>
+    </Reference>
+    <Reference Include="WebActivatorEx, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebActivatorEx.2.2.0\lib\net40\WebActivatorEx.dll</HintPath>
+    </Reference>
+    <Reference Include="WebGrease">
+      <Private>True</Private>
+      <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
+    </Reference>
+    <Reference Include="Antlr3.Runtime">
+      <Private>True</Private>
+      <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\UnityConfig.cs" />
+    <Compile Include="App_Start\UnityMvcActivator.cs" />
+    <Compile Include="Controllers\Admin\ManageTreatmentController.cs" />
+    <Compile Include="Controllers\Admin\ManageHospitalController.cs" />
+    <Compile Include="Controllers\Admin\ManageEnquiryController.cs" />
+    <Compile Include="Controllers\Admin\ManageDoctorController.cs" />
+    <Compile Include="Controllers\Admin\AdminHomeController.cs" />
+    <Compile Include="Controllers\PagesController.cs" />
+    <Compile Include="Controllers\HospitalsController.cs" />
+    <Compile Include="Controllers\UserHealthController.cs" />
+    <Compile Include="CustomFilter\CustomExceptionHandlerFilter.cs" />
+    <Compile Include="Filters\AuthorizeAdmin.cs" />
+    <Compile Include="Helper\GoogleCelendarHelper.cs" />
+    <Compile Include="Models\GoogleCalendar.cs" />
+    <Compile Include="Models\Appointment.cs" />
+    <Compile Include="Controllers\DoctorsController.cs" />
+    <Compile Include="Controllers\AdminLoginController.cs" />
+    <Compile Include="Controllers\TreatmentController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\RegisterController.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Filters\Authorize.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Admin\AdminLogin.cs" />
+    <Compile Include="Models\Admin\Home.cs" />
+    <Compile Include="Models\Admin\search.cs" />
+    <Compile Include="Models\CountryWiseCities.cs" />
+    <Compile Include="Models\Doctors.cs" />
+    <Compile Include="Models\DropdownMaster.cs" />
+    <Compile Include="Models\Hospital.cs" />
+    <Compile Include="Models\ViewResponseModel.cs" />
+    <Compile Include="Models\Menu.cs" />
+    <Compile Include="Models\Quote.cs" />
+    <Compile Include="Models\Testimonial.cs" />
+    <Compile Include="Models\Services.cs" />
+    <Compile Include="Models\SendEmail.cs" />
+    <Compile Include="Models\Testimonial.cs" />
+    <Compile Include="Models\Treatment.cs" />
+    <Compile Include="Models\Locations.cs" />
+    <Compile Include="Models\Login.cs" />
+    <Compile Include="Models\Registration.cs" />
+    <Compile Include="Models\UserVallet.cs" />
+    <Compile Include="Models\User.cs" />
+    <Compile Include="Models\Admin\_Mysave.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="AdminAssets\css\_custom-radio.css" />
+    <Content Include="AdminAssets\css\app-rtl.css" />
+    <Content Include="AdminAssets\css\app-rtl.min.css" />
+    <Content Include="AdminAssets\css\app.css" />
+    <Content Include="AdminAssets\css\app.min.css" />
+    <Content Include="AdminAssets\css\bootstrap-multiselect.css" />
+    <Content Include="AdminAssets\css\bootstrap.css" />
+    <Content Include="AdminAssets\css\bootstrap.min.css" />
+    <Content Include="AdminAssets\css\icons.css" />
+    <Content Include="AdminAssets\css\icons.min.css" />
+    <Content Include="AdminAssets\fonts\cerebrisans-bold.svg" />
+    <Content Include="AdminAssets\fonts\cerebrisans-light.svg" />
+    <Content Include="AdminAssets\fonts\cerebrisans-medium.svg" />
+    <Content Include="AdminAssets\fonts\cerebrisans-regular.svg" />
+    <Content Include="AdminAssets\fonts\cerebrisans-semibold.svg" />
+    <Content Include="AdminAssets\fonts\dripicons-v2.svg" />
+    <Content Include="AdminAssets\fonts\dropify.svg" />
+    <Content Include="AdminAssets\fonts\fa-brands-400.svg" />
+    <Content Include="AdminAssets\fonts\fa-regular-400.svg" />
+    <Content Include="AdminAssets\fonts\fa-solid-900.svg" />
+    <Content Include="AdminAssets\fonts\feather.svg" />
+    <Content Include="AdminAssets\fonts\footable.svg" />
+    <Content Include="AdminAssets\fonts\materialdesignicons-webfont.svg" />
+    <Content Include="AdminAssets\fonts\Simple-Line-Icons.svg" />
+    <Content Include="AdminAssets\fonts\themify.svg" />
+    <Content Include="AdminAssets\fonts\weathericons-regular-webfont.svg" />
+    <Content Include="AdminAssets\formwizard\app.js" />
+    <Content Include="AdminAssets\formwizard\form-wizard.init.js" />
+    <Content Include="AdminAssets\formwizard\jquery.bootstrap.wizard.min.js" />
+    <Content Include="AdminAssets\formwizard\vendor.js" />
+    <Content Include="AdminAssets\js\app.js" />
+    <Content Include="AdminAssets\js\app.min.js" />
+    <Content Include="AdminAssets\js\bootstrap-multiselect.min.js" />
+    <Content Include="AdminAssets\js\bootstrap.js" />
+    <Content Include="AdminAssets\js\bootstrap.min.js" />
+    <Content Include="AdminAssets\js\jquery.js" />
+    <Content Include="AdminAssets\js\pages\add-product.init.js" />
+    <Content Include="AdminAssets\js\pages\animation.init.js" />
+    <Content Include="AdminAssets\js\pages\bootstrap-tables.init.js" />
+    <Content Include="AdminAssets\js\pages\c3.init.js" />
+    <Content Include="AdminAssets\js\pages\calendar.init.js" />
+    <Content Include="AdminAssets\js\pages\chartist.init.js" />
+    <Content Include="AdminAssets\js\pages\chartjs.init.js" />
+    <Content Include="AdminAssets\js\pages\coming-soon.init.js" />
+    <Content Include="AdminAssets\js\pages\crm-dashboard.init.js" />
+    <Content Include="AdminAssets\js\pages\crm-leads.init.js" />
+    <Content Include="AdminAssets\js\pages\crm-opportunities.init.js" />
+    <Content Include="AdminAssets\js\pages\dashboard-1.init.js" />
+    <Content Include="AdminAssets\js\pages\dashboard-2.init.js" />
+    <Content Include="AdminAssets\js\pages\dashboard-3.init.js" />
+    <Content Include="AdminAssets\js\pages\dashboard-4.init.js" />
+    <Content Include="AdminAssets\js\pages\datatables.init.js" />
+    <Content Include="AdminAssets\js\pages\ecommerce-dashboard.init.js" />
+    <Content Include="AdminAssets\js\pages\flot.init.js" />
+    <Content Include="AdminAssets\js\pages\foo-tables.init.js" />
+    <Content Include="AdminAssets\js\pages\form-advanced.init.js" />
+    <Content Include="AdminAssets\js\pages\form-fileuploads.init.js" />
+    <Content Include="AdminAssets\js\pages\form-imagecrop.init.js" />
+    <Content Include="AdminAssets\js\pages\form-masks.init.js" />
+    <Content Include="AdminAssets\js\pages\form-pickers.init.js" />
+    <Content Include="AdminAssets\js\pages\form-quilljs.init.js" />
+    <Content Include="AdminAssets\js\pages\form-summernote.init.js" />
+    <Content Include="AdminAssets\js\pages\form-validation.init.js" />
+    <Content Include="AdminAssets\js\pages\form-wizard.init.js" />
+    <Content Include="AdminAssets\js\pages\form-xeditable.init.js" />
+    <Content Include="AdminAssets\js\pages\gallery.init.js" />
+    <Content Include="AdminAssets\js\pages\google-maps.init.js" />
+    <Content Include="AdminAssets\js\pages\inbox.js" />
+    <Content Include="AdminAssets\js\pages\jquery.chat.js" />
+    <Content Include="AdminAssets\js\pages\jquery.todo.js" />
+    <Content Include="AdminAssets\js\pages\jsgrid.init.js" />
+    <Content Include="AdminAssets\js\pages\justgage.init.js" />
+    <Content Include="AdminAssets\js\pages\kanban.init.js" />
+    <Content Include="AdminAssets\js\pages\loading-btn.init.js" />
+    <Content Include="AdminAssets\js\pages\mapeal-maps.init.js" />
+    <Content Include="AdminAssets\js\pages\morris.init.js" />
+    <Content Include="AdminAssets\js\pages\nestable.init.js" />
+    <Content Include="AdminAssets\js\pages\peity.init.js" />
+    <Content Include="AdminAssets\js\pages\range-sliders.init.js" />
+    <Content Include="AdminAssets\js\pages\responsive-table.init.js" />
+    <Content Include="AdminAssets\js\pages\ricksaw.init.js" />
+    <Content Include="AdminAssets\js\pages\sparkline.init.js" />
+    <Content Include="AdminAssets\js\pages\sweet-alerts.init.js" />
+    <Content Include="AdminAssets\js\pages\tabledit.init.js" />
+    <Content Include="AdminAssets\js\pages\tablesaw.init.js" />
+    <Content Include="AdminAssets\js\pages\tickets.js" />
+    <Content Include="AdminAssets\js\pages\toastr.init.js" />
+    <Content Include="AdminAssets\js\pages\tour.init.js" />
+    <Content Include="AdminAssets\js\pages\treeview.init.js" />
+    <Content Include="AdminAssets\js\pages\vector-maps.init.js" />
+    <Content Include="AdminAssets\js\pages\widgets.init.js" />
+    <Content Include="AdminAssets\js\vendor.js" />
+    <Content Include="AdminAssets\js\vendor.min.js" />
+    <Content Include="AdminAssets\libs\animate\animate.min.css" />
+    <Content Include="AdminAssets\libs\autocomplete\jquery.autocomplete.min.js" />
+    <Content Include="AdminAssets\libs\autonumeric\autoNumeric-min.js" />
+    <Content Include="AdminAssets\libs\bootstrap-colorpicker\bootstrap-colorpicker.min.css" />
+    <Content Include="AdminAssets\libs\bootstrap-colorpicker\bootstrap-colorpicker.min.js" />
+    <Content Include="AdminAssets\libs\bootstrap-datepicker\bootstrap-datepicker.min.css" />
+    <Content Include="AdminAssets\libs\bootstrap-datepicker\bootstrap-datepicker.min.js" />
+    <Content Include="AdminAssets\libs\bootstrap-maxlength\bootstrap-maxlength.min.js" />
+    <Content Include="AdminAssets\libs\bootstrap-select\bootstrap-select.min.css" />
+    <Content Include="AdminAssets\libs\bootstrap-select\bootstrap-select.min.js" />
+    <Content Include="AdminAssets\libs\bootstrap-table\bootstrap-table.min.css" />
+    <Content Include="AdminAssets\libs\bootstrap-table\bootstrap-table.min.js" />
+    <Content Include="AdminAssets\libs\bootstrap-touchspin\jquery.bootstrap-touchspin.css" />
+    <Content Include="AdminAssets\libs\bootstrap-touchspin\jquery.bootstrap-touchspin.min.js" />
+    <Content Include="AdminAssets\libs\c3\c3.min.css" />
+    <Content Include="AdminAssets\libs\c3\c3.min.js" />
+    <Content Include="AdminAssets\libs\chart-js\Chart.bundle.min.js" />
+    <Content Include="AdminAssets\libs\chartist\chartist-plugin-tooltip.min.js" />
+    <Content Include="AdminAssets\libs\chartist\chartist.min.css" />
+    <Content Include="AdminAssets\libs\chartist\chartist.min.js" />
+    <Content Include="AdminAssets\libs\clockpicker\bootstrap-clockpicker.min.css" />
+    <Content Include="AdminAssets\libs\clockpicker\bootstrap-clockpicker.min.js" />
+    <Content Include="AdminAssets\libs\cropper\cropper.min.css" />
+    <Content Include="AdminAssets\libs\cropper\cropper.min.js" />
+    <Content Include="AdminAssets\libs\custombox\custombox.min.css" />
+    <Content Include="AdminAssets\libs\custombox\custombox.min.js" />
+    <Content Include="AdminAssets\libs\d3\d3.min.js" />
+    <Content Include="AdminAssets\libs\datatables\buttons.bootstrap4.css" />
+    <Content Include="AdminAssets\libs\datatables\buttons.bootstrap4.min.js" />
+    <Content Include="AdminAssets\libs\datatables\buttons.flash.min.js" />
+    <Content Include="AdminAssets\libs\datatables\buttons.html5.min.js" />
+    <Content Include="AdminAssets\libs\datatables\buttons.print.min.js" />
+    <Content Include="AdminAssets\libs\datatables\dataTables.bootstrap4.css" />
+    <Content Include="AdminAssets\libs\datatables\dataTables.bootstrap4.js" />
+    <Content Include="AdminAssets\libs\datatables\dataTables.buttons.min.js" />
+    <Content Include="AdminAssets\libs\datatables\dataTables.keyTable.min.js" />
+    <Content Include="AdminAssets\libs\datatables\dataTables.responsive.min.js" />
+    <Content Include="AdminAssets\libs\datatables\dataTables.select.min.js" />
+    <Content Include="AdminAssets\libs\datatables\jquery.dataTables.min.js" />
+    <Content Include="AdminAssets\libs\datatables\responsive.bootstrap4.css" />
+    <Content Include="AdminAssets\libs\datatables\responsive.bootstrap4.min.js" />
+    <Content Include="AdminAssets\libs\datatables\select.bootstrap4.css" />
+    <Content Include="AdminAssets\libs\dropify\dropify.min.css" />
+    <Content Include="AdminAssets\libs\dropify\dropify.min.js" />
+    <Content Include="AdminAssets\libs\dropzone\dropzone.min.css" />
+    <Content Include="AdminAssets\libs\dropzone\dropzone.min.js" />
+    <Content Include="AdminAssets\libs\flatpickr\flatpickr.min.css" />
+    <Content Include="AdminAssets\libs\flatpickr\flatpickr.min.js" />
+    <Content Include="AdminAssets\libs\flot-charts\jquery.flot.crosshair.js" />
+    <Content Include="AdminAssets\libs\flot-charts\jquery.flot.js" />
+    <Content Include="AdminAssets\libs\flot-charts\jquery.flot.orderBars.js" />
+    <Content Include="AdminAssets\libs\flot-charts\jquery.flot.pie.js" />
+    <Content Include="AdminAssets\libs\flot-charts\jquery.flot.resize.js" />
+    <Content Include="AdminAssets\libs\flot-charts\jquery.flot.selection.js" />
+    <Content Include="AdminAssets\libs\flot-charts\jquery.flot.stack.js" />
+    <Content Include="AdminAssets\libs\flot-charts\jquery.flot.time.js" />
+    <Content Include="AdminAssets\libs\flot-charts\jquery.flot.tooltip.min.js" />
+    <Content Include="AdminAssets\libs\footable\footable.all.min.js" />
+    <Content Include="AdminAssets\libs\footable\footable.core.min.css" />
+    <Content Include="AdminAssets\libs\fullcalendar\fullcalendar.min.css" />
+    <Content Include="AdminAssets\libs\fullcalendar\fullcalendar.min.js" />
+    <Content Include="AdminAssets\libs\gmaps\gmaps.min.js" />
+    <Content Include="AdminAssets\libs\hopscotch\hopscotch.min.css" />
+    <Content Include="AdminAssets\libs\hopscotch\hopscotch.min.js" />
+    <Content Include="AdminAssets\libs\ion-rangeslider\ion.rangeSlider.css" />
+    <Content Include="AdminAssets\libs\ion-rangeslider\ion.rangeSlider.min.js" />
+    <Content Include="AdminAssets\libs\jquery-countdown\jquery.countdown.min.js" />
+    <Content Include="AdminAssets\libs\jquery-knob\jquery.knob.min.js" />
+    <Content Include="AdminAssets\libs\jquery-mapael\jquery.mapael.min.js" />
+    <Content Include="AdminAssets\libs\jquery-mapael\usa_states.min.js" />
+    <Content Include="AdminAssets\libs\jquery-mapael\world_countries.min.js" />
+    <Content Include="AdminAssets\libs\jquery-mask-plugin\jquery.mask.min.js" />
+    <Content Include="AdminAssets\libs\jquery-mockjax\jquery.mockjax.min.js" />
+    <Content Include="AdminAssets\libs\jquery-nice-select\jquery.nice-select.min.js" />
+    <Content Include="AdminAssets\libs\jquery-nice-select\nice-select.css" />
+    <Content Include="AdminAssets\libs\jquery-scrollto\jquery.scrollTo.min.js" />
+    <Content Include="AdminAssets\libs\jquery-sparkline\jquery.sparkline.min.js" />
+    <Content Include="AdminAssets\libs\jquery-tabledit\jquery.tabledit.min.js" />
+    <Content Include="AdminAssets\libs\jquery-toast\jquery.toast.min.css" />
+    <Content Include="AdminAssets\libs\jquery-toast\jquery.toast.min.js" />
+    <Content Include="AdminAssets\libs\jquery-ui\jquery-ui.min.js" />
+    <Content Include="AdminAssets\libs\jquery-vectormap\jquery-jvectormap-1.2.2.css" />
+    <Content Include="AdminAssets\libs\jquery-vectormap\jquery-jvectormap-1.2.2.min.js" />
+    <Content Include="AdminAssets\libs\jquery-vectormap\jquery-jvectormap-au-mill-en.js" />
+    <Content Include="AdminAssets\libs\jquery-vectormap\jquery-jvectormap-ca-lcc-en.js" />
+    <Content Include="AdminAssets\libs\jquery-vectormap\jquery-jvectormap-in-mill-en.js" />
+    <Content Include="AdminAssets\libs\jquery-vectormap\jquery-jvectormap-uk-mill-en.js" />
+    <Content Include="AdminAssets\libs\jquery-vectormap\jquery-jvectormap-us-il-chicago-mill-en.js" />
+    <Content Include="AdminAssets\libs\jquery-vectormap\jquery-jvectormap-us-merc-en.js" />
+    <Content Include="AdminAssets\libs\jquery-vectormap\jquery-jvectormap-world-mill-en.js" />
+    <Content Include="AdminAssets\libs\jsgrid\jsgrid-theme.css" />
+    <Content Include="AdminAssets\libs\jsgrid\jsgrid.min.css" />
+    <Content Include="AdminAssets\libs\jsgrid\jsgrid.min.js" />
+    <Content Include="AdminAssets\libs\justgage\justgage.js" />
+    <Content Include="AdminAssets\libs\katex\katex.min.js" />
+    <Content Include="AdminAssets\libs\ladda\ladda-themeless.min.css" />
+    <Content Include="AdminAssets\libs\ladda\ladda.js" />
+    <Content Include="AdminAssets\libs\ladda\spin.js" />
+    <Content Include="AdminAssets\libs\magnific-popup\jquery.magnific-popup.min.js" />
+    <Content Include="AdminAssets\libs\magnific-popup\magnific-popup.css" />
+    <Content Include="AdminAssets\libs\moment\moment.min.js" />
+    <Content Include="AdminAssets\libs\morris-js\morris.min.js" />
+    <Content Include="AdminAssets\libs\multiselect\jquery.multi-select.js" />
+    <Content Include="AdminAssets\libs\multiselect\multi-select.css" />
+    <Content Include="AdminAssets\libs\nestable2\jquery.nestable.min.css" />
+    <Content Include="AdminAssets\libs\nestable2\jquery.nestable.min.js" />
+    <Content Include="AdminAssets\libs\parsleyjs\parsley.min.js" />
+    <Content Include="AdminAssets\libs\pdfmake\pdfmake.min.js" />
+    <Content Include="AdminAssets\libs\pdfmake\vfs_fonts.js" />
+    <Content Include="AdminAssets\libs\peity\jquery.peity.min.js" />
+    <Content Include="AdminAssets\libs\quill\quill.bubble.css" />
+    <Content Include="AdminAssets\libs\quill\quill.core.css" />
+    <Content Include="AdminAssets\libs\quill\quill.min.js" />
+    <Content Include="AdminAssets\libs\quill\quill.snow.css" />
+    <Content Include="AdminAssets\libs\raphael\raphael.min.js" />
+    <Content Include="AdminAssets\libs\rickshaw\rickshaw.min.css" />
+    <Content Include="AdminAssets\libs\rickshaw\rickshaw.min.js" />
+    <Content Include="AdminAssets\libs\rwd-table\rwd-table.min.css" />
+    <Content Include="AdminAssets\libs\rwd-table\rwd-table.min.js" />
+    <Content Include="AdminAssets\libs\select2\select2.min.css" />
+    <Content Include="AdminAssets\libs\select2\select2.min.js" />
+    <Content Include="AdminAssets\libs\summernote\summernote-bs4.css" />
+    <Content Include="AdminAssets\libs\summernote\summernote-bs4.min.js" />
+    <Content Include="AdminAssets\libs\sweetalert2\sweetalert2.min.css" />
+    <Content Include="AdminAssets\libs\sweetalert2\sweetalert2.min.js" />
+    <Content Include="AdminAssets\libs\switchery\switchery.min.css" />
+    <Content Include="AdminAssets\libs\switchery\switchery.min.js" />
+    <Content Include="AdminAssets\libs\tablesaw\tablesaw.css" />
+    <Content Include="AdminAssets\libs\tablesaw\tablesaw.js" />
+    <Content Include="AdminAssets\libs\tippy-js\tippy.all.min.js" />
+    <Content Include="AdminAssets\libs\toastr\toastr.min.css" />
+    <Content Include="AdminAssets\libs\toastr\toastr.min.js" />
+    <Content Include="AdminAssets\libs\twitter-bootstrap-wizard\jquery.bootstrap.wizard.min.js" />
+    <Content Include="AdminAssets\libs\x-editable\bootstrap-editable.css" />
+    <Content Include="AdminAssets\libs\x-editable\bootstrap-editable.min.js" />
+    <Content Include="Assets\css\style.css" />
+    <Content Include="Assets\images\about\05.png" />
+    <Content Include="Assets\images\about\1.png" />
+    <Content Include="Assets\images\about\2.png" />
+    <Content Include="Assets\images\about\3.png" />
+    <Content Include="Assets\images\about\4.png" />
+    <Content Include="Assets\images\about\5.png" />
+    <Content Include="Assets\images\about\6.png" />
+    <Content Include="Assets\images\about\about-1.jpg" />
+    <Content Include="Assets\images\about\about-2.jpg" />
+    <Content Include="Assets\images\about\about-3.jpg" />
+    <Content Include="Assets\images\about\about-4.jpg" />
+    <Content Include="Assets\images\about\img-1.jpg" />
+    <Content Include="Assets\images\about\img-2.jpg" />
+    <Content Include="Assets\images\about\img-3.jpg" />
+    <Content Include="Assets\images\about\sign.png" />
+    <Content Include="Assets\images\Award winning Patient Care -icons\Body-Surgery.png" />
+    <Content Include="Assets\images\Award winning Patient Care -icons\Dental-Care.png" />
+    <Content Include="Assets\images\Award winning Patient Care -icons\Gynecology.png" />
+    <Content Include="Assets\images\Award winning Patient Care -icons\Heart-Disease.png" />
+    <Content Include="Assets\images\Award winning Patient Care -icons\Laboratory-Services.png" />
+    <Content Include="Assets\images\Award winning Patient Care -icons\Neurology-Surgery.png" />
+    <Content Include="Assets\images\award-winnig\Award-winning-Patient-Care.png" />
+    <Content Include="Assets\images\banner\banner.png" />
+    <Content Include="Assets\images\beds.png" />
+    <Content Include="Assets\images\bg\22.jpg" />
+    <Content Include="Assets\images\bg\banner.jpg" />
+    <Content Include="Assets\images\bg\bg-2.jpg" />
+    <Content Include="Assets\images\bg\bg-4.jpg" />
+    <Content Include="Assets\images\bg\patient-detail-form-bg.png" />
+    <Content Include="Assets\images\bg\slider-bg-1.jpg" />
+    <Content Include="Assets\images\blk.svg" />
+    <Content Include="Assets\images\blog\blog-1.jpg" />
+    <Content Include="Assets\images\blog\blog-2.jpg" />
+    <Content Include="Assets\images\blog\blog-4.jpg" />
+    <Content Include="Assets\images\blog\blog-6.jpg" />
+    <Content Include="Assets\images\blog\blog-7.jpg" />
+    <Content Include="Assets\images\blog\blog-8.jpg" />
+    <Content Include="Assets\images\blog\blog1.jpg" />
+    <Content Include="Assets\images\blog\blog2.jpg" />
+    <Content Include="Assets\images\blog\blog3.jpg" />
+    <Content Include="Assets\images\blog\blog4.jpg" />
+    <Content Include="Assets\images\blog\testimonial1.jpg" />
+    <Content Include="Assets\images\blog\testimonial2.jpg" />
+    <Content Include="Assets\images\certificate.png" />
+    <Content Include="Assets\images\client-testimonial\client1.png" />
+    <Content Include="Assets\images\client-testimonial\client2.png" />
+    <Content Include="Assets\images\cost-of-treatment\Cosmetology.png" />
+    <Content Include="Assets\images\cost-of-treatment\Endocrinology.png" />
+    <Content Include="Assets\images\cost-of-treatment\Gynecology.png" />
+    <Content Include="Assets\images\cost-of-treatment\Nephrology.png" />
+    <Content Include="Assets\images\cost-of-treatment\Neurology.png" />
+    <Content Include="Assets\images\cost-of-treatment\oncology.png" />
+    <Content Include="Assets\images\country\cambodia.png" />
+    <Content Include="Assets\images\country\india-icon.svg" />
+    <Content Include="Assets\images\country\india.png" />
+    <Content Include="Assets\images\country\thailand.png" />
+    <Content Include="Assets\images\country\turkey-icon.svg" />
+    <Content Include="Assets\images\country\turkey.png" />
+    <Content Include="Assets\images\country\uae.png" />
+    <Content Include="Assets\images\disease\body-surgery.svg" />
+    <Content Include="Assets\images\disease\cancer-care-icon - Copy.jpg" />
+    <Content Include="Assets\images\disease\cancer-care-icon - Copy.png" />
+    <Content Include="Assets\images\disease\cancer-care-icon.jpg" />
+    <Content Include="Assets\images\disease\cancer-care.jpg" />
+    <Content Include="Assets\images\disease\cancer.png" />
+    <Content Include="Assets\images\disease\Cancer.svg" />
+    <Content Include="Assets\images\disease\cardiology-icon.jpg" />
+    <Content Include="Assets\images\disease\cardiology-icon1.jpg" />
+    <Content Include="Assets\images\disease\cardiology.jpg" />
+    <Content Include="Assets\images\disease\cardiology.png" />
+    <Content Include="Assets\images\disease\Cardiology.svg" />
+    <Content Include="Assets\images\disease\contact-dotted.png" />
+    <Content Include="Assets\images\disease\Cosmetology-bg.png" />
+    <Content Include="Assets\images\disease\D2EFC623.png" />
+    <Content Include="Assets\images\disease\dental-care.svg" />
+    <Content Include="Assets\images\disease\Gynecology-bg.png" />
+    <Content Include="Assets\images\disease\Gynecology.svg" />
+    <Content Include="Assets\images\disease\IVF-and-fertility.jpg" />
+    <Content Include="Assets\images\disease\IVF.png" />
+    <Content Include="Assets\images\disease\Neuro and Brain.png" />
+    <Content Include="Assets\images\disease\Neuro and Brain.svg" />
+    <Content Include="Assets\images\disease\neurology-surgery.svg" />
+    <Content Include="Assets\images\disease\Neurology.png" />
+    <Content Include="Assets\images\disease\Neurosurgery.png" />
+    <Content Include="Assets\images\disease\Oncology-bg.png" />
+    <Content Include="Assets\images\disease\operational-costs.svg" />
+    <Content Include="Assets\images\disease\orthopaedic.png" />
+    <Content Include="Assets\images\disease\Orthopedic.png" />
+    <Content Include="Assets\images\disease\Orthopedic.svg" />
+    <Content Include="Assets\images\disease\transplant-surgery-icon - Copy.png" />
+    <Content Include="Assets\images\disease\transplant-surgery-icon.jpg" />
+    <Content Include="Assets\images\disease\transplant-surgery.jpg" />
+    <Content Include="Assets\images\disease\transplant-surgery.png" />
+    <Content Include="Assets\images\disease\Transplant.png" />
+    <Content Include="Assets\images\disease\Urology.png" />
+    <Content Include="Assets\images\disease\Urology.svg" />
+    <Content Include="Assets\images\disease\Weight-Loss.jpg" />
+    <Content Include="Assets\images\Doctors\1_00000000-0000-0000-0000-000000000000.jpg" />
+    <Content Include="Assets\images\Doctors\1_7d3499d1-24ad-47d3-a9fe-f462b88322d6.jpg" />
+    <Content Include="Assets\images\Doctors\7cf46d11-307b-464e-8fa8-09158aab9e47.jpg" />
+    <Content Include="Assets\images\Doctors\b863ded6-4688-4ed9-b9de-0284844725d0.jpg" />
+    <Content Include="Assets\images\Doctors\Doctor-avatart-list.svg" />
+    <Content Include="Assets\images\Doctors\dr-tarun.png" />
+    <Content Include="Assets\images\Doctors\pasport_Photo_44a05259-32f4-4732-a307-00bfe2f82591.jpg" />
+    <Content Include="Assets\images\establishment.png" />
+    <Content Include="Assets\images\footer\footer-logo.svg" />
+    <Content Include="Assets\images\hospital.png" />
+    <Content Include="Assets\images\hospitals\amri.png" />
+    <Content Include="Assets\images\hospitals\amri.svg" />
+    <Content Include="Assets\images\hospitals\apollo.png" />
+    <Content Include="Assets\images\hospitals\apollo.svg" />
+    <Content Include="Assets\images\hospitals\apollo_6c986805-fc76-4d14-bb0f-07f35902835b.png" />
+    <Content Include="Assets\images\hospitals\artemis.jpg" />
+    <Content Include="Assets\images\hospitals\Artemis.png" />
+    <Content Include="Assets\images\hospitals\artemis_a486b007-952e-4342-a0d9-4ccb3a446148.jpg" />
+    <Content Include="Assets\images\hospitals\aster.jpg" />
+    <Content Include="Assets\images\hospitals\blk-logo.svg" />
+    <Content Include="Assets\images\hospitals\blk.jpg" />
+    <Content Include="Assets\images\hospitals\blk.png" />
+    <Content Include="Assets\images\hospitals\columbia.jpg" />
+    <Content Include="Assets\images\hospitals\dummyhospital.jfif" />
+    <Content Include="Assets\images\hospitals\dummyhospital_4a668f06-ae15-4c13-b97b-7470d3fa596b.jfif" />
+    <Content Include="Assets\images\hospitals\dummyhospital_a486b007-952e-4342-a0d9-4ccb3a446148.jfif" />
+    <Content Include="Assets\images\hospitals\fortis.png" />
+    <Content Include="Assets\images\hospitals\fortis.svg" />
+    <Content Include="Assets\images\hospitals\fortis_logo.jpeg" />
+    <Content Include="Assets\images\hospitals\global.jpg" />
+    <Content Include="Assets\images\hospitals\hospital-svgrepo-com.svg" />
+    <Content Include="Assets\images\hospitals\indian-spinal.jpg" />
+    <Content Include="Assets\images\hospitals\jaslok.jpg" />
+    <Content Include="Assets\images\hospitals\jaypee-logo.svg" />
+    <Content Include="Assets\images\hospitals\jaypee.jpg" />
+    <Content Include="Assets\images\hospitals\jaypee.png" />
+    <Content Include="Assets\images\hospitals\kokilaben.jpg" />
+    <Content Include="Assets\images\hospitals\manipal.jpg" />
+    <Content Include="Assets\images\hospitals\max.jpg" />
+    <Content Include="Assets\images\hospitals\medanta.jpg" />
+    <Content Include="Assets\images\hospitals\metro-logo.png" />
+    <Content Include="Assets\images\hospitals\metro.jpeg" />
+    <Content Include="Assets\images\hospitals\metro.jpg" />
+    <Content Include="Assets\images\hospitals\metro.png" />
+    <Content Include="Assets\images\hospitals\metro.svg" />
+    <Content Include="Assets\images\hospitals\metro_00000000-0000-0000-0000-000000000000.png" />
+    <Content Include="Assets\images\hospitals\mgm.jpg" />
+    <Content Include="Assets\images\hospitals\miot.jpg" />
+    <Content Include="Assets\images\hospitals\nanavati.jpg" />
+    <Content Include="Assets\images\hospitals\paras.jpg" />
+    <Content Include="Assets\images\hospitals\qrg.png" />
+    <Content Include="Assets\images\hospitals\qrg.svg" />
+    <Content Include="Assets\images\hospitals\sharda.jpg" />
+    <Content Include="Assets\images\hospital\amri.png" />
+    <Content Include="Assets\images\hospital\blk.png" />
+    <Content Include="Assets\images\hospital\fortis.png" />
+    <Content Include="Assets\images\hospital\jaypee.png" />
+    <Content Include="Assets\images\hospital\metro.png" />
+    <Content Include="Assets\images\hospital\qrg.png" />
+    <Content Include="Assets\images\hosptial-logo\amri.svg" />
+    <Content Include="Assets\images\hosptial-logo\apollo.svg" />
+    <Content Include="Assets\images\hosptial-logo\blk-logo.svg" />
+    <Content Include="Assets\images\hosptial-logo\blk.png" />
+    <Content Include="Assets\images\hosptial-logo\fortis.png" />
+    <Content Include="Assets\images\hosptial-logo\fortis.svg" />
+    <Content Include="Assets\images\hosptial-logo\jaypee-logo.svg" />
+    <Content Include="Assets\images\hosptial-logo\jaypee.png" />
+    <Content Include="Assets\images\hosptial-logo\metro.png" />
+    <Content Include="Assets\images\hosptial-logo\metro.svg" />
+    <Content Include="Assets\images\hosptial-logo\qrg.svg" />
+    <Content Include="Assets\images\logo.jpg" />
+    <Content Include="Assets\images\logo.png" />
+    <Content Include="Assets\images\need-emergency\need-emegency.png" />
+    <Content Include="Assets\images\nodatafound.png" />
+    <Content Include="Assets\images\partners\amri.png" />
+    <Content Include="Assets\images\partners\blk.png" />
+    <Content Include="Assets\images\partners\fortis.png" />
+    <Content Include="Assets\images\partners\jaypee.png" />
+    <Content Include="Assets\images\partners\metro.png" />
+    <Content Include="Assets\images\partners\qrg.png" />
+    <Content Include="Assets\images\partner\partner1.png" />
+    <Content Include="Assets\images\partner\partner2.png" />
+    <Content Include="Assets\images\partner\partner3.png" />
+    <Content Include="Assets\images\partner\partner4.png" />
+    <Content Include="Assets\images\services\book-appointment.png" />
+    <Content Include="Assets\images\services\compare-cost.png" />
+    <Content Include="Assets\images\services\consult-video.png" />
+    <Content Include="Assets\images\services\for-visa.png" />
+    <Content Include="Assets\images\services\hospitalisation-support.png" />
+    <Content Include="Assets\images\services\Hospitality.jpg" />
+    <Content Include="Assets\images\services\Hospitalization.jpg" />
+    <Content Include="Assets\images\services\price-comparison.png" />
+    <Content Include="Assets\images\services\Technical-assistance.png" />
+    <Content Include="Assets\images\services\transparency.png" />
+    <Content Include="Assets\images\service\bg-1.jpg" />
+    <Content Include="Assets\images\service\book-doctor-appoint-image.jpg" />
+    <Content Include="Assets\images\service\Hospitalization.jpg" />
+    <Content Include="Assets\images\service\ourservicesbg.jpg" />
+    <Content Include="Assets\images\service\service-1.jpg" />
+    <Content Include="Assets\images\service\service-2.jpg" />
+    <Content Include="Assets\images\service\service-3.jpg" />
+    <Content Include="Assets\images\service\service-4.jpg" />
+    <Content Include="Assets\images\service\service-5.jpg" />
+    <Content Include="Assets\images\service\service-6.jpg" />
+    <Content Include="Assets\images\service\service-8.jpg" />
+    <Content Include="Assets\images\service\technology-image.jpg" />
+    <Content Include="Assets\images\service\visa-service-image.jpg" />
+    <Content Include="Assets\images\siteuser.jpg" />
+    <Content Include="Assets\images\team\1.jfif" />
+    <Content Include="Assets\images\team\1.jpg" />
+    <Content Include="Assets\images\team\2.jpg" />
+    <Content Include="Assets\images\team\3.jpg" />
+    <Content Include="Assets\images\team\4.jpg" />
+    <Content Include="Assets\images\team\dummy.jfif" />
+    <Content Include="Assets\images\team\test-thumb1.jpg" />
+    <Content Include="Assets\images\team\test-thumb2.jpg" />
+    <Content Include="Assets\images\team\test-thumb3.jpg" />
+    <Content Include="Assets\images\team\test-thumb4.jpg" />
+    <Content Include="Assets\images\team\user-4.jpg" />
+    <Content Include="Assets\images\testi1.png" />
+    <Content Include="Assets\images\Testimonial\Chuut Pun.jpg" />
+    <Content Include="Assets\images\Testimonial\Dr KHENG KIMSRUN.jpg" />
+    <Content Include="Assets\images\Testimonial\Lort Theara.jpg" />
+    <Content Include="Assets\images\Testimonial\LortT hea Rith.jpg" />
+    <Content Include="Assets\images\Testimonial\Sre Ing.jpg" />
+    <Content Include="Assets\images\Testimonial\Yong Kim Sieu.jpg" />
+    <Content Include="Assets\images\treatment\BMT.jpg" />
+    <Content Include="Assets\images\treatment\cancer_care\cancer-care-icon.jpg" />
+    <Content Include="Assets\images\treatment\cancer_care\cancer-care.jpg" />
+    <Content Include="Assets\images\treatment\cancer_care\icon\anal-cancer.jpg" />
+    <Content Include="Assets\images\treatment\cancer_care\icon\breast-biopsy-breast-cancer-and-surgery.jpg" />
+    <Content Include="Assets\images\treatment\cancer_care\icon\cervical-cancer.jpg" />
+    <Content Include="Assets\images\treatment\cancer_care\icon\colon-cancer.jpg" />
+    <Content Include="Assets\images\treatment\cancer_care\icon\gallbladder-cancer.jpg" />
+    <Content Include="Assets\images\treatment\cancer_care\icon\hodgkin-disease.jpg" />
+    <Content Include="Assets\images\treatment\cancer_care\icon\kidney-cancer.jpg" />
+    <Content Include="Assets\images\treatment\cancer_care\icon\liver-cancer.jpg" />
+    <Content Include="Assets\images\treatment\cancer_care\icon\lung-cancer.jpg" />
+    <Content Include="Assets\images\treatment\cancer_care\icon\oral-cancer.jpg" />
+    <Content Include="Assets\images\treatment\cancer_care\icon\prostate-cancer.jpg" />
+    <Content Include="Assets\images\treatment\cancer_care\icon\stomach-cancer.jpg" />
+    <Content Include="Assets\images\treatment\cancer_care\icon\wilms-tumor.jpg" />
+    <Content Include="Assets\images\treatment\cancer_care\images\anal-cancer.jpg" />
+    <Content Include="Assets\images\treatment\cancer_care\images\anal-cancer1.jpg" />
+    <Content Include="Assets\images\treatment\cancer_care\images\breast-biopsy,-breast-cancer-and-surgery.jpg" />
+    <Content Include="Assets\images\treatment\cancer_care\images\breast-biopsy,-breast-cancer-and-surgery1.jpg" />
+    <Content Include="Assets\images\treatment\cancer_care\images\cervical-cancer.jpg" />
+    <Content Include="Assets\images\treatment\cancer_care\images\cervical-cancer1.jpg" />
+    <Content Include="Assets\images\treatment\cancer_care\images\colon-cancer.jpg" />
+    <Content Include="Assets\images\treatment\cancer_care\images\colon-cancer1.jpg" />
+    <Content Include="Assets\images\treatment\cancer_care\images\gallbladder-cancer.jpg" />
+    <Content Include="Assets\images\treatment\cancer_care\images\gallbladder-cancer1.jpg" />
+    <Content Include="Assets\images\treatment\cancer_care\images\hodgkin-disease.jpg" />
+    <Content Include="Assets\images\treatment\cancer_care\images\hodgkin-disease1.jpg" />
+    <Content Include="Assets\images\treatment\cancer_care\images\kidney-cancer.jpg" />
+    <Content Include="Assets\images\treatment\cancer_care\images\kidney-cancer1.jpg" />
+    <Content Include="Assets\images\treatment\cancer_care\images\liver-cancer.jpg" />
+    <Content Include="Assets\images\treatment\cancer_care\images\liver-cancer1.jpg" />
+    <Content Include="Assets\images\treatment\cancer_care\images\lung-cancer.jpg" />
+    <Content Include="Assets\images\treatment\cancer_care\images\lung-cancer1.jpg" />
+    <Content Include="Assets\images\treatment\cancer_care\images\oral-cancer.jpg" />
+    <Content Include="Assets\images\treatment\cancer_care\images\oral-cancer1.jpg" />
+    <Content Include="Assets\images\treatment\cancer_care\images\prostate-cancer.jpg" />
+    <Content Include="Assets\images\treatment\cancer_care\images\prostate-cancer1.jpg" />
+    <Content Include="Assets\images\treatment\cancer_care\images\stomach-cancer.jpg" />
+    <Content Include="Assets\images\treatment\cancer_care\images\stomach-cancer1.jpg" />
+    <Content Include="Assets\images\treatment\cancer_care\images\wilms-tumor.jpg" />
+    <Content Include="Assets\images\treatment\cancer_care\images\wilms-tumor1.jpg" />
+    <Content Include="Assets\images\treatment\cardiology.jpg" />
+    <Content Include="Assets\images\treatment\cardiology\cardiology-icon.jpg" />
+    <Content Include="Assets\images\treatment\cardiology\cardiology.jpg" />
+    <Content Include="Assets\images\treatment\cardiology\icon\aicd.jpg" />
+    <Content Include="Assets\images\treatment\cardiology\icon\angiography.jpg" />
+    <Content Include="Assets\images\treatment\cardiology\icon\angioplasty-1-stent.jpg" />
+    <Content Include="Assets\images\treatment\cardiology\icon\aortic-valve-replacement.jpg" />
+    <Content Include="Assets\images\treatment\cardiology\icon\bentall-procedure.jpg" />
+    <Content Include="Assets\images\treatment\cardiology\icon\coronary-heart-bypass-surgery-%28cabg%29.jpg" />
+    <Content Include="Assets\images\treatment\cardiology\icon\crt---d-implant.jpg" />
+    <Content Include="Assets\images\treatment\cardiology\icon\heart-surgery.jpg" />
+    <Content Include="Assets\images\treatment\cardiology\icon\icd-implant.jpg" />
+    <Content Include="Assets\images\treatment\cardiology\icon\lvad.jpg" />
+    <Content Include="Assets\images\treatment\cardiology\icon\mitral-valve-replacement.jpg" />
+    <Content Include="Assets\images\treatment\cardiology\icon\tavi.jpg" />
+    <Content Include="Assets\images\treatment\cardiology\icon\valve-replacement.jpg" />
+    <Content Include="Assets\images\treatment\cardiology\icon\vsd-closure-%28adult%29-surgery.jpg" />
+    <Content Include="Assets\images\treatment\cardiology\images\aicd.jpg" />
+    <Content Include="Assets\images\treatment\cardiology\images\angiography.jpg" />
+    <Content Include="Assets\images\treatment\cardiology\images\angioplasty-1-stent.jpg" />
+    <Content Include="Assets\images\treatment\cardiology\images\aortic-valve-replacement.jpg" />
+    <Content Include="Assets\images\treatment\cardiology\images\bentall-procedure.jpg" />
+    <Content Include="Assets\images\treatment\cardiology\images\coronary-heart-bypass-surgery-%28cabg%29.jpg" />
+    <Content Include="Assets\images\treatment\cardiology\images\crt---d-implant.jpg" />
+    <Content Include="Assets\images\treatment\cardiology\images\heart-surgery.jpg" />
+    <Content Include="Assets\images\treatment\cardiology\images\icd-implant.jpg" />
+    <Content Include="Assets\images\treatment\cardiology\images\lvad.jpg" />
+    <Content Include="Assets\images\treatment\cardiology\images\mitral-valve-replacement.jpg" />
+    <Content Include="Assets\images\treatment\cardiology\images\tavi.jpg" />
+    <Content Include="Assets\images\treatment\cardiology\images\valve-replacement.jpg" />
+    <Content Include="Assets\images\treatment\cardiology\images\vsd-closure-%28adult%29-surgery.jpg" />
+    <Content Include="Assets\images\treatment\ENT.jpg" />
+    <Content Include="Assets\images\treatment\ivf.png" />
+    <Content Include="Assets\images\treatment\minimal access surgery.png" />
+    <Content Include="Assets\images\treatment\Nephro_00000000-0000-0000-0000-000000000000.jpg" />
+    <Content Include="Assets\images\treatment\Nephro_3b2f2835-8b58-4aa0-a0a2-71fef4362a1d.jpg" />
+    <Content Include="Assets\images\treatment\NEUROLOGY.jpg" />
+    <Content Include="Assets\images\treatment\Nikon-1-V3-sample-photo_00000000-0000-0000-0000-000000000000.jpg" />
+    <Content Include="Assets\images\treatment\ORTHOPEDIC.jpg" />
+    <Content Include="Assets\images\treatment\transplant_surgery\icon\bone-marrow-transplant.jpg" />
+    <Content Include="Assets\images\treatment\transplant_surgery\icon\heart-transplant.jpg" />
+    <Content Include="Assets\images\treatment\transplant_surgery\icon\kidney-transplant.jpg" />
+    <Content Include="Assets\images\treatment\transplant_surgery\icon\liver-transplant.jpg" />
+    <Content Include="Assets\images\treatment\transplant_surgery\images\bone-marrow-transplant.jpg" />
+    <Content Include="Assets\images\treatment\transplant_surgery\images\heart-transplant.jpg" />
+    <Content Include="Assets\images\treatment\transplant_surgery\images\kidney-transplant.jpg" />
+    <Content Include="Assets\images\treatment\transplant_surgery\images\liver-transplant.jpg" />
+    <Content Include="Assets\images\treatment\transplant_surgery\transplant-surgery-icon.jpg" />
+    <Content Include="Assets\images\treatment\transplant_surgery\transplant-surgery.jpg" />
+    <Content Include="Assets\images\treatment\transplant_surgery\transplant-surgery.png" />
+    <Content Include="Assets\images\treatment\UROLOGY.jpg" />
+    <Content Include="Assets\images\user-4.jpg" />
+    <Content Include="Assets\images\UserDocuments\apollo_00000000-0000-0000-0000-000000000000.png" />
+    <Content Include="Assets\images\UserDocuments\artemis_a15dbc30-bcd4-4f95-a60f-2816c1c20b69.jpg" />
+    <Content Include="Assets\images\UserDocuments\dipti_34c09b70-9cc6-470f-a75d-f682a9a96274.jpg" />
+    <Content Include="Assets\images\UserDocuments\dipti_39c852e1-26ce-41a9-b28e-ea515b92ea56.jpg" />
+    <Content Include="Assets\images\UserDocuments\dipti_5914cfb9-47cf-4e85-834d-e23d1bbf87b5.jpg" />
+    <Content Include="Assets\images\UserDocuments\dipti_8cb6f1b0-d673-4a78-a276-4db8fcf7f0d2.jpg" />
+    <Content Include="Assets\images\UserDocuments\dipti_a5f29534-2677-40e6-a091-4ede92cafd67.jpg" />
+    <Content Include="Assets\images\UserDocuments\dipti_b66cbe01-7aa4-4187-8ab4-64123536e406.jpg" />
+    <Content Include="Assets\images\UserDocuments\dipti_c04e4c1c-4f10-4272-80b9-81c46da19846.jpg" />
+    <Content Include="Assets\images\UserDocuments\dipti_c73a18d1-0a26-47b3-b83f-a764cf6acd92.jpg" />
+    <Content Include="Assets\images\UserDocuments\download %282%29_a4aff40b-e8a1-44a2-b344-d13cb14929a8.jpg" />
+    <Content Include="Assets\images\UserDocuments\download %283%29_a3f2714f-120a-4e46-b129-9a5fd2f66ca5.jpg" />
+    <Content Include="Assets\images\UserDocuments\Photo1_9e3e271e-0b01-4862-89dd-72ed3ce0e3f2.jpg" />
+    <Content Include="Assets\images\UserDocuments\user-4_919217cf-5c58-4de1-a12d-62cc0f7cdef6.jpg" />
+    <Content Include="Assets\js\contact.js" />
+    <Content Include="Assets\js\script.js" />
+    <Content Include="Assets\plugins\bootstrap\css\bootstrap.min.css" />
+    <Content Include="Assets\plugins\bootstrap\js\bootstrap.js" />
+    <Content Include="Assets\plugins\bootstrap\js\bootstrap.min.js" />
+    <Content Include="Assets\plugins\bootstrap\js\popper.js" />
+    <Content Include="Assets\plugins\counterup\jquery.counterup.min.js" />
+    <Content Include="Assets\plugins\counterup\jquery.easing.js" />
+    <Content Include="Assets\plugins\counterup\jquery.waypoints.min.js" />
+    <Content Include="Assets\plugins\google-map\map.js" />
+    <Content Include="Assets\plugins\icofont\demo.html" />
+    <Content Include="Assets\plugins\icofont\icofont.css" />
+    <Content Include="Assets\plugins\icofont\icofont.min.css" />
+    <Content Include="Assets\plugins\jquery\jquery.js" />
+    <Content Include="Assets\plugins\shuffle\shuffle.min.js" />
+    <Content Include="Assets\plugins\slick-carousel\slick\ajax-loader.gif" />
+    <Content Include="Assets\plugins\slick-carousel\slick\fonts\slick.svg" />
+    <Content Include="Assets\plugins\slick-carousel\slick\slick-theme.css" />
+    <Content Include="Assets\plugins\slick-carousel\slick\slick.css" />
+    <Content Include="Assets\plugins\slick-carousel\slick\slick.js" />
+    <Content Include="Assets\plugins\slick-carousel\slick\slick.min.js" />
+    <Content Include="Content\bootstrap-theme.css" />
+    <Content Include="Content\bootstrap-theme.min.css" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="css\bootstrap.min.css" />
+    <Content Include="css\owl.carousel.min.css" />
+    <Content Include="css\talkto-treat.css" />
+    <Content Include="css\talkto-treat1.css" />
+    <Content Include="EmailTemplate\AppoitmentConfirmation.html" />
+    <Content Include="EmailTemplate\AppoitmentBook.html" />
+    <Content Include="EmailTemplate\AppoitmentUpdate.html" />
+    <Content Include="EmailTemplate\QuoteConfirm.html" />
+    <Content Include="EmailTemplate\RegisterConfirm.html" />
+    <Content Include="EmailTemplate\AppoitmentCancelRequest.html" />
+    <Content Include="EmailTemplate\ResetPassword.html" />
+    <Content Include="favicon.ico" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Global.asax" />
+    <Content Include="Content\Site.css" />
+    <Content Include="images\4EB8BC30.png" />
+    <Content Include="images\alrt-notification.svg" />
+    <Content Include="images\anal-cancer.jpg" />
+    <Content Include="images\apollo-delhi.svg" />
+    <Content Include="images\Award winning Patient Care.png" />
+    <Content Include="images\award-winning-patient-care.svg" />
+    <Content Include="images\banner-element-1.png" />
+    <Content Include="images\banner-element-2.png" />
+    <Content Include="images\banner-element-3.png" />
+    <Content Include="images\banner-element-4.png" />
+    <Content Include="images\banner-line.svg" />
+    <Content Include="images\banner.png" />
+    <Content Include="images\best-cardiology-hospital-in-delhi.svg" />
+    <Content Include="images\blk-building.svg" />
+    <Content Include="images\blk-logo.svg" />
+    <Content Include="images\blk.png" />
+    <Content Include="images\blk.svg" />
+    <Content Include="images\body-surgery.svg" />
+    <Content Include="images\breast-biopsy,-breast-cancer-and-surgery.jpg" />
+    <Content Include="images\business-efficiency.svg" />
+    <Content Include="images\cancer-care-icon.jpg" />
+    <Content Include="images\Cancer.png" />
+    <Content Include="images\Cancer.svg" />
+    <Content Include="images\cardiology-icon.jpg" />
+    <Content Include="images\cardiology.jpg" />
+    <Content Include="images\Cardiology.png" />
+    <Content Include="images\Cardiology.svg" />
+    <Content Include="images\cervical-cancer.jpg" />
+    <Content Include="images\colon-cancer.jpg" />
+    <Content Include="images\configuration-management.svg" />
+    <Content Include="images\contact-dotted.png" />
+    <Content Include="images\Cosmetology-bg.png" />
+    <Content Include="images\crousel-next.svg" />
+    <Content Include="images\crousel-prev.svg" />
+    <Content Include="images\D2EFC623.png" />
+    <Content Include="images\dental-care.svg" />
+    <Content Include="images\Doctor-avatart-list.svg" />
+    <Content Include="images\Doctor-avatart-listF.png" />
+    <Content Include="images\doctor-avtar.png" />
+    <Content Include="images\doctor-avtar.svg" />
+    <Content Include="images\doctors-banner.svg" />
+    <Content Include="images\ECA9EDB1.png" />
+    <Content Include="images\EE489A70.jpg" />
+    <Content Include="images\email.svg" />
+    <Content Include="images\employee-engagement.svg" />
+    <Content Include="images\employee-productivity.svg" />
+    <Content Include="images\Endocrinology-bg.png" />
+    <Content Include="images\footer-logo.svg" />
+    <Content Include="images\form-shape.png" />
+    <Content Include="images\form-shape.svg" />
+    <Content Include="images\fortis-logo.svg" />
+    <Content Include="images\fortis.png" />
+    <Content Include="images\fortis.svg" />
+    <Content Include="images\gallbladder-cancer.jpg" />
+    <Content Include="images\Gynecology-bg.png" />
+    <Content Include="images\Gynecology.svg" />
+    <Content Include="images\health-chck.svg" />
+    <Content Include="images\heart-disease.svg" />
+    <Content Include="images\hodgkin-disease.jpg" />
+    <Content Include="images\hospital-avtar.svg" />
+    <Content Include="images\hospital-banner.svg" />
+    <Content Include="images\india-icon.png" />
+    <Content Include="images\india-icon.svg" />
+    <Content Include="images\industry-benchmark.svg" />
+    <Content Include="images\integration.svg" />
+    <Content Include="images\issue-resolution.svg" />
+    <Content Include="images\it-dependency.svg" />
+    <Content Include="images\Jaypee-Hospital-build.svg" />
+    <Content Include="images\jaypee-logo.svg" />
+    <Content Include="images\jaypee.png" />
+    <Content Include="images\jaypee.svg" />
+    <Content Include="images\kidney-cancer.jpg" />
+    <Content Include="images\knowledge-base.svg" />
+    <Content Include="images\laboratory.svg" />
+    <Content Include="images\liver-cancer.jpg" />
+    <Content Include="images\logo.svg" />
+    <Content Include="images\lung-cancer.jpg" />
+    <Content Include="images\make-appointment.png" />
+    <Content Include="images\map-location.svg" />
+    <Content Include="images\need-emegency.png" />
+    <Content Include="images\Nephrology-bg.png" />
+    <Content Include="images\Neuro and Brain.png" />
+    <Content Include="images\Neuro and Brain.svg" />
+    <Content Include="images\neurology-surgery.svg" />
+    <Content Include="images\Neurology.png" />
+    <Content Include="images\next.png" />
+    <Content Include="images\next.svg" />
+    <Content Include="images\no-image.png" />
+    <Content Include="images\no-of-bed.svg" />
+    <Content Include="images\Oncology-bg.png" />
+    <Content Include="images\operational-costs.svg" />
+    <Content Include="images\oral-cancer.jpg" />
+    <Content Include="images\Orthopedic.png" />
+    <Content Include="images\Orthopedic.svg" />
+    <Content Include="images\partner1.svg" />
+    <Content Include="images\partner2.svg" />
+    <Content Include="images\partner3.svg" />
+    <Content Include="images\partner4.svg" />
+    <Content Include="images\partner5.svg" />
+    <Content Include="images\password-management.svg" />
+    <Content Include="images\phone.svg" />
+    <Content Include="images\prev.png" />
+    <Content Include="images\prev.svg" />
+    <Content Include="images\prostate-cancer.jpg" />
+    <Content Include="images\quality-measurement.svg" />
+    <Content Include="images\search.svg" />
+    <Content Include="images\software-installation-icon.png" />
+    <Content Include="images\speaciality.svg" />
+    <Content Include="images\stomach-cancer.jpg" />
+    <Content Include="images\team.png" />
+    <Content Include="images\teams.png" />
+    <Content Include="images\testimonial-quote-icon.svg" />
+    <Content Include="images\testimonial1.svg" />
+    <Content Include="images\testimonial2.svg" />
+    <Content Include="images\transplant-surgery-icon.jpg" />
+    <Content Include="images\unnamed.png" />
+    <Content Include="images\Urology.png" />
+    <Content Include="images\Urology.svg" />
+    <Content Include="images\user-management.svg" />
+    <Content Include="images\valve-replacement.jpg" />
+    <Content Include="images\waves-shape.svg" />
+    <Content Include="images\wilms-tumor.jpg" />
+    <Content Include="images\work-accuracy.svg" />
+    <Content Include="images\work-from-home.svg" />
+    <Content Include="images\workplace-state-monitoring.svg" />
+    <Content Include="js\bootstrap.min.js" />
+    <Content Include="js\jquery.min.js" />
+    <Content Include="js\owl.carousel.js" />
+    <Content Include="js\owl.carousel.min.js" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Assets\css\maps\style.css.map" />
+    <Content Include="Assets\plugins\icofont\fonts\icofont.eot" />
+    <Content Include="Assets\plugins\icofont\fonts\icofont.ttf" />
+    <Content Include="Assets\plugins\icofont\fonts\icofont.woff" />
+    <Content Include="Assets\plugins\icofont\fonts\icofont.woff2" />
+    <Content Include="Assets\plugins\slick-carousel\slick\config.rb" />
+    <Content Include="Assets\plugins\slick-carousel\slick\fonts\slick.eot" />
+    <Content Include="Assets\plugins\slick-carousel\slick\fonts\slick.ttf" />
+    <Content Include="Assets\plugins\slick-carousel\slick\fonts\slick.woff" />
+    <Content Include="Assets\plugins\slick-carousel\slick\slick-theme.less" />
+    <Content Include="Assets\plugins\slick-carousel\slick\slick-theme.scss" />
+    <Content Include="Assets\plugins\slick-carousel\slick\slick.less" />
+    <Content Include="Assets\plugins\slick-carousel\slick\slick.scss" />
+    <Content Include="Assets\scss\style.scss" />
+    <Content Include="Assets\scss\templates\_about.scss" />
+    <Content Include="Assets\scss\templates\_backgrounds.scss" />
+    <Content Include="Assets\scss\templates\_blog-sidebar.scss" />
+    <Content Include="Assets\scss\templates\_blog.scss" />
+    <Content Include="Assets\scss\templates\_contact.scss" />
+    <Content Include="Assets\scss\templates\_counter.scss" />
+    <Content Include="Assets\scss\templates\_cta.scss" />
+    <Content Include="Assets\scss\templates\_department.scss" />
+    <Content Include="Assets\scss\templates\_feature.scss" />
+    <Content Include="Assets\scss\templates\_footer.scss" />
+    <Content Include="Assets\scss\templates\_header.scss" />
+    <Content Include="Assets\scss\templates\_navigation.scss" />
+    <Content Include="Assets\scss\templates\_portfolio.scss" />
+    <Content Include="Assets\scss\templates\_review.scss" />
+    <Content Include="Assets\scss\templates\_service.scss" />
+    <Content Include="Assets\scss\templates\_single-post.scss" />
+    <Content Include="Assets\scss\templates\_slider.scss" />
+    <Content Include="Assets\scss\templates\_team.scss" />
+    <Content Include="Assets\scss\_color.scss" />
+    <Content Include="Assets\scss\_common.scss" />
+    <Content Include="Assets\scss\_media-query.scss" />
+    <Content Include="Assets\scss\_mixins.scss" />
+    <Content Include="Assets\scss\_typography.scss" />
+    <Content Include="Assets\scss\_variables.scss" />
+    <Content Include="AdminAssets\css\app-rtl.min.css.map" />
+    <Content Include="AdminAssets\css\app.min.css.map" />
+    <Content Include="AdminAssets\css\bootstrap.min.css.map" />
+    <Content Include="AdminAssets\css\icons.min.css.map" />
+    <Content Include="AdminAssets\data\jsgrid.json" />
+    <Content Include="AdminAssets\fonts\cerebrisans-bold.eot" />
+    <Content Include="AdminAssets\fonts\cerebrisans-bold.ttf" />
+    <Content Include="AdminAssets\fonts\cerebrisans-bold.woff" />
+    <Content Include="AdminAssets\fonts\cerebrisans-bold.woff2" />
+    <Content Include="AdminAssets\fonts\cerebrisans-light.eot" />
+    <Content Include="AdminAssets\fonts\cerebrisans-light.ttf" />
+    <Content Include="AdminAssets\fonts\cerebrisans-light.woff" />
+    <Content Include="AdminAssets\fonts\cerebrisans-light.woff2" />
+    <Content Include="AdminAssets\fonts\cerebrisans-medium.eot" />
+    <Content Include="AdminAssets\fonts\cerebrisans-medium.ttf" />
+    <Content Include="AdminAssets\fonts\cerebrisans-medium.woff" />
+    <Content Include="AdminAssets\fonts\cerebrisans-medium.woff2" />
+    <Content Include="AdminAssets\fonts\cerebrisans-regular.eot" />
+    <Content Include="AdminAssets\fonts\cerebrisans-regular.ttf" />
+    <Content Include="AdminAssets\fonts\cerebrisans-regular.woff" />
+    <Content Include="AdminAssets\fonts\cerebrisans-regular.woff2" />
+    <Content Include="AdminAssets\fonts\cerebrisans-semibold.eot" />
+    <Content Include="AdminAssets\fonts\cerebrisans-semibold.ttf" />
+    <Content Include="AdminAssets\fonts\cerebrisans-semibold.woff" />
+    <Content Include="AdminAssets\fonts\cerebrisans-semibold.woff2" />
+    <Content Include="AdminAssets\fonts\dripicons-v2.eot" />
+    <Content Include="AdminAssets\fonts\dripicons-v2.ttf" />
+    <Content Include="AdminAssets\fonts\dripicons-v2.woff" />
+    <Content Include="AdminAssets\fonts\dropify.eot" />
+    <Content Include="AdminAssets\fonts\dropify.ttf" />
+    <Content Include="AdminAssets\fonts\dropify.woff" />
+    <Content Include="AdminAssets\fonts\fa-brands-400.eot" />
+    <Content Include="AdminAssets\fonts\fa-brands-400.ttf" />
+    <Content Include="AdminAssets\fonts\fa-brands-400.woff" />
+    <Content Include="AdminAssets\fonts\fa-brands-400.woff2" />
+    <Content Include="AdminAssets\fonts\fa-regular-400.eot" />
+    <Content Include="AdminAssets\fonts\fa-regular-400.ttf" />
+    <Content Include="AdminAssets\fonts\fa-regular-400.woff" />
+    <Content Include="AdminAssets\fonts\fa-regular-400.woff2" />
+    <Content Include="AdminAssets\fonts\fa-solid-900.eot" />
+    <Content Include="AdminAssets\fonts\fa-solid-900.ttf" />
+    <Content Include="AdminAssets\fonts\fa-solid-900.woff" />
+    <Content Include="AdminAssets\fonts\fa-solid-900.woff2" />
+    <Content Include="AdminAssets\fonts\feather.eot" />
+    <Content Include="AdminAssets\fonts\feather.ttf" />
+    <Content Include="AdminAssets\fonts\feather.woff" />
+    <Content Include="AdminAssets\fonts\footable.eot" />
+    <Content Include="AdminAssets\fonts\footable.ttf" />
+    <Content Include="AdminAssets\fonts\footable.woff" />
+    <Content Include="AdminAssets\fonts\materialdesignicons-webfont.eot" />
+    <Content Include="AdminAssets\fonts\materialdesignicons-webfont.ttf" />
+    <Content Include="AdminAssets\fonts\materialdesignicons-webfont.woff" />
+    <Content Include="AdminAssets\fonts\materialdesignicons-webfont.woff2" />
+    <Content Include="AdminAssets\fonts\Simple-Line-Icons.eot" />
+    <Content Include="AdminAssets\fonts\Simple-Line-Icons.ttf" />
+    <Content Include="AdminAssets\fonts\Simple-Line-Icons.woff" />
+    <Content Include="AdminAssets\fonts\Simple-Line-Icons.woff2" />
+    <Content Include="AdminAssets\fonts\summernote.eot" />
+    <Content Include="AdminAssets\fonts\summernote.ttf" />
+    <Content Include="AdminAssets\fonts\summernote.woff" />
+    <Content Include="AdminAssets\fonts\themify.eot" />
+    <Content Include="AdminAssets\fonts\themify.ttf" />
+    <Content Include="AdminAssets\fonts\themify.woff" />
+    <Content Include="AdminAssets\fonts\weathericons-regular-webfont.eot" />
+    <Content Include="AdminAssets\fonts\weathericons-regular-webfont.ttf" />
+    <Content Include="AdminAssets\fonts\weathericons-regular-webfont.woff" />
+    <Content Include="AdminAssets\fonts\weathericons-regular-webfont.woff2" />
+    <Content Include="AdminAssets\js\app.min.js.map" />
+    <Content Include="AdminAssets\js\vendor.min.js.map" />
+    <Content Include="AdminAssets\css\_custom-radio.scss" />
+    <Content Include="Assets\images\about\6754.csv" />
+    <Content Include="Assets\images\hospitals\TT app changes and new flow.pdf" />
+    <Content Include="Assets\images\hosptial-logo\hospital-logo.zip" />
+    <Content Include="EventJson\client_secret_386918777922-c15lprale928dujt4u3vlq8pe8pv2b0o.apps.googleusercontent.com.json" />
+    <Content Include="Assets\Cre\cre.json" />
+    <None Include="Scripts\jquery-3.4.1.intellisense.js" />
+    <Content Include="Scripts\jquery-3.4.1.js" />
+    <Content Include="Scripts\jquery-3.4.1.min.js" />
+    <Content Include="Scripts\jquery-3.4.1.slim.js" />
+    <Content Include="Scripts\jquery-3.4.1.slim.min.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\SHA256.js" />
+    <Content Include="Views\Doctors\_DoctorListPartial.cshtml" />
+    <Content Include="Web.config" />
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Views\Web.config" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Home\Register.cshtml" />
+    <Content Include="Views\Home\login.cshtml" />
+    <Content Include="Views\Home\Service.cshtml" />
+    <Content Include="Views\Home\About.cshtml" />
+    <Content Include="Views\Home\Confirmation.cshtml" />
+    <Content Include="Views\User\Index.cshtml" />
+    <Content Include="Views\Treatment\ParentDetail.cshtml" />
+    <Content Include="Views\Shared\_Enquiry.cshtml" />
+    <Content Include="Views\Doctors\Detail.cshtml" />
+    <Content Include="Views\Doctors\Index.cshtml" />
+    <Content Include="Views\Shared\_LayoutAdmin.cshtml" />
+    <Content Include="Views\AdminLogin\Index.cshtml" />
+    <Content Include="Views\AdminHome\Index.cshtml" />
+    <Content Include="Views\Doctors\ConsultOnline.cshtml" />
+    <Content Include="Views\Shared\_ConsolutOnline.cshtml" />
+    <Content Include="Views\Home\ApointmentConfirmation.cshtml" />
+    <Content Include="Views\ManageDoctor\AppointmentList.cshtml" />
+    <Content Include="Views\ManageDoctor\DoctorList.cshtml" />
+    <Content Include="Views\ManageDoctor\DoctorDetail.cshtml" />
+    <Content Include="Views\ManageDoctor\Create.cshtml" />
+    <Content Include="Views\ManageEnquiry\EnquiryList.cshtml" />
+    <Content Include="Views\ManageHospital\Create.cshtml" />
+    <Content Include="Views\ManageHospital\HospitallDetail.cshtml" />
+    <Content Include="Views\ManageHospital\HospitalList.cshtml" />
+    <Content Include="Views\Hospitals\ConsultOnline.cshtml" />
+    <Content Include="Views\Hospitals\Detail.cshtml" />
+    <Content Include="Views\Hospitals\Index.cshtml" />
+    <Content Include="Views\ManageTreatment\Create.cshtml" />
+    <Content Include="Views\ManageTreatment\TreatmentDetail.cshtml" />
+    <Content Include="Views\ManageTreatment\TreatmentList.cshtml" />
+    <Content Include="Views\ManageDoctor\ReplytoCustomer.cshtml" />
+    <Content Include="Views\User\AppointmentList.cshtml" />
+    <Content Include="Views\User\Healthwallet.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Home\OLD_Index.cshtml" />
+    <Content Include="Views\Hospitals\OLD_Index.cshtml" />
+    <Content Include="Views\Doctors\OLD_Index.cshtml" />
+    <Content Include="Views\Hospitals\OLD_Detail.cshtml" />
+    <Content Include="Views\Doctors\OLD_Detail.cshtml" />
+    <Content Include="Views\Home\OLD_Register.cshtml" />
+    <Content Include="Views\Home\OLD_login.cshtml" />
+    <Content Include="Views\Doctors\OLD_ConsultOnline.cshtml" />
+    <Content Include="Views\Pages\Cardioc.cshtml" />
+    <Content Include="Views\Pages\CompanyLicence.cshtml" />
+    <Content Include="Views\Pages\CompanySupport.cshtml" />
+    <Content Include="Views\Pages\Confirmation.cshtml" />
+    <Content Include="Views\Pages\FAQuestions.cshtml" />
+    <Content Include="Views\Pages\Medicine.cshtml" />
+    <Content Include="Views\Pages\PrivacyPolicy.cshtml" />
+    <Content Include="Views\Pages\Radiology.cshtml" />
+    <Content Include="Views\Pages\Surgery.cshtml" />
+    <Content Include="Views\Pages\TermsAndConditions.cshtml" />
+    <Content Include="Views\Pages\WomenHealth.cshtml" />
+    <Content Include="Views\Shared\_GetQuote.cshtml" />
+    <Content Include="Views\Home\ResetPassword.cshtml" />
+    <Content Include="Views\User\_HealthCondition.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Treatment\MegaMenu.cshtml" />
+    <Content Include="Views\Treatment\VerticalMenu.cshtml" />
+    <Content Include="Views\Treatment\ChildDetail.cshtml" />
+    <Content Include="Views\Shared\_OurPartners.cshtml" />
+    <Content Include="Views\Home\OurServices.cshtml" />
+    <Content Include="Views\Treatment\TreatmentPackages.cshtml" />
+    <Content Include="Views\User\AppointmentListFuture.cshtml" />
+    <Content Include="Views\Doctors\viewResponse.cshtml" />
+    <Content Include="Views\Home\ChangePassword.cshtml" />
+    <Content Include="Views\Treatment\Detail.cshtml" />
+    <Content Include="Views\Home\Testimonial.cshtml" />
+    <Content Include="Views\Home\GetQuote.cshtml" />
+    <Content Include="Views\Home\ConfirmationQuote.cshtml" />
+    <Content Include="Views\Hospitals\_HospitalListPartial.cshtml" />
+    <Content Include="Views\Home\loginDoctor.cshtml" />
+    <Content Include="Views\Doctors\AppointmentList.cshtml" />
+    <Content Include="Views\Doctors\AppointmentListFuture.cshtml" />
+    <Content Include="Views\Doctors\AppointmentDetail.cshtml" />
+    <Content Include="Views\ManageEnquiry\Create.cshtml" />
+    <Content Include="Views\User\viewResponse.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="Assets\images\GetQuote\" />
+    <Folder Include="Assets\token.json\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\bootstrap.min.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Content\bootstrap-theme.min.css.map" />
+    <Content Include="Content\bootstrap-theme.css.map" />
+    <None Include="packages.config" />
+    <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
+    <Content Include="Scripts\jquery-3.4.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BaseApiApp.Entities\BaseApiApp.Entities.csproj">
+      <Project>{9361AFF5-46FD-4DDD-ABB5-2D6A9C9535C1}</Project>
+      <Name>BaseApiApp.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BaseApiApp.Framework\BaseApiApp.Framework.csproj">
+      <Project>{244D72D0-F421-49F3-8369-973332F354A7}</Project>
+      <Name>BaseApiApp.Framework</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="CopyRoslynFiles" AfterTargets="AfterBuild" Condition="!$(Disable_CopyWebApplication) And '$(OutDir)' != '$(OutputPath)'">
+    <ItemGroup>
+      <RoslynFiles Include="$(CscToolPath)\*" />
+    </ItemGroup>
+    <MakeDir Directories="$(WebProjectOutputDir)\bin\roslyn" />
+    <Copy SourceFiles="@(RoslynFiles)" DestinationFolder="$(WebProjectOutputDir)\bin\roslyn" SkipUnchangedFiles="true" Retries="$(CopyRetryCount)" RetryDelayMilliseconds="$(CopyRetryDelayMilliseconds)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>30267</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>https://localhost:44347/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.Extensions.Configuration.UserSecrets.5.0.0\build\netstandard2.0\Microsoft.Extensions.Configuration.UserSecrets.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Extensions.Configuration.UserSecrets.5.0.0\build\netstandard2.0\Microsoft.Extensions.Configuration.UserSecrets.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.Extensions.Configuration.UserSecrets.5.0.0\build\netstandard2.0\Microsoft.Extensions.Configuration.UserSecrets.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Extensions.Configuration.UserSecrets.5.0.0\build\netstandard2.0\Microsoft.Extensions.Configuration.UserSecrets.targets'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.3.6.0\build\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.3.6.0\build\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets'))" />
+  </Target>
+  <Import Project="..\packages\Microsoft.Extensions.Configuration.UserSecrets.5.0.0\build\netstandard2.0\Microsoft.Extensions.Configuration.UserSecrets.targets" Condition="Exists('..\packages\Microsoft.Extensions.Configuration.UserSecrets.5.0.0\build\netstandard2.0\Microsoft.Extensions.Configuration.UserSecrets.targets')" />
+  <Import Project="..\packages\AutoMapper.3.3.0\tools\AutoMapper.targets" Condition="Exists('..\packages\AutoMapper.3.3.0\tools\AutoMapper.targets')" />
+  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.3.6.0\build\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.3.6.0\build\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>

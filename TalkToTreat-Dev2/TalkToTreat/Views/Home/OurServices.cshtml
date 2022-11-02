@@ -1,0 +1,44 @@
+﻿@model List<TalkToTreat.Models.Services>
+
+
+<section class="our-services">
+
+    <div class="container">
+        <div class="row our-services-area">
+            <div class="col-md-12 text-center">
+                <h3>Our Services</h3>
+                <p style="margin-bottom:0px;">Easy Access to Options Around the World.</p>
+            </div>
+            <div class="col-md-12">
+                <div id="owl-servicesne" class="owl-carousel owl-theme owl-nav">
+                    @foreach (var service in Model)
+                    {
+
+                        <div>
+                            <div class="our-services-box">
+                                <div class="row">
+                                    <div class="col-md-12 col-xs-12 image-box">
+                                        <img src="~/Assets/images/services/@Path.GetFileName(service.Image)" />
+                                    </div>
+                                    <div class="col-md-12  col-xs-12">
+                                        <h4 class="text-uppercase">@service.Name</h4>
+                                        <p class="texth">@service.ShortDescription</p>
+                                        <p><a href="/Home/Service/#@service.Id.ToString()">Read more</a></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    
+                    }
+                    
+                 </div>
+            </div>
+
+
+        </div>
+        </div>
+
+</section>
+
+@**@
+

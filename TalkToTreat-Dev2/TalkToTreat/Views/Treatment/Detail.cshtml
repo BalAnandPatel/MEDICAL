@@ -1,0 +1,46 @@
+﻿@model TalkToTreat.Models.Treatment
+@{
+    ViewBag.Title = "Treatment";
+}
+<section class="banner-area doctor-banner services-banner">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 text-left">
+                <div class="banner-text">
+                    <h3>@Model.Name</h3> 
+                    <h6> @Model.Description</h6>
+                </div>
+            </div>
+            <div class="col-md-6 text-left">
+
+            </div>
+        </div>
+    </div>
+</section>
+<section class="appoinment section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="department-content mt-5">
+                    <h3 class="text-md">@Model.Name</h3>
+                    <div class="divider my-4"></div>
+                    <p class="lead">@Model.Description</p>
+
+
+                    <h3 class="mt-5 mb-4">Services features</h3>
+                    <div class="divider my-4"></div>
+                    <ul class="list-unstyled department-service">
+                        <li><i class="icofont-check mr-2"></i>International Drug Database</li>
+                        <li><i class="icofont-check mr-2"></i>Stretchers and Stretcher Accessories</li>
+                        <li><i class="icofont-check mr-2"></i>Cushions and Mattresses</li>
+                        <li><i class="icofont-check mr-2"></i>Cholesterol and lipid tests</li>
+                        <li><i class="icofont-check mr-2"></i>Critical Care Medicine Specialists</li>
+                        <li><i class="icofont-check mr-2"></i>Emergency Assistance</li>
+                    </ul>
+
+                </div>
+            </div>
+            @Html.Partial("~/Views/Shared/_Enquiry.cshtml", new TalkToTreat.Models.Registration())
+        </div>
+    </div>
+</section>

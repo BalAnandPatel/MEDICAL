@@ -1,0 +1,209 @@
+﻿@model  TalkToTreat.Models.Home 
+@{
+    ViewBag.Title = "Home Page";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    int rowNum = 1;
+}
+
+<!-- ============================================================== -->
+<!-- Start Page Content here -->
+<!-- ============================================================== -->
+
+<div class="content-page">
+    <div class="content">
+
+        <!-- Start Content-->
+        <div class="container-fluid">
+
+            <!-- start page title -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="page-title-box">
+                        <div class="page-title-right">
+                            @*<ol class="breadcrumb m-0">
+                                <li class="breadcrumb-item"><a href="javascript: void(0);">UBold</a></li>
+                                <li class="breadcrumb-item"><a href="javascript: void(0);">Apps</a></li>
+                                <li class="breadcrumb-item active">Tickets</li>
+                            </ol>*@
+                        </div>
+                        <h4 class="page-title">Dashboard</h4>
+                    </div>
+                </div>
+            </div>
+            <!-- end page title -->
+
+            <div class="row">
+                <div class="col-md-6 col-xl-3">
+                    <div class="widget-rounded-circle card-box">
+                        <a href="/ManageDoctor/Doctorlist">
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="avatar-lg rounded-circle bg-primary">
+                                        <i class="fe-tag font-22 avatar-title text-white"></i>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="text-right">
+                                        <h3 class="text-dark mt-1"><span data-plugin="counterup">@Model.TotalDoctors</span></h3>
+                                        <p class="text-muted mb-1 text-truncate">Total Doctors</p>
+                                    </div>
+                                </div>
+                            </div> <!-- end row-->
+                        </a>
+                    </div> <!-- end widget-rounded-circle-->
+                </div> <!-- end col-->
+
+                <div class="col-md-6 col-xl-3">
+                    <div class="widget-rounded-circle card-box">
+                        <a href="/ManageHospital/HospitalList">
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="avatar-lg rounded-circle bg-warning">
+                                        <i class="fe-clock font-22 avatar-title text-white"></i>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="text-right">
+                                        <h3 class="text-dark mt-1"><span data-plugin="counterup">@Model.TotalHospital</span></h3>
+                                        <p class="text-muted mb-1 text-truncate">Total Hospital</p>
+                                    </div>
+                                </div>
+                            </div> <!-- end row-->
+                        </a>
+                    </div> <!-- end widget-rounded-circle-->
+                </div> <!-- end col-->
+
+                <div class="col-md-6 col-xl-3">
+                    <div class="widget-rounded-circle card-box">
+                        <a href="/ManageEnquiry/EnquiryList">
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="avatar-md rounded-circle bg-success">
+                                        <i class="fe-check-circle font-22 avatar-title text-white"></i>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="text-right">
+                                        <h3 class="text-dark mt-1"><span data-plugin="counterup">@Model.TotalEnquiry</span></h3>
+                                        <p class="text-muted mb-1 text-truncate">Total Enquiry</p>
+                                    </div>
+                                </div>
+                            </div> <!-- end row-->
+                        </a>
+                    </div> <!-- end widget-rounded-circle-->
+                </div> <!-- end col-->
+
+                <div class="col-md-6 col-xl-3">
+                    <div class="widget-rounded-circle card-box">
+                        <a href="/ManageDoctor/AppointmentList">
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="avatar-lg rounded-circle bg-soft-info border-info border">
+                                        <i class="fe-bar-chart-line- font-22 avatar-title text-info"></i>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="text-right">
+                                        <h3 class="text-dark mt-1"><span data-plugin="counterup">@Model.TotalAppointment</span></h3>
+                                        <p class="text-muted mb-1 text-truncate">Appointment Requests</p>
+                                    </div>
+                                </div>
+                            </div> <!-- end row-->
+                        </a>
+                    </div> <!-- end widget-rounded-circle-->
+                </div> <!-- end col-->
+            </div>
+            <!-- end row -->
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="card-box">
+                        @*<button type="button" class="btn btn-sm btn-blue waves-effect waves-light float-right">
+                            <i class="mdi mdi-plus-circle"></i> Add Ticket
+                        </button>*@
+                        <h4 class="header-title mb-4">Recent Appointment</h4>
+
+                        <table class="table table-hover m-0 table-centered dt-responsive nowrap w-100" id="tickets-table">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        ID
+                                    </th>
+                                    <th>Requested By</th>
+                                    <th>Mobile No</th>
+                                    <th>Age</th>
+                                    <th>Doctor Name</th>
+                                    <th>Created Date</th>
+                                    <th class="hidden-sm">Action</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                @foreach (var item in Model.Appointments)
+                                {
+                                    
+                                <tr>
+                                    <td><b>#@rowNum</b></td>
+                                    <td>
+                                        <a href="javascript: void(0);" class="text-body">
+                                            <span class="ml-2">@item.FullName (@item.EmailId)</span>
+                                        </a>
+                                    </td>
+
+                                    <td>
+                                        <span class="badge bg-soft-secondary text-secondary">@item.MobileNo</span>
+                                    </td>
+
+                                    <td>
+                                        @item.PatientAge
+                                    </td>
+
+                                    <td>
+                                        <span class="badge badge-success">@item.DoctorName</span>
+                                    </td>
+
+                                    <td>
+                                        @item.Created.ToString("dd/MM/yyyy")                                        
+                                    </td>
+                                    <td style="border-bottom: 1px solid #2574ab; text-align: center;border-collapse:collapse;">
+                                        @if (item.IsReplied)
+                                        {
+                                            <a class="show-on-hover" style="color: forestgreen;" href="@Url.Action("ReplytoCustomer","ManageDoctor")/@item.Id">View Reply</a>
+                                        }
+                                        else
+                                        {
+                                            <a class="show-on-hover" style="color: deepskyblue;" href="@Url.Action("ReplytoCustomer","ManageDoctor")/@item.Id">Send Reply</a>
+                                        }
+                                    </td>
+                                    @*<td>
+
+
+                                    <div class="btn-group dropdown">
+            <a href="javascript: void(0);" class="table-action-btn dropdown-toggle arrow-none btn btn-light btn-sm" data-toggle="dropdown" aria-expanded="false"><i class="mdi mdi-dots-horizontal"></i></a>
+            <div class="dropdown-menu dropdown-menu-right">
+                <a class="dropdown-item" href="#"><i class="mdi mdi-pencil mr-2 text-muted font-18 vertical-middle"></i>Edit Ticket</a>
+                <a class="dropdown-item" href="#"><i class="mdi mdi-check-all mr-2 text-muted font-18 vertical-middle"></i>Close</a>
+                <a class="dropdown-item" href="#"><i class="mdi mdi-delete mr-2 text-muted font-18 vertical-middle"></i>Remove</a>
+                <a class="dropdown-item" href="#"><i class="mdi mdi-star mr-2 font-18 text-muted vertical-middle"></i>Mark as Unread</a>
+            </div>
+        </div>
+                                    </td>*@
+                                </tr>
+                                    rowNum = rowNum + 1;
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div><!-- end col -->
+            </div>
+            <!-- end row -->
+
+        </div> <!-- container -->
+
+    </div> <!-- content -->
+ 
+</div>
+
+<!-- ============================================================== -->
+<!-- End Page content -->
+<!-- ============================================================== -->

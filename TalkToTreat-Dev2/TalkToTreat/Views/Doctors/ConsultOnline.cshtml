@@ -1,0 +1,140 @@
+﻿@model  TalkToTreat.Models.Doctors
+@using TalkToTreat.Models;
+@using System.Linq;
+@using System;
+@using System.Collections.Generic;
+@{
+    ViewBag.Title = "Doctors";
+    var appointmentmodel = new TalkToTreat.Models.Appointment();
+    appointmentmodel.DoctorId = Model.Id;
+
+
+    var AllCities = ViewBag.AllCities as List<Locations>;
+    //var countries = AllCities.GroupBy(d => new { d.CountryId, d.CountryName }).Select(m => new { m.Key.CountryId, m.Key.CountryName });
+
+    //Layout = null;
+
+}
+
+<section class="banner-area doctor-banner">
+    <div class="container">
+        <div class="row ">
+            <div class="col-md-6 text-left">
+                <div class="banner-text">
+                   
+                    <h1>
+                        Best Doctors in India</h1>
+                    <h6>
+                        Talk to Treat helps you with the most experienced doctors <br />  on your case, receive the best treatment with us across India.<br /><br />
+                        Get your queries regarding your treatment and condition solves <br /> by the reputed doctors through online consultation.
+                    </h6>
+
+                </div>
+            </div>
+            <div class="col-md-6 text-left">
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<section class="listing-sec doctor-single" style="padding-bottom:0;">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-4 col-md-3 col-xs-12">
+
+                <div class="doctor-img-block-profile">
+
+                    <div class="profile-img-block ">
+                        @if (!string.IsNullOrEmpty(Model.Image))
+                        {
+                            Model.Image = Model.Image.Replace("https://talktotreat.com/Assets/images/Doctors/", "");
+                        }
+
+                        @if (!string.IsNullOrEmpty(Model.Image))
+                        {
+                            <img src="~/Assets/images/Doctors/@Model.Image"
+                                 onerror="this.src ='@(Model.Gender ? "/images/Doctor-avatart-list.png" : "/images/Doctor-avatart-listF.png")'">
+                        }
+                        else if (Model.Gender)
+                        {
+                            <img src="~/images/Doctor-avatart-list.svg">
+                        }
+                        else
+                        {
+                            <img src="~/images/Doctor-avatart-listF.svg">
+                        }
+                    </div>
+
+                    <div class="info-block ">
+                        <h4 class="mb-0">@Model.Name</h4>
+                        <p>@Model.Department</p>
+
+                        <ul class="list-inline mt-4 doctor-social-links">
+                            <li class="list-inline-item"><a href="#"><i class="fa fa-facebook"></i></a></li>
+                            <li class="list-inline-item"><a href="#"><i class="fa fa-twitter"></i></a></li>
+                            <li class="list-inline-item"><a href="#"><i class="fa fa-skype"></i></a></li>
+                            <li class="list-inline-item"><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                            <li class="list-inline-item"><a href="#"><i class="fa fa-pinterest"></i></a></li>
+                        </ul>
+
+                        <div class="d-none d-md-block call-to-action" >
+                            <font class="">Call us for Apppointment</font>
+                            <h4>+91-9560960088</h4>
+                        </div>
+                    </div>
+
+
+
+                </div>
+            </div>
+            <div class="col-sm-8 col-md-9 col-xs-12">
+
+                <div class="row">
+                    <div class="col-lg-12 col-md-12">
+                        <div class="doctor-details mt-4 mt-lg-0">
+
+                            <div class="row doctor-inner-box">
+                                <h4 class="mb-0"><a href="/Doctors/Detail/@Model.Id">Introducing to @Model.Name</a></h4>
+                                <p>@Model.Department</p>
+
+                                <span class="secondary-heading-md margin5-bottom uppercase"> 
+                                <img height="19" width="14" src="~/images/hospital-avtar.svg"> 
+                                <a href="/hospitals/Detail/@Model.HospitalId" title="@Model.Hospital" alt="@Model.Hospital"> @Model.Hospital</a>
+                                </span>
+                                <p class="desig">
+                                    <img height="19" width="14" src="~/images/year.svg">
+                                    @Model.Designation , @Model.YearsofExp years of Experience
+                                </p>
+                            </div>
+
+                            <div class="divider my-4"></div>
+
+                            <h6 class="doc-subhed text-green">About The Doctor</h6>
+                           
+                            <p>@Model.Description</p>
+
+                            @if (Model.Cost > 0)
+                            {
+                                 <h5 style="font-weight:bold;">Consultation Fees Rs. @Model.Cost.ToString("0.##")  /-</h5>
+                            }
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="appoint-page-form" id="bookapp">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6"></div>
+            @Html.Partial("~/Views/Shared/_ConsolutOnline.cshtml", appointmentmodel)
+        </div>
+    </div>
+</section>
+
+
+

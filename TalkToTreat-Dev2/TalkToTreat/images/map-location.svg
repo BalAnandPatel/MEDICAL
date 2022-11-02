@@ -1,0 +1,9 @@
+<svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 11 15" width="11" height="15">
+	<title>hospital-avtar</title>
+	<defs>
+		<image  width="11" height="15" id="img1" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAAPCAMAAAAF48UCAAAAAXNSR0IB2cksfwAAAQtQTFRF/v/////9//79//7//////v3//f7/nMzQN5aYDoGECoCCOZiam8vL/v7+WqiqCn2AS6ClksXGksjKTJ+jCn2EWqqr+P7+kMXJCH6AmMjMl8vJB319k8XM//3/LpKSSZ6h/v/9R5+gL5CW/f/8CICBhMDAhsDCBX6GI4yQbbG0bbKvI42NcrO3GIWI5fHx/P//4vDxFYeIc7S22ezqDYCDIpCRt9na+/z++vv9ttjZI4+RCoCA2evt/v7/Za+uB4GCB3+ACX+B6PLxEoaGCXyBCn2CCn5+B36EFYWG6PTy//3+lcbKB36Ck8bHQpydQZyf+///4OrpEIOGEoKE3evs+//+mMjKmsrO/f/+WLzNFwAAAKhJREFUeJwNzGlfAXEUxfFzuxfZShHDiLGU3SD7roytkZ3e/yvxf3rO5/sD6AHEIg4ikDhdj26P18cM+J+eAy+vwdBbGIhoUXVSTI/jPZE0xEmQVBqZ7IeSEPnMgfMFUSFIsQQuV6rCJtfqDfBXs9XudHv9wRAjHuvaZDrTxwrR98/cWixX6w1U7VfTbGsrBsA0+rPt3V7UymwejqezcSH4eQPzevtX8g65sBKl5/L8mgAAAABJRU5ErkJggg=="/>
+	</defs>
+	<style>
+	</style>
+	<use id="Background" href="#img1" x="0" y="0"/>
+</svg>

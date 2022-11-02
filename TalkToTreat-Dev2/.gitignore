@@ -1,0 +1,37 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs/TalkToTreat/v17/workspaceFileList.bin
+/packages
+/TalkToTreat/bin
+/TalkToTreat/obj
+/BaseApiApp/bin
+/BaseApiApp/obj
+/BaseApiApp.Entities/bin/Debug
+/BaseApiApp.Entities/obj
+/BaseApiApp.Framework/bin/Debug
+/BaseApiApp.Framework/obj
+/TalkToTreatService/bin/Debug
+/TalkToTreatService/obj
+/.vs/T20
+
+# User-specific files
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+bld/
+[Bb]in/
+[Oo]bj/	
+*.vsidx
+/.vs/TalkToTreat/FileContentIndex/write.lock
+/TalkToTreat/Properties/PublishProfiles

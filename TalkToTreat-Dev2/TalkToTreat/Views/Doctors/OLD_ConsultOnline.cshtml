@@ -1,0 +1,53 @@
+﻿@model  TalkToTreat.Models.Doctors
+@using TalkToTreat.Models;
+@using System.Linq;
+@using System;
+@using System.Collections.Generic;
+@{
+    ViewBag.Title = "Doctors";
+    var appointmentmodel = new TalkToTreat.Models.Appointment();
+    appointmentmodel.DoctorId = Model.Id;
+
+    var AllCities = (List<Locations>)ViewBag.AllCities;
+    var countries = AllCities.GroupBy(d => new { d.CountryId, d.CountryName }).Select(m => new { m.Key.CountryId, m.Key.CountryName });
+}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6/jquery.min.js" type="text/javascript"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"
+        type="text/javascript"></script>
+<link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css"
+<section class="section doctors">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-6 text-center">
+                <div class="section-title">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6 shuffle-wrapper portfolio-gallery">
+                <div class="col-lg-6 col-sm-6 col-md-6 mb-4 shuffle-item">
+                    <div class="position-relative doctor-inner-box">
+                        <div class="doctor-profile">
+                            <div class="doctor-img">
+                                @if (!string.IsNullOrEmpty(Model.Image))
+                                {<img src="~/Assets/images/team/@Model.Image" alt="doctor-image" class="img-fluid w-100">
+                                }
+                                else
+                                {<img src="~/Assets/images/team/1.jfif" alt="doctor-image" class="img-fluid w-100">
+                                }
+                            </div>
+                        </div>
+                        <div class="content mt-3">
+                            <h4 class="mb-0"> @Model.Name</h4>
+                            <p>@Model.Department</p>
+                            @if (Model.Cost > 0)
+                            {<p>Consultation Fees Rs.  @Model.Cost.ToString("0.##") /-</p>}
+                            <p>@Model.Designation</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @Html.Partial("~/Views/Shared/_ConsolutOnline.cshtml", appointmentmodel)
+        </div>
+    </div>
+</section>

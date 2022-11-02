@@ -1,0 +1,295 @@
+﻿@model TalkToTreat.Models.Quote
+
+@using TalkToTreat.Models;
+@{
+
+    var AllCities = (List<Locations>)ViewBag.AllCities;
+    var countries = AllCities.GroupBy(d => new { d.CountryId, d.CountryName, d.Code }).Select(m => new { m.Key.CountryId, m.Key.CountryName, m.Key.Code });
+    var Treatment = (List<TalkToTreatService.Entities.Treatment>)ViewBag.TreatmentsForGetQuote;
+    var TreatmentRoot = Treatment.Where(a => a.ParentId == Guid.Empty).ToList();
+    var TreatmentSub = Treatment.Where(a => a.ParentId != Guid.Empty).ToList();
+}
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<!-- Include Bootstrap Datepicker -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6/jquery.min.js" type="text/javascript"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js" type="text/javascript"></script>
+<link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="Stylesheet" type="text/css" />
+
+<script>
+    $(document).ready(function () {
+
+    });
+</script>
+
+<script>
+   $(function () {
+        $("#Country").change(function () {
+            $("#City option").remove();
+            var id = $(this).val();
+
+            var ListMain =  @Html.Raw(Json.Encode(ViewBag.AllCities));
+            var List = JSON.parse(JSON.stringify(ListMain)).filter(function (entry) { return entry.CountryId == id; });
+
+            var mySelect = $('#City');
+            mySelect.append($('<option></option>').val("").html("City"));
+            $.each(List, function (index, item) {
+                mySelect.append($('<option></option>').val(item.CityId).html(item.Name));
+            });
+        });
+
+        $("#TreatmentId").change(function () {
+            $("#SubTreatmentId option").remove();
+            var id = $(this).val();
+
+            var ListMain =  @Html.Raw(Json.Encode(ViewBag.TreatmentsForGetQuote));
+            var List = JSON.parse(JSON.stringify(ListMain)).filter(function (entry) { return entry.ParentId == id; });
+
+            var mySelect = $('#SubTreatmentId');
+            mySelect.append($('<option></option>').val("").html("Treatment Sub Type"));
+            $.each(List, function (index, item) {
+                mySelect.append($('<option></option>').val(item.Id).html(item.Name));
+            });
+        });
+
+        $("#ConsiderTravelOrTreatmentIndiaCountry").change(function () {
+            $("#ConsiderTravelOrTreatmentIndiaCity option").remove();
+            var id = $(this).val();
+
+            var ListMain =  @Html.Raw(Json.Encode(ViewBag.AllCities));
+            var List = JSON.parse(JSON.stringify(ListMain)).filter(function (entry) { return entry.CountryId == id; });
+
+            var mySelect = $('#ConsiderTravelOrTreatmentIndiaCity');
+            mySelect.append($('<option></option>').val("").html("City"));
+            $.each(List, function (index, item) {
+                mySelect.append($('<option></option>').val(item.CityId).html(item.Name));
+            });
+        });
+
+       $("#Country").val('@Model.Country');
+       $("#City").val('@Model.City')
+       $("#TreatmentId").val('@Model.TreatmentId');
+
+       $("#TravelingForTreatmentTime").val('@Model.TravelingForTreatmentTime');
+       $("#SubTreatmentId").val('@Model.SubTreatmentId');
+       $("#ConsiderTravelOrTreatmentIndiaCountry").val('@Model.ConsiderTravelOrTreatmentIndiaCountry');
+       $("#ConsiderTravelOrTreatmentIndiaCity").val('@Model.ConsiderTravelOrTreatmentIndiaCity');
+       $("#SpecialistsReach").val('@Model.SpecialistsReach');
+
+       debugger;
+       var valSeenDoctorRelatedProcedure = '@(!string.IsNullOrEmpty(Model.SeenDoctorRelatedProcedure)?(Convert.ToBoolean(Model.SeenDoctorRelatedProcedure)?"1":"0"):string.Empty)';
+
+       $("input[name=SeenDoctorRelatedProcedure][value=" + valSeenDoctorRelatedProcedure + "]").prop('checked', true);
+
+
+       //$("input[name=SeenDoctorRelatedProcedure][value=" + @Model.SeenDoctorRelatedProcedure + "]").prop('checked', true);
+    });
+
+    function AllowOnlyNumbers(e) {
+        e = (e) ? e : window.event;
+        var clipboardData = e.clipboardData ? e.clipboardData : window.clipboardData;
+        var key = e.keyCode ? e.keyCode : e.which ? e.which : e.charCode;
+        var str = (e.type && e.type == "paste") ? clipboardData.getData('Text') : String.fromCharCode(key);
+        return (/^\d+$/.test(str));
+    }
+</script>
+
+@using (Html.BeginForm("Edit", "ManageEnquiry", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="content-page">
+        <div class="content">
+            <!-- Start Content-->
+            <div class="container-fluid">
+                <!-- start page title -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="page-title-box">
+                            <div class="page-title-right">
+                            </div>
+                            <h4 class="page-title">Edit Quote</h4>
+                        </div>
+                    </div>
+                </div>
+                <!-- end page title -->
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="card-box">
+                            <input type="hidden" value="@Model.ID" name="Id" />
+                            <div class="form-group mb-3">
+                                <label for="product-name">Name <span class="text-danger">*</span></label>
+                                @Html.TextBoxFor(model => model.Name, new { @class = "form-control", placeholder = "e.g : Dr XYZ", required = true })
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="product-name">Country <span class="text-danger">*</span></label>
+                                <select class="form-control" id="Country" name="Country" required="True">
+                                    <option value="" selected="selected">Country</option>
+                                    @foreach (var item in countries)
+                                    {
+                                        <option value="@item.CountryId">@item.Code @item.CountryName</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="product-price">City</label>
+                                <select class="form-control" id="City" name="City" required="True">
+                                    <option value="" selected="selected">City</option>
+                                    @foreach (var item in AllCities)
+                                    {
+                                        <option value="@item.CityId">@item.Name</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="product-price">PhoneNo</label>
+                                @Html.TextAreaFor(model => model.PhoneNo, new { @class = "form-control", placeholder = "Enter Description", required = true })
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="product-price">Email </label>
+                                @Html.TextAreaFor(model => model.Email, new { @class = "form-control", placeholder = "Enter Infrastructure" })
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="product-name">Treatment Type <span class="text-danger">*</span></label>
+                                <select class="form-control" id="TreatmentId" name="TreatmentId" required="True">
+                                    <option value="" selected="selected">Treatment Type</option>
+                                    @foreach (var item in TreatmentRoot)
+                                    {
+                                        <option value="@item.Id">@item.Name</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="product-name">Phone No <span class="text-danger">*</span></label>
+                                @Html.TextBoxFor(model => model.PhoneNo, new { @class = "form-control", placeholder = "e.g : 9876543210", required = true, type = "number" })
+                            </div>
+                        </div> <!-- end card-box -->
+                    </div> <!-- end col -->
+
+                    <div class="col-lg-6">
+                        <div class="card-box">
+                            <div class="form-group mb-3">
+                                <label for="product-description">Subject<span class="text-danger">*</span></label>
+                                @Html.TextBoxFor(m => m.Subject, new { placeholder = "Subject", required = "True", value = "", @class = "form-control", maxlength = 150 })
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="product-name">Query <span class="text-danger">*</span></label>
+                                @Html.TextAreaFor(m => m.Query, new { placeholder = "Query", required = "True", value = "", @class = "form-control", maxlength = 500 })
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="product-name">How soon do you plan on traveling for treatment?</label>
+
+                                <select class="form-control" id="TravelingForTreatmentTime" name="TravelingForTreatmentTime">
+                                    <option value="" selected="selected">--Select--</option>
+                                    <option value="In a week">In a week</option>
+                                    <option value="In a month">In a month</option>
+                                    <option value="In 6 months">In 6 months</option>
+                                </select>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="product-name">What medical specialty treatment consultation are you looking for?</label>
+                                <select class="form-control" id="SubTreatmentId" name="SubTreatmentId">
+                                    <option value="" selected="selected">Treatment Sub Type</option>
+                                    @foreach (var item in TreatmentSub)
+                                    {
+                                        <option value="@item.Id">@item.Name</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="product-name">Have you seen a doctor related to this procedure before?</label>
+                                @Html.RadioButtonFor(s => s.SeenDoctorRelatedProcedure, 1) Yes
+                                @Html.RadioButtonFor(s => s.SeenDoctorRelatedProcedure, 0) No
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="product-name">Which country and city are you considering to travel to or treatment in India?</label>
+                                <select class="form-control" id="ConsiderTravelOrTreatmentIndiaCountry" name="ConsiderTravelOrTreatmentIndiaCountry">
+                                    <option value="" selected="selected">Country</option>
+                                    @foreach (var item in countries)
+                                    {
+                                        <option value="@item.CountryId">@item.Code @item.CountryName</option>
+                                    }
+                                </select>
+                                <select class="form-control" id="ConsiderTravelOrTreatmentIndiaCity" name="ConsiderTravelOrTreatmentIndiaCity">
+                                    <option value="" selected="selected">City</option>
+                                    @foreach (var item in AllCities)
+                                    {
+                                        <option value="@item.CityId">@item.Name</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="form-group mb-3">
+                                <span class="get-tex">How can our specialists/physicians best reach you?</span>
+                                <select class="form-control" id="SpecialistsReach" name="SpecialistsReach">
+                                    <option value="" selected="selected">--Select--</option>
+                                    <option value="Call">Call</option>
+                                    <option value="Whatsapp">Whatsapp</option>
+                                    <option value="Email">Email</option>
+                                </select>
+                            </div>
+                        </div> <!-- end card-box -->
+                    </div> <!-- end col-->
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card-box">
+                            <div class="form-group mb-3" style="display:none">
+                                <label for="product-name">Upload Document</label>
+                                <input name="files" type="file" id="files" multiple="multiple" onchange="Filevalidation()" />
+                            </div>
+
+                            <table border="1" width="100%" style="padding-bottom:30px;">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            Name
+                                        </th>
+                                        <th>
+                                            Action
+                                        </th>
+                                    </tr>
+                                </thead>
+                                @if (Model.lstQuoteFiles != null && Model.lstQuoteFiles.Count() > 0)
+                                {
+                                    foreach (var item in Model.lstQuoteFiles)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @item.Name
+                                            </td>
+                                            <td>
+                                                <a target="_blank" class="show-on-hover" style="color: forestgreen; "
+                                                   href="~/Assets/Images/GetQuote/@item.Name" download>Download</a>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <!-- end row -->
+                <!-- end row -->
+            </div> <!-- container -->
+
+        </div> <!-- content -->
+        <!-- Footer Start -->
+        <footer class="footer">
+            <div class="container-fluid">
+                <div class="col-12">
+                    <div class="text-center mb-3">
+                        <a href="/ManageEnquiry/EnquiryList" class="btn w-sm btn-light waves-effect">Cancel</a>
+                        @*<button type="submit" class="btn w-sm btn-success waves-effect waves-light">Save</button>*@
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!-- end Footer -->
+    </div>
+}
+
+
+
+

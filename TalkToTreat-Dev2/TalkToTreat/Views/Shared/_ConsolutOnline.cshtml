@@ -1,0 +1,210 @@
+﻿@model TalkToTreat.Models.Appointment
+@{
+    ViewBag.Title = "Book Appointment";
+    //Model.AppointMentDate = DateTime.Now.AddDays(1);
+}
+@using TalkToTreat.Models;
+@using System.Linq;
+@using System;
+@using System.Collections.Generic;
+@{
+    ViewBag.Title = "Doctors";
+    var appointmentmodel = new TalkToTreat.Models.Appointment();
+    appointmentmodel.DoctorId = Model.DoctorId;
+    var AllCities = (List<Locations>)ViewBag.AllCities;
+    var countries = AllCities.GroupBy(d => new { d.CountryId, d.CountryName, d.Code }).Select(m => new { m.Key.CountryId, m.Key.CountryName, m.Key.Code });
+}
+
+@{
+    string Name = "";
+    string username = "";
+    string userid = "";
+    string user_image = "";
+    if (Session["userdetails"] != null)
+    {
+        string userdetails = null;
+        string[] details = null;
+        userdetails = Session["userdetails"].ToString();
+        details = userdetails.Split('(', '&', '#', '$', ')');
+        Name = details[10];
+        username = details[5];
+        userid = details[0];
+        user_image = details[15];
+    }
+
+}
+
+
+
+
+<script type="text/javascript">
+
+    $(function () {
+        $("#AppointMentDate").datepicker({
+            autoclose: true,  
+            todayHighlight: true,
+            startDate: new Date(),
+            endDate: new Date(new Date().setDate(new Date().getDate() + 30))
+        });
+    });
+
+
+    function AllowOnlyNumbers(e) {
+        e = (e) ? e : window.event;
+        var clipboardData = e.clipboardData ? e.clipboardData : window.clipboardData;
+        var key = e.keyCode ? e.keyCode : e.which ? e.which : e.charCode;
+        var str = (e.type && e.type == "paste") ? clipboardData.getData('Text') : String.fromCharCode(key);
+        return (/^\d+$/.test(str));
+    }
+
+    $(function () {
+        $("#Country").change(function () {          
+            if ($('option:selected', $(this)).text() == 'Country') {
+                $("#spanCountryCode").html('');
+            }
+            else {
+                $("#spanCountryCode").html($('option:selected', $(this)).text().split(' ')[0]);
+            }
+        });
+
+    });
+    
+
+</script>
+<style>
+    .ct-code {
+        top: 7px;
+    }
+
+    .inpne {
+        padding-left: 50px;
+    }
+
+    .datepicker {
+        width:100%;
+        max-width: 200px;
+    }
+</style>
+
+
+<div class="col-md-6">
+    <div class="appointment-form">
+        <h5>Get Some Advice?</h5>
+        <h2>Make An Appointment</h2>
+        <p>(Get Free opinion, Quote, Medical Visa Invitation and Assistance at every step of your treatment.)</p>
+        @using (Html.BeginForm("BookAppointment", "Doctors", FormMethod.Post, new { id = "basicForm", @class = "form-horizontal", autocomplete = "off" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+            <form id="#" class="appoinment-form" method="post" action="#">
+                <div class="row">
+
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <input type="hidden" name="DoctorId" id="DoctorId" value="@Model.DoctorId">
+
+                            @Html.TextBox("AppointMentDate", "", new { @class = "form-control", placeholder = "mm/dd/yyyy", required = true })
+
+                            <span class="field-validation-valid" data-valmsg-for="AppointMentDate" data-valmsg-replace="true" style="color: red"></span>
+
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <input class="form-control" id="FullName" name="FullName" placeholder="Enter Your Name" required="True" type="text" value="@Name">
+                            <span class="field-validation-valid" data-valmsg-for="FullName" data-valmsg-replace="true" style="color: red"></span>
+
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+
+
+
+                        <div class="form-group">
+                            <select class="form-control" id="Country" required="True">
+                                <option value="" selected="selected">Country</option>
+                                @foreach (var item in countries)
+                                {
+                                    <option value="@item.CountryName">@item.Code @item.CountryName</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <input class="form-control" id="EmailId" name="EmailId" placeholder="Enter Your Email Id" required="True" type="email" value="@username">
+                            <span class="field-validation-valid" data-valmsg-for="EmailId" data-valmsg-replace="true" style="color: red"></span>
+                        </div>
+                    </div>
+
+
+                    <div class="col-lg-6">
+
+                        <div class="form-group" style="display: flex; align-items: baseline;">
+                            <span id="spanCountryCode" class="ct-code"></span>
+                            <input class="form-control inpne" style="" id="MobileNo" name="MobileNo" placeholder="Enter Mobile No" required="True" type="text" value="" maxlength="10" onkeypress="return AllowOnlyNumbers(event);">
+                            <span class="field-validation-valid" data-valmsg-for="MobileNo" data-valmsg-replace="true" style="color: red"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <input value="" class="form-control" data-val="true" data-val-number="The field PatientAge must be a number." data-val-required="The PatientAge field is required." id="PatientAge" max="125" min="0" name="PatientAge" placeholder="Enter Patient Age" required="True" type="number">
+                            <span class="field-validation-valid" data-valmsg-for="PatientAge" data-valmsg-replace="true" style="color: red"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+
+                    <div class="col-lg-5">
+                        <p class="text-muted ">Appointment Type</p>
+                    </div>
+
+                    <div class="col-lg-6">
+
+
+                        <label class="radiocontainer">
+                            <input checked="checked" id="AppointMentType" name="AppointMentType" type="radio" value="Online">
+                            <span class="checkmark"></span>
+                            Online
+
+                        </label>
+                        <label class="radiocontainer">
+                            <input id="AppointMentType" name="AppointMentType" type="radio" value="Hospital">
+                            <span class="checkmark"></span>
+                            Hospital
+
+                        </label>
+
+                    </div>
+                </div>
+
+
+                <div class="row">
+
+                    <div class="col-lg-5">
+                        <p class="text-muted ">Gender</p>
+                    </div>
+                    <div class="col-lg-6">
+
+                        <label class="radiocontainer">
+                            <input checked="checked" id="Gender" name="Gender" type="radio" value="Male">
+                            <span class="checkmark"></span>
+                            Male
+
+                        </label>
+                        <label class="radiocontainer">
+                            <input id="Gender" name="Gender" type="radio" value="Female">
+                            <span class="checkmark"></span>
+                            Female
+
+                        </label>
+
+                    </div>
+                </div>
+
+                <button class="btn btn-success succes-btn">Make An Appointment<i class="icofont-simple-right ml-2"></i></button>
+            </form>
+        }
+    </div>
+</div>

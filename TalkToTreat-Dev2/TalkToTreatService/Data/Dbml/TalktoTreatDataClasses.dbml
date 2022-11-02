@@ -1,0 +1,840 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="TalkToTreat_05aug_2022_AfterDeployee" Class="TalktoTreatClassesDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=BRICKRED54;Initial Catalog=TalkToTreat_05aug_2022_AfterDeployee;Integrated Security=True" SettingsObjectName="TalkToTreatService.Properties.Settings" SettingsPropertyName="TalkToTreat_05aug_2022_AfterDeployeeConnectionString" Provider="System.Data.SqlClient" />
+  <Function Name="dbo.procSiteAuthenticate" Method="procSiteAuthenticate">
+    <Parameter Name="Username" Parameter="username" Type="System.String" DbType="NVarChar(100)" />
+    <ElementType Name="procSiteAuthenticateResult">
+      <Column Name="ID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="iid" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL" CanBeNull="false" />
+      <Column Name="Title" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="FirstName" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="MiddleName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="LastName" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="UserName" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Email" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="Password" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="Salt" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="IsDeleted" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="PhoneNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Gender" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="NewsletterSubscribe" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="PhotoUrl" Type="System.String" DbType="NVarChar(1000)" CanBeNull="true" />
+      <Column Name="Created" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="CreatedBy" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="LastUpdated" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="LastUpdatedBy" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="IsValidated" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="Postcode" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="Country" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.GetAllTreatments" Method="GetAllTreatments">
+    <ElementType Name="GetAllTreatmentsResult">
+      <Column Name="ID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(150) NOT NULL" CanBeNull="false" />
+      <Column Name="Created" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="CreatedBy" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
+      <Column Name="LastUpdated" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="LastUpdatedBy" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
+      <Column Name="Cost" Type="System.Decimal" DbType="Money" CanBeNull="true" />
+      <Column Name="IsActive" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="Image" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="Code" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="Description" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="ShortDescription" Type="System.String" DbType="NVarChar(400)" CanBeNull="true" />
+      <Column Name="ParentId" Type="System.Guid" DbType="UniqueIdentifier NULL" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.GetAllAppointment" Method="GetAllAppointment">
+    <ElementType Name="GetAllAppointmentResult">
+      <Column Name="ID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="iid" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Age" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Detail" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="Email" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="PhoneNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Created" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="CreatedBy" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="LastUpdated" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="LastUpdatedBy" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Postcode" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="Country" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="City" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="IpAddress" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="DoctorId" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
+      <Column Name="AppointMentDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="AppointMentType" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Gender" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="DoctorName" Type="System.String" DbType="NVarChar(550) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.procUpdateUserProfile" Method="procUpdateUserProfile">
+    <Parameter Name="UserId" Parameter="userId" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Parameter Name="FirstName" Parameter="firstName" Type="System.String" DbType="NVarChar(100)" />
+    <Parameter Name="LastName" Parameter="lastName" Type="System.String" DbType="NVarChar(100)" />
+    <Parameter Name="Email" Parameter="email" Type="System.String" DbType="NVarChar(255)" />
+    <Parameter Name="PatientCondition" Parameter="patientCondition" Type="System.String" DbType="NVarChar(MAX)" />
+    <Parameter Name="Gender" Parameter="gender" Type="System.String" DbType="NVarChar(20)" />
+    <Parameter Name="PhoneNo" Parameter="phoneNo" Type="System.String" DbType="NVarChar(20)" />
+    <Parameter Name="Country" Parameter="country" Type="System.String" DbType="NVarChar(20)" />
+    <Parameter Name="Age" Parameter="age" Type="System.Int32" DbType="Int" />
+    <Parameter Name="MobileNo" Parameter="mobileNo" Type="System.String" DbType="NVarChar(20)" />
+    <ElementType Name="procUpdateUserProfileResult">
+      <Column Name="RecordId" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
+      <Column Name="IsValid" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="IsExistingUser" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="IId" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.procGetUserValletBy" Method="procGetUserValletBy">
+    <Parameter Name="UserId" Parameter="userId" Type="System.Guid" DbType="UniqueIdentifier" />
+    <ElementType Name="procGetUserValletByResult">
+      <Column Name="ID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="UserID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="iid" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL" CanBeNull="false" />
+      <Column Name="FileName" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="FileType" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="Description" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="FileUrl" Type="System.String" DbType="NVarChar(1000)" CanBeNull="true" />
+      <Column Name="Created" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="CreatedBy" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.procSiteAuthenticateDoctor" Method="procSiteAuthenticateDoctor">
+    <Parameter Name="username" Type="System.String" DbType="NVarChar(500)" />
+    <ElementType Name="procSiteAuthenticateDoctorResult">
+      <Column Name="ID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(550) NOT NULL" CanBeNull="false" />
+      <Column Name="Department" Type="System.String" DbType="NVarChar(550)" CanBeNull="true" />
+      <Column Name="Designation" Type="System.String" DbType="NVarChar(550)" CanBeNull="true" />
+      <Column Name="ShortDescription" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="Description" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="City" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="State" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Country" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="PostCode" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="PhoneNumber" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="MobileNumber" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Created" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="CreatedBy" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="LastUpdated" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="LastUpdatedBy" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="CustomNo" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="IsActive" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="Image" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="Hospital" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="YearsofExp" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Degree" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="Cost" Type="System.Decimal" DbType="Money" CanBeNull="true" />
+      <Column Name="Award" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="Salt" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="Password" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="UserName" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.procDeleteObject" Method="procDeleteObject">
+    <Parameter Name="ObjectId" Parameter="objectId" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Parameter Name="ObjectType" Parameter="objectType" Type="System.Int32" DbType="Int" />
+    <ElementType Name="procDeleteObjectResult">
+      <Column Name="RecordId" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
+      <Column Name="IsValid" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="MessageCode" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Message" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.GetAllAppointmentByDoctor" Method="GetAllAppointmentByDoctor">
+    <Parameter Name="SearchValue" Parameter="searchValue" Type="System.String" DbType="NVarChar(255)" />
+    <Parameter Name="pagenum" Type="System.Int32" DbType="Int" />
+    <Parameter Name="DoctorId" Parameter="doctorId" Type="System.Guid" DbType="UniqueIdentifier" />
+    <ElementType Name="GetAllAppointmentByDoctorResult">
+      <Column Name="Id" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="Iid" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL" CanBeNull="false" />
+      <Column Name="FullName" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="PatientAge" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Detail" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="MobileNo" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="EmailId" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="DoctorId" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
+      <Column Name="Created" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="CreatedBy" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="LastUpdated" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="LastUpdatedby" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="AppointmentDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="Gender" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="DoctorName" Type="System.String" DbType="NVarChar(550) NOT NULL" CanBeNull="false" />
+      <Column Name="TotalRecord" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="IsReplied" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Response" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.procSiteAuthenticateSocialLogin" Method="procSiteAuthenticateSocialLogin">
+    <Parameter Name="Username" Parameter="username" Type="System.String" DbType="NVarChar(100)" />
+    <Parameter Name="IsPhoneNumber" Parameter="isPhoneNumber" Type="System.Boolean" DbType="Bit" />
+    <ElementType Name="procSiteAuthenticateSocialLoginResult">
+      <Column Name="ID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="iid" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL" CanBeNull="false" />
+      <Column Name="Title" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="FirstName" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="MiddleName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="LastName" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="UserName" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Email" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="Password" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="Salt" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="IsDeleted" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="PhoneNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Gender" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="NewsletterSubscribe" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="PhotoUrl" Type="System.String" DbType="NVarChar(1000)" CanBeNull="true" />
+      <Column Name="Created" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="CreatedBy" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="LastUpdated" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="LastUpdatedBy" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="IsValidated" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="Postcode" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="Country" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.GetAllAppointmentByUser" Method="GetAllAppointmentByUser">
+    <Parameter Name="SearchValue" Parameter="searchValue" Type="System.String" DbType="NVarChar(255)" />
+    <Parameter Name="pagenum" Type="System.Int32" DbType="Int" />
+    <ElementType Name="GetAllAppointmentByUserResult">
+      <Column Name="Id" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="Iid" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL" CanBeNull="false" />
+      <Column Name="FullName" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="PatientAge" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Detail" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="MobileNo" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="EmailId" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="DoctorId" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
+      <Column Name="Created" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="CreatedBy" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="LastUpdated" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="LastUpdatedby" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="AppointmentDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="Gender" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="DoctorName" Type="System.String" DbType="NVarChar(550) NOT NULL" CanBeNull="false" />
+      <Column Name="TotalRecord" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="IsReplied" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Body" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="Subject" Type="System.String" DbType="NVarChar(500) NOT NULL" CanBeNull="false" />
+      <Column Name="ConsultationFee" Type="System.Decimal" DbType="Money" CanBeNull="true" />
+      <Column Name="Image" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.GetAllAppointmentDetailByUser" Method="GetAllAppointmentDetailByUser">
+    <Parameter Name="Id" Parameter="id" Type="System.Guid" DbType="UniqueIdentifier" />
+    <ElementType Name="GetAllAppointmentDetailByUserResult">
+      <Column Name="Id" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="Iid" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL" CanBeNull="false" />
+      <Column Name="Email" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="ConsultationFee" Type="System.Decimal" DbType="Money NOT NULL" CanBeNull="false" />
+      <Column Name="Image" Type="System.String" DbType="NVarChar(500) NOT NULL" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Age" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Detail" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="DoctorId" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
+      <Column Name="Phone" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Created" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="CreatedBy" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="LastUpdated" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="LastUpdatedby" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="AppointmentDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="Gender" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="DoctorName" Type="System.String" DbType="NVarChar(550) NOT NULL" CanBeNull="false" />
+      <Column Name="IsReplied" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Body" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="Subject" Type="System.String" DbType="NVarChar(500) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.GetAppointmentListByUser" Method="GetAppointmentListByUser">
+    <Parameter Name="SearchValue" Parameter="searchValue" Type="System.String" DbType="NVarChar(255)" />
+    <Parameter Name="pagenum" Type="System.Int32" DbType="Int" />
+    <ElementType Name="GetAppointmentListByUserResult">
+      <Column Name="Id" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="Iid" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL" CanBeNull="false" />
+      <Column Name="FullName" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="PatientAge" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Detail" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="MobileNo" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="EmailId" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="DoctorId" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
+      <Column Name="Created" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="CreatedBy" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="AppointmentDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="DoctorName" Type="System.String" DbType="NVarChar(550) NOT NULL" CanBeNull="false" />
+      <Column Name="TotalRecord" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ConsultationFee" Type="System.Decimal" DbType="Money NOT NULL" CanBeNull="false" />
+      <Column Name="Image" Type="System.String" DbType="NVarChar(500) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.GetServices" Method="GetServices">
+    <ElementType Name="GetServicesResult">
+      <Column Name="Id" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="ShortDescription" Type="System.String" DbType="NVarChar(500) NOT NULL" CanBeNull="false" />
+      <Column Name="Description" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="Image" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="IsActive" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.procUpsertSubscribers" Method="procUpsertSubscribers">
+    <Parameter Name="Email" Parameter="email" Type="System.String" DbType="NVarChar(255)" />
+    <Parameter Name="IsUnscubscribe" Parameter="isUnscubscribe" Type="System.Boolean" DbType="Bit" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.GetDoctorsBySearch" Method="GetDoctorsBySearch">
+    <Parameter Name="Search" Parameter="search" Type="System.String" DbType="NVarChar(255)" />
+    <ElementType Name="GetDoctorsBySearchResult">
+      <Column Name="ID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(550) NOT NULL" CanBeNull="false" />
+      <Column Name="Department" Type="System.String" DbType="NVarChar(550)" CanBeNull="true" />
+      <Column Name="Designation" Type="System.String" DbType="NVarChar(550)" CanBeNull="true" />
+      <Column Name="ShortDescription" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="Description" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="City" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="State" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Country" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="PostCode" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="PhoneNumber" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="MobileNumber" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Created" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="CreatedBy" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="LastUpdated" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="LastUpdatedBy" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="CustomNo" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="IsActive" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="Image" Type="System.String" DbType="NVarChar(500) NOT NULL" CanBeNull="false" />
+      <Column Name="Hospital" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="YearsofExp" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Degree" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="Cost" Type="System.Decimal" DbType="Money" CanBeNull="true" />
+      <Column Name="Award" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.procUpsertUser" Method="procUpsertUser">
+    <Parameter Name="UserId" Parameter="userId" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Parameter Name="FirstName" Parameter="firstName" Type="System.String" DbType="NVarChar(100)" />
+    <Parameter Name="LastName" Parameter="lastName" Type="System.String" DbType="NVarChar(100)" />
+    <Parameter Name="Email" Parameter="email" Type="System.String" DbType="NVarChar(255)" />
+    <Parameter Name="Password" Parameter="password" Type="System.String" DbType="NVarChar(500)" />
+    <Parameter Name="Salt" Parameter="salt" Type="System.String" DbType="NVarChar(500)" />
+    <Parameter Name="Culture" Parameter="culture" Type="System.String" DbType="NVarChar(10)" />
+    <Parameter Name="NewsletterSubscribe" Parameter="newsletterSubscribe" Type="System.Boolean" DbType="Bit" />
+    <Parameter Name="Title" Parameter="title" Type="System.String" DbType="NVarChar(10)" />
+    <Parameter Name="Gender" Parameter="gender" Type="System.String" DbType="NVarChar(20)" />
+    <Parameter Name="PhoneNo" Parameter="phoneNo" Type="System.String" DbType="NVarChar(20)" />
+    <Parameter Name="Country" Parameter="country" Type="System.String" DbType="NVarChar(20)" />
+    <Parameter Name="IpAddress" Parameter="ipAddress" Type="System.String" DbType="NVarChar(30)" />
+    <Parameter Name="MobileNo" Parameter="mobileNo" Type="System.String" DbType="NVarChar(20)" />
+    <Parameter Name="PatientAge" Parameter="patientAge" Type="System.Int32" DbType="Int" />
+    <ElementType Name="procUpsertUserResult">
+      <Column Name="RecordId" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
+      <Column Name="IsValid" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="IsExistingUser" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="IId" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.procGetUserById" Method="procGetUserById">
+    <Parameter Name="UserId" Parameter="userId" Type="System.Guid" DbType="UniqueIdentifier" />
+    <ElementType Name="procGetUserByIdResult">
+      <Column Name="ID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="iid" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL" CanBeNull="false" />
+      <Column Name="Title" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="FirstName" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="MiddleName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="LastName" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="UserName" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Email" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="Password" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="Salt" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="IsDeleted" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="PhoneNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Gender" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="NewsletterSubscribe" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="PhotoUrl" Type="System.String" DbType="NVarChar(1000)" CanBeNull="true" />
+      <Column Name="Created" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="CreatedBy" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="LastUpdated" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="LastUpdatedBy" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="IsValidated" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="Postcode" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="Country" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="PatientCondition" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="Image" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="PatientAge" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.procJsonUpsertDoctor_New" Method="procJsonUpsertDoctor_New">
+    <Parameter Name="DoctorId" Parameter="doctorId" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Parameter Name="DoctorJson" Parameter="doctorJson" Type="System.String" DbType="NVarChar(MAX)" />
+    <Parameter Name="SavedBy" Parameter="savedBy" Type="System.String" DbType="NVarChar(100)" />
+    <Parameter Name="Name" Parameter="name" Type="System.String" DbType="NVarChar(200)" />
+    <Parameter Name="Department" Parameter="department" Type="System.String" DbType="NVarChar(500)" />
+    <Parameter Name="IsActive" Parameter="isActive" Type="System.Boolean" DbType="Bit" />
+    <Parameter Name="EmailId" Parameter="emailId" Type="System.String" DbType="NVarChar(255)" />
+    <Parameter Name="Salt" Parameter="salt" Type="System.String" DbType="NVarChar(500)" />
+    <Parameter Name="Designation" Parameter="designation" Type="System.String" DbType="NVarChar(500)" />
+    <Parameter Name="UserName" Parameter="userName" Type="System.String" DbType="NVarChar(500)" />
+    <Parameter Name="ShortDescription" Parameter="shortDescription" Type="System.String" DbType="NVarChar(MAX)" />
+    <Parameter Name="Description" Parameter="description" Type="System.String" DbType="NVarChar(MAX)" />
+    <Parameter Name="Password" Parameter="password" Type="System.String" DbType="NVarChar(500)" />
+    <Parameter Name="City" Parameter="city" Type="System.String" DbType="NVarChar(500)" />
+    <Parameter Name="PostCode" Parameter="postCode" Type="System.String" DbType="NVarChar(500)" />
+    <Parameter Name="PhoneNumber" Parameter="phoneNumber" Type="System.String" DbType="NVarChar(500)" />
+    <Parameter Name="MobileNumber" Parameter="mobileNumber" Type="System.String" DbType="NVarChar(500)" />
+    <Parameter Name="Image" Parameter="image" Type="System.String" DbType="NVarChar(500)" />
+    <Parameter Name="Hospital" Parameter="hospital" Type="System.String" DbType="NVarChar(500)" />
+    <Parameter Name="YearsofExp" Parameter="yearsofExp" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Degree" Parameter="degree" Type="System.String" DbType="NVarChar(500)" />
+    <Parameter Name="CustomNo" Parameter="customNo" Type="System.String" DbType="NVarChar(100)" />
+    <ElementType Name="procJsonUpsertDoctor_NewResult">
+      <Column Name="RecordId" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
+      <Column Name="IsValid" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="MessageCode" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Message" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.procJsonUpsertHospital_New" Method="procJsonUpsertHospital_New">
+    <Parameter Name="HospitalId" Parameter="hospitalId" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Parameter Name="HospitalJson" Parameter="hospitalJson" Type="System.String" DbType="NVarChar(MAX)" />
+    <Parameter Name="SavedBy" Parameter="savedBy" Type="System.String" DbType="NVarChar(100)" />
+    <Parameter Name="Name" Parameter="name" Type="System.String" DbType="NVarChar(200)" />
+    <Parameter Name="StockCode" Parameter="stockCode" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="IsActive" Parameter="isActive" Type="System.Boolean" DbType="Bit" />
+    <Parameter Name="ShortDescription" Parameter="shortDescription" Type="System.String" DbType="NVarChar(MAX)" />
+    <Parameter Name="Description" Parameter="description" Type="System.String" DbType="NVarChar(MAX)" />
+    <Parameter Name="City" Parameter="city" Type="System.String" DbType="NVarChar(500)" />
+    <Parameter Name="State" Parameter="state" Type="System.String" DbType="NVarChar(500)" />
+    <Parameter Name="Country" Parameter="country" Type="System.String" DbType="NVarChar(500)" />
+    <Parameter Name="Code" Parameter="code" Type="System.String" DbType="NVarChar(500)" />
+    <Parameter Name="PhoneNumber" Parameter="phoneNumber" Type="System.String" DbType="NVarChar(500)" />
+    <Parameter Name="MobileNumber" Parameter="mobileNumber" Type="System.String" DbType="NVarChar(500)" />
+    <Parameter Name="Image" Parameter="image" Type="System.String" DbType="NVarChar(500)" />
+    <Parameter Name="CustomNo" Parameter="customNo" Type="System.String" DbType="NVarChar(100)" />
+    <Parameter Name="noofbeds" Type="System.Int32" DbType="Int" />
+    <Parameter Name="estYear" Type="System.String" DbType="NVarChar(10)" />
+    <Parameter Name="HositalType" Parameter="hositalType" Type="System.String" DbType="NVarChar(100)" />
+    <ElementType Name="procJsonUpsertHospital_NewResult">
+      <Column Name="RecordId" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
+      <Column Name="IsValid" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="MessageCode" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Message" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.procJsonUpsertTreatment_New" Method="procJsonUpsertTreatment_New">
+    <Parameter Name="TreatmentId" Parameter="treatmentId" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Parameter Name="TreatmentJson" Parameter="treatmentJson" Type="System.String" DbType="NVarChar(MAX)" />
+    <Parameter Name="SavedBy" Parameter="savedBy" Type="System.String" DbType="NVarChar(100)" />
+    <Parameter Name="Name" Parameter="name" Type="System.String" DbType="NVarChar(200)" />
+    <Parameter Name="IsActive" Parameter="isActive" Type="System.Boolean" DbType="Bit" />
+    <Parameter Name="Description" Parameter="description" Type="System.String" DbType="NVarChar(MAX)" />
+    <Parameter Name="Image" Parameter="image" Type="System.String" DbType="NVarChar(500)" />
+    <Parameter Name="Cost" Parameter="cost" Type="System.Decimal" DbType="Money" />
+    <ElementType Name="procJsonUpsertTreatment_NewResult">
+      <Column Name="RecordId" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
+      <Column Name="IsValid" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="MessageCode" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Message" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.procJsonUpsertVallet_New" Method="procJsonUpsertVallet_New">
+    <Parameter Name="UserId" Parameter="userId" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Parameter Name="ValletJson" Parameter="valletJson" Type="System.String" DbType="NVarChar(MAX)" />
+    <Parameter Name="SavedBy" Parameter="savedBy" Type="System.String" DbType="NVarChar(100)" />
+    <Parameter Name="FileType" Parameter="fileType" Type="System.String" DbType="NVarChar(200)" />
+    <Parameter Name="Description" Parameter="description" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="FileUrl" Parameter="fileUrl" Type="System.String" DbType="NVarChar(500)" />
+    <Parameter Name="FileName" Parameter="fileName" Type="System.String" DbType="NVarChar(255)" />
+    <Parameter Name="Id" Parameter="id" Type="System.Guid" DbType="UniqueIdentifier" />
+    <ElementType Name="procJsonUpsertVallet_NewResult">
+      <Column Name="RecordId" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
+      <Column Name="IsValid" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="MessageCode" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Message" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.procUpdateUserProfile_new" Method="procUpdateUserProfile_new">
+    <Parameter Name="UserId" Parameter="userId" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Parameter Name="FirstName" Parameter="firstName" Type="System.String" DbType="NVarChar(100)" />
+    <Parameter Name="LastName" Parameter="lastName" Type="System.String" DbType="NVarChar(100)" />
+    <Parameter Name="Email" Parameter="email" Type="System.String" DbType="NVarChar(255)" />
+    <Parameter Name="PatientCondition" Parameter="patientCondition" Type="System.String" DbType="NVarChar(MAX)" />
+    <Parameter Name="Gender" Parameter="gender" Type="System.String" DbType="NVarChar(20)" />
+    <Parameter Name="PhoneNo" Parameter="phoneNo" Type="System.String" DbType="NVarChar(20)" />
+    <Parameter Name="Country" Parameter="country" Type="System.String" DbType="NVarChar(20)" />
+    <Parameter Name="Age" Parameter="age" Type="System.Int32" DbType="Int" />
+    <Parameter Name="MobileNo" Parameter="mobileNo" Type="System.String" DbType="NVarChar(20)" />
+    <ElementType Name="procUpdateUserProfile_newResult">
+      <Column Name="RecordId" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
+      <Column Name="IsValid" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="IsExistingUser" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="IId" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.procUpsertEnquiryReply_New" Method="procUpsertEnquiryReply_New">
+    <Parameter Name="AppointmentId" Parameter="appointmentId" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Parameter Name="AppointmentJson" Parameter="appointmentJson" Type="System.String" DbType="NVarChar(MAX)" />
+    <Parameter Name="SavedBy" Parameter="savedBy" Type="System.String" DbType="NVarChar(100)" />
+    <Parameter Name="EmailId" Parameter="emailId" Type="System.String" DbType="NVarChar(500)" />
+    <Parameter Name="Title" Parameter="title" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="DoctorId" Parameter="doctorId" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Parameter Name="Body" Parameter="body" Type="System.String" DbType="NVarChar(MAX)" />
+    <ElementType Name="procUpsertEnquiryReply_NewResult">
+      <Column Name="RecordId" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
+      <Column Name="IsValid" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="MessageCode" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Message" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.procUpsertEnquiryReplylog_New" Method="procUpsertEnquiryReplylog_New">
+    <Parameter Name="AppointmentId" Parameter="appointmentId" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Parameter Name="AppointmentJson" Parameter="appointmentJson" Type="System.String" DbType="NVarChar(MAX)" />
+    <Parameter Name="SavedBy" Parameter="savedBy" Type="System.String" DbType="NVarChar(100)" />
+    <Parameter Name="EmailId" Parameter="emailId" Type="System.String" DbType="NVarChar(500)" />
+    <Parameter Name="Title" Parameter="title" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="Body" Parameter="body" Type="System.String" DbType="NVarChar(MAX)" />
+    <ElementType Name="procUpsertEnquiryReplylog_NewResult">
+      <Column Name="RecordId" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
+      <Column Name="IsValid" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="MessageCode" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Message" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.GetAllAppointmentByDoctor_New" Method="GetAllAppointmentByDoctor_New">
+    <Parameter Name="SearchValue" Parameter="searchValue" Type="System.String" DbType="NVarChar(255)" />
+    <Parameter Name="pagenum" Type="System.Int32" DbType="Int" />
+    <Parameter Name="DoctorId" Parameter="doctorId" Type="System.Guid" DbType="UniqueIdentifier" />
+    <ElementType Name="GetAllAppointmentByDoctor_NewResult">
+      <Column Name="Id" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="Iid" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL" CanBeNull="false" />
+      <Column Name="FullName" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="PatientAge" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Detail" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="MobileNo" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="EmailId" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="DoctorId" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
+      <Column Name="Created" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="CreatedBy" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="LastUpdated" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="LastUpdatedby" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="AppointmentDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="Gender" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="DoctorName" Type="System.String" DbType="NVarChar(550) NOT NULL" CanBeNull="false" />
+      <Column Name="TotalRecord" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="IsReplied" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Response" Type="System.Xml.Linq.XElement" DbType="Xml" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.procInsertEnquiry" Method="procInsertEnquiry">
+    <Parameter Name="Name" Parameter="name" Type="System.String" DbType="NVarChar(100)" />
+    <Parameter Name="Email" Parameter="email" Type="System.String" DbType="NVarChar(255)" />
+    <Parameter Name="Age" Parameter="age" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Detail" Parameter="detail" Type="System.String" DbType="NVarChar(MAX)" />
+    <Parameter Name="PhoneNo" Parameter="phoneNo" Type="System.String" DbType="NVarChar(20)" />
+    <Parameter Name="Country" Parameter="country" Type="System.String" DbType="NVarChar(20)" />
+    <Parameter Name="City" Parameter="city" Type="System.String" DbType="NVarChar(20)" />
+    <Parameter Name="IpAddress" Parameter="ipAddress" Type="System.String" DbType="NVarChar(30)" />
+    <Parameter Name="DoctorId" Parameter="doctorId" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Parameter Name="AppointMentDate" Parameter="appointMentDate" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="AppointMentType" Parameter="appointMentType" Type="System.String" DbType="NVarChar(255)" />
+    <Parameter Name="Gender" Parameter="gender" Type="System.String" DbType="NVarChar(100)" />
+    <Parameter Name="UserId" Parameter="userId" Type="System.Guid" DbType="UniqueIdentifier" />
+    <ElementType Name="procInsertEnquiryResult">
+      <Column Name="IsValid" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="IId" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.GetTreatments" Method="GetTreatments">
+    <Parameter Name="Country" Parameter="country" Type="System.String" DbType="NVarChar(255)" />
+    <Parameter Name="State" Parameter="state" Type="System.String" DbType="NVarChar(255)" />
+    <Parameter Name="City" Parameter="city" Type="System.String" DbType="NVarChar(255)" />
+    <Parameter Name="PostCode" Parameter="postCode" Type="System.String" DbType="NVarChar(255)" />
+    <Parameter Name="HospitalId" Parameter="hospitalId" Type="System.String" DbType="NVarChar(255)" />
+    <Parameter Name="TreatmentId" Parameter="treatmentId" Type="System.String" DbType="NVarChar(255)" />
+    <Parameter Name="MinCost" Parameter="minCost" Type="System.Decimal" DbType="Decimal(18,2)" />
+    <Parameter Name="MaxCost" Parameter="maxCost" Type="System.Decimal" DbType="Decimal(18,2)" />
+    <Parameter Name="SearchText" Parameter="searchText" Type="System.String" DbType="NVarChar(255)" />
+    <ElementType Name="GetTreatmentsResult">
+      <Column Name="Id" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="HospitalId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="TreatmentId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="MinCost" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="MaxCost" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="IsActive" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="HospitalName" Type="System.String" DbType="NVarChar(150) NOT NULL" CanBeNull="false" />
+      <Column Name="HospitalImage" Type="System.String" DbType="NVarChar(500) NOT NULL" CanBeNull="false" />
+      <Column Name="HospitalIconImage" Type="System.String" DbType="NVarChar(500) NOT NULL" CanBeNull="false" />
+      <Column Name="City" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="State" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="Country" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="PostCode" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="TreatmentName" Type="System.String" DbType="NVarChar(150) NOT NULL" CanBeNull="false" />
+      <Column Name="TreatmentImage" Type="System.String" DbType="NVarChar(500) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.GetUserByIdentifier" Method="GetUserByIdentifier">
+    <Parameter Name="UserName" Parameter="userName" Type="System.String" DbType="VarChar(500)" />
+    <ElementType Name="GetUserByIdentifierResult">
+      <Column Name="ID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="iid" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL" CanBeNull="false" />
+      <Column Name="Title" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="FirstName" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="MiddleName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="LastName" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="UserName" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Email" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="Password" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="Salt" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="IsDeleted" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="PhoneNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Gender" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="NewsletterSubscribe" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="PhotoUrl" Type="System.String" DbType="NVarChar(1000)" CanBeNull="true" />
+      <Column Name="Created" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="CreatedBy" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="LastUpdated" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="LastUpdatedBy" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="IsValidated" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="Postcode" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="Country" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="PatientCondition" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="Image" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="PatientAge" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.UpdateUserPassword" Method="UpdateUserPassword">
+    <Parameter Name="UserId" Parameter="userId" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Parameter Name="Password" Parameter="password" Type="System.String" DbType="NVarChar(500)" />
+    <Parameter Name="Salt" Parameter="salt" Type="System.String" DbType="NVarChar(500)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.GetAllTreatmentListMaster" Method="GetAllTreatmentListMaster">
+    <Parameter Name="SearchValue" Parameter="searchValue" Type="System.String" DbType="NVarChar(255)" />
+    <ElementType Name="GetAllTreatmentListMasterResult">
+      <Column Name="Rn" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="Id" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(150) NOT NULL" CanBeNull="false" />
+      <Column Name="Code" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="Description" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="Image" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="IsActive" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="ShortDescription" Type="System.String" DbType="NVarChar(400)" CanBeNull="true" />
+      <Column Name="SubId" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
+      <Column Name="SubName" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="MinCost" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.GetAllLocations" Method="GetAllLocations">
+    <ElementType Name="GetAllLocationsResult">
+      <Column Name="CityId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Cityname" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Stateid" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Statename" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="CountryId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="CountryName" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="status" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Code" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.GetTestimonial" Method="GetTestimonial">
+    <ElementType Name="GetTestimonialResult">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="Treatment" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="City" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="Description" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="IsActive" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="Image" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.procInsertQuote" Method="procInsertQuote">
+    <Parameter Name="ID" Parameter="iD" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Parameter Name="Name" Parameter="name" Type="System.String" DbType="NVarChar(150)" />
+    <Parameter Name="Country" Parameter="country" Type="System.String" DbType="NVarChar(100)" />
+    <Parameter Name="City" Parameter="city" Type="System.String" DbType="NVarChar(200)" />
+    <Parameter Name="PhoneNo" Parameter="phoneNo" Type="System.Boolean" DbType="Bit" />
+    <Parameter Name="Email" Parameter="email" Type="System.String" DbType="NVarChar(MAX)" />
+    <Parameter Name="TreatmentId" Parameter="treatmentId" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Parameter Name="Subject" Parameter="subject" Type="System.String" DbType="NVarChar(500)" />
+    <Parameter Name="Query" Parameter="query" Type="System.String" DbType="NVarChar(1000)" />
+    <Parameter Name="TravelingForTreatmentTime" Parameter="travelingForTreatmentTime" Type="System.String" DbType="NVarChar(100)" />
+    <Parameter Name="SubTreatmentId" Parameter="subTreatmentId" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Parameter Name="ProcedureInterestedIn" Parameter="procedureInterestedIn" Type="System.String" DbType="NVarChar(100)" />
+    <Parameter Name="SeenDoctorRelatedProcedure" Parameter="seenDoctorRelatedProcedure" Type="System.String" DbType="NVarChar(100)" />
+    <Parameter Name="ConsiderTravelOrTreatmentIndiaCountry" Parameter="considerTravelOrTreatmentIndiaCountry" Type="System.String" DbType="NVarChar(100)" />
+    <Parameter Name="ConsiderTravelOrTreatmentIndiaCity" Parameter="considerTravelOrTreatmentIndiaCity" Type="System.String" DbType="NVarChar(100)" />
+    <Parameter Name="SpecialistsReach" Parameter="specialistsReach" Type="System.String" DbType="NVarChar(100)" />
+    <ElementType Name="procInsertQuoteResult">
+      <Column Name="RecordId" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
+      <Column Name="Message" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.GetAllHospitaltsHomePage" Method="GetAllHospitaltsHomePage">
+    <ElementType Name="GetAllHospitaltsHomePageResult">
+      <Column Name="ID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(150) NOT NULL" CanBeNull="false" />
+      <Column Name="ShortDescription" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="Description" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="NumberOfBeds" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="EstablishmentYesr" Type="System.String" DbType="NVarChar(5)" CanBeNull="true" />
+      <Column Name="Type" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="City" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="CityId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="State" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="Country" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="CountryId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="PostCode" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="PhoneNumber" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="MobileNumber" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Created" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="CreatedBy" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="LastUpdated" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="LastUpdatedBy" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="CustomNo" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="IsActive" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="Code" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Infrastructure" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="RegNo" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="Spacialities" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="Image" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="IconImage" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.GetAllAppointmentByDoctorFuture" Method="GetAllAppointmentByDoctorFuture">
+    <Parameter Name="SearchValue" Parameter="searchValue" Type="System.String" DbType="NVarChar(255)" />
+    <Parameter Name="pagenum" Type="System.Int32" DbType="Int" />
+    <ElementType Name="GetAllAppointmentByDoctorFutureResult">
+      <Column Name="Id" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="Iid" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL" CanBeNull="false" />
+      <Column Name="FullName" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="PatientAge" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Detail" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="MobileNo" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="EmailId" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="DoctorId" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
+      <Column Name="Created" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="CreatedBy" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="LastUpdated" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="LastUpdatedby" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="AppointmentDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="Gender" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="DoctorName" Type="System.String" DbType="NVarChar(550) NOT NULL" CanBeNull="false" />
+      <Column Name="TotalRecord" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="IsReplied" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Body" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="Subject" Type="System.String" DbType="NVarChar(500) NOT NULL" CanBeNull="false" />
+      <Column Name="ConsultationFee" Type="System.Decimal" DbType="Money NOT NULL" CanBeNull="false" />
+      <Column Name="Image" Type="System.String" DbType="NVarChar(500) NOT NULL" CanBeNull="false" />
+      <Column Name="IsCancel" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.GetAllAppointmentByUserFuture" Method="GetAllAppointmentByUserFuture">
+    <Parameter Name="SearchValue" Parameter="searchValue" Type="System.String" DbType="NVarChar(255)" />
+    <Parameter Name="pagenum" Type="System.Int32" DbType="Int" />
+    <ElementType Name="GetAllAppointmentByUserFutureResult">
+      <Column Name="Id" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="Iid" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL" CanBeNull="false" />
+      <Column Name="FullName" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="PatientAge" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Detail" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="MobileNo" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="EmailId" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="DoctorId" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
+      <Column Name="Created" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="CreatedBy" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="LastUpdated" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="LastUpdatedby" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="AppointmentDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="Gender" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="DoctorName" Type="System.String" DbType="NVarChar(550) NOT NULL" CanBeNull="false" />
+      <Column Name="TotalRecord" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="IsReplied" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Body" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="Subject" Type="System.String" DbType="NVarChar(500) NOT NULL" CanBeNull="false" />
+      <Column Name="ConsultationFee" Type="System.Decimal" DbType="Money NOT NULL" CanBeNull="false" />
+      <Column Name="Image" Type="System.String" DbType="NVarChar(500) NOT NULL" CanBeNull="false" />
+      <Column Name="IsCancel" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.GetAllHospitalts" Method="GetAllHospitalts">
+    <ElementType Name="GetAllHospitaltsResult">
+      <Column Name="ID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(150) NOT NULL" CanBeNull="false" />
+      <Column Name="ShortDescription" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="Description" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="NumberOfBeds" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="EstablishmentYesr" Type="System.String" DbType="NVarChar(5)" CanBeNull="true" />
+      <Column Name="Type" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="PostCode" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="PhoneNumber" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="MobileNumber" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Created" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="CreatedBy" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="LastUpdated" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="LastUpdatedBy" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="CustomNo" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="IsActive" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="Code" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Infrastructure" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="RegNo" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="Spacialities" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="PriorityOrder" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="TreatmentId" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
+      <Column Name="TreatmentDetailID" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
+      <Column Name="Image" Type="System.String" DbType="NVarChar(552)" CanBeNull="true" />
+      <Column Name="IconImage" Type="System.String" DbType="NVarChar(556)" CanBeNull="true" />
+      <Column Name="Address" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="CityId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="City" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="StateId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="State" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="CountryId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Country" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.GetAllDoctors" Method="GetAllDoctors">
+    <ElementType Name="GetAllDoctorsResult">
+      <Column Name="ID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(550) NOT NULL" CanBeNull="false" />
+      <Column Name="Department" Type="System.String" DbType="NVarChar(550)" CanBeNull="true" />
+      <Column Name="Designation" Type="System.String" DbType="NVarChar(550)" CanBeNull="true" />
+      <Column Name="ShortDescription" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="Description" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="City" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="CityId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="State" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="Country" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="CountryId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="PostCode" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="PhoneNumber" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="MobileNumber" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Created" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="CreatedBy" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="LastUpdated" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="LastUpdatedBy" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="CustomNo" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="IsActive" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="Gender" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="Image" Type="System.String" DbType="NVarChar(500) NOT NULL" CanBeNull="false" />
+      <Column Name="Hospital" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="HospitalID" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
+      <Column Name="YearsofExp" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Cost" Type="System.Decimal" DbType="Money" CanBeNull="true" />
+      <Column Name="Award" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="TreatmentId" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
+      <Column Name="TreatmentDetailID" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
+      <Column Name="Degree" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="Experience" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="AdditionalInfo" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.ExceptionLoggingToDataBase" Method="ExceptionLoggingToDataBase">
+    <Parameter Name="ExceptionMessage" Parameter="exceptionMessage" Type="System.String" DbType="VarChar(1000)" />
+    <Parameter Name="ExceptionStackTrack" Parameter="exceptionStackTrack" Type="System.String" DbType="NVarChar(MAX)" />
+    <Parameter Name="ControllerName" Parameter="controllerName" Type="System.String" DbType="NVarChar(100)" />
+    <Parameter Name="ActionName" Parameter="actionName" Type="System.String" DbType="VarChar(100)" />
+    <Parameter Name="ExceptionLogTime" Parameter="exceptionLogTime" Type="System.DateTime" DbType="DateTime" />
+    <Return Type="System.Int32" />
+  </Function>
+</Database>

@@ -1,0 +1,55 @@
+﻿@model TalkToTreat.Models.Login
+@{
+    ViewBag.Title = "Login";
+}
+
+<section class="appoinment section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="mt-3">
+                    <div class="feature-icon mb-3">
+                        <i class="icofont-support text-lg"></i>
+                    </div>
+                    <span class="h3">Call for an Emergency Service!</span>
+                    <h2 class="text-color mt-3">+84 789 1256 </h2>
+                </div>
+            </div>
+
+            <div class="col-lg-8">
+                <div class="appoinment-wrap mt-5 mt-lg-0 pl-lg-5">
+                    <h2 class="mb-2 title-color">Login</h2>
+                    <p class="mb-4">Mollitia dicta commodi est recusandae iste, natus eum asperiores corrupti qui velit . Iste dolorum atque similique praesentium soluta.</p>
+                     
+                    <p style="color:coral;text-align:center"><b>@ViewBag.Invalid</b></p>
+                    @using (Html.BeginForm("Create", "Login", FormMethod.Post, new { id = "basicForm", @class = "form-horizontal", autocomplete = "off" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true)
+                        <form id="#" class="appoinment-form" method="post" action="#">
+                            <div class="row">
+
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        @Html.TextBoxFor(model => model.EmailId, new { @class = "form-control", placeholder = "Enter Username", required = true })
+                                        @Html.ValidationMessageFor(model => model.EmailId, "", new { @style = "color: red" })
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        @Html.TextBoxFor(model => model.Password, new { name = "password", id = "password", @class = "form-control", placeholder = "Enter Your Password", type = "Password", required = true })
+                                        @Html.ValidationMessageFor(model => model.Password, "", new { @style = "color: red" })
+                                        @*@Html.HiddenFor(s => s.hdrandom, new { name = "hdrandom", id = "hdrandom" })*@
+                                        <input type="hidden" value="@ViewBag.hdrandom" id="myHiddenVar" />
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="btn btn-main btn-round-full">Login<i class="icofont-simple-right ml-2"></i></button>
+                            <a class="btn btn-main btn-round-full" href="/Home/Register">Register<i class="icofont-simple-right ml-2"></i></a>
+                        </form>
+                    }
+                </div>
+            </div>
+        </div>
+    </div> 
+</section>

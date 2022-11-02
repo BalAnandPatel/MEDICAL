@@ -1,0 +1,160 @@
+﻿@model TalkToTreat.Models.UserVallet
+@{
+    ViewBag.Title = "Healthvallet";
+    var UserValletList = (List<TalkToTreat.Models.UserVallet>)ViewBag.UserValletList;
+    int i = 0;
+}
+
+<script>
+    Filevalidation = () => {
+        const fi = document.getElementById('file');
+        // Check if any file is selected.
+        if (fi.files.length > 0) {
+            for (const i = 0; i <= fi.files.length - 1; i++) {
+                const fsize = fi.files.item(i).size;
+                const file = Math.round((fsize / 1024));
+                // The size of the file.
+                if (file >= 2096) {
+                    alert("File too Big, please select a file less than 2mb");
+                    $("#file").val('');
+                } 
+            }
+        }
+    }
+</script>
+
+<section class="banner-area doctor-banner hospital">
+    <div class="container">
+        <div class="row ">
+
+            <div class="col-md-6 text-left">
+                <div class="banner-text">
+                    <h3>My Health wallet</h3>
+                </div>
+            </div>
+            <div class="col-md-6 text-left">
+            </div>
+        </div>
+    </div>    
+</section>
+
+<section class="section appoinment">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="appoinment-wrap mt-5 mt-lg-0 pl-lg-5">
+                    <p style="color:coral;text-align:center"><b>@TempData["HealthwalletMessage"]</b></p>
+                    <div class="row align-items-center">
+                        <div class="col-lg-6">
+                            <div class="appoinment-content">
+                                <div class="mt-5 mt-lg-0 pl-lg-5 col-lg-12">
+                                    <h2 class="mb-2 title-color">Add New Document</h2>
+                                    <p class="mb-4">File upload option with name.eg- Prescription, Reports etc. </p>
+                                    @using (Html.BeginForm("AddDocument", "User", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        @Html.ValidationSummary(true)
+                                        <form id="#" class="appoinment-form" method="post" action="#">
+                                            <div class="row">
+                                                <div class="col-lg-12">
+                                                    <div class="form-group">
+                                                        @Html.TextBoxFor(model => model.FileName, new { @class = "form-control", placeholder = "Enter File Name", required = true })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-12">
+                                                    <div class="form-group">
+                                                        @Html.TextAreaFor(model => model.Description, new { @class = "form-control", placeholder = "Enter File Description", required = true })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-12">
+                                                    <div class="card-box">
+                                                        <label for="product-name">Select File (Not more than 2MB) <span class="text-danger">*</span></label>
+                                                        <div class="fallback" style="display:inline-block;">
+                                                            <input name="file" type="file" id="file" 
+                                                                   onchange="Filevalidation()"
+                                                                   required="true" accept=".png, .jpg, .jpeg, .doc, .docx, .pdf" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 mt-2">
+                                                <div class="mt-2 mb-3">
+                                                    <button type="submit" class="btn btn-main btn-round-full">Update</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            @Html.Partial("~/Views/User/_HealthCondition.cshtml", new TalkToTreat.Models.User { Remark = ViewBag.UserHealthCondition })
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            @{
+                                if (UserValletList.Count() != 0)
+                                {
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div id="_indexdiv">
+                                                <div id="dvContents">
+                                                    <div class="panel-body">
+                                                        <table class="examplesansserif" style="width: 100%; height: 100%; border: 2px solid #06888A; border-collapse: collapse; background-color: white">
+                                                            <thead>
+                                                                <tr style="height: 40px; background-color: #06888A; color: white; font-family: Arial; ">
+                                                                    <th style="font-size:16px; border-bottom: 1px solid #2574ab; border-right: 1px solid white;text-align: center; width: 5%;border-collapse:collapse">S.No.</th>
+                                                                    <th style="font-size:16px; border-bottom: 1px solid #2574ab; border-right: 1px solid white;text-align: center; width: 60%;border-collapse:collapse">FileName</th>
+                                                                    <th style="font-size:16px; border-bottom: 1px solid #2574ab; border-right: 1px solid white;text-align: center; width: 25;border-collapse:collapse">Download</th>
+                                                                    <th style="font-size:16px; border-bottom: 1px solid #2574ab; border-right: 1px solid white;text-align: center; width: 10%;border-collapse:collapse">Delete</th>
+
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                @foreach (var item in UserValletList)
+                                                                {
+
+                                                                    i = i + 1;
+                                                                    <tr style="height:30px;color:black">
+                                                                        <td style="border-bottom: 1px solid #2574ab; text-align: center;border-collapse:collapse"> @i</td>
+
+                                                                        <td style="border-bottom: 1px solid #2574ab; text-align: center;border-collapse:collapse">
+                                                                            @Html.DisplayFor(modelItem => item.FileName)
+                                                                        </td>
+                                                                        <td style="border-bottom: 1px solid #2574ab; text-align: center;border-collapse:collapse">
+                                                                            <a target="_blank" class="show-on-hover" style="color: forestgreen;" href="~/Assets/Images/UserDocuments/@item.FileUrl" download>Download </a>
+                                                                        </td>
+                                                                        <td style="border-bottom: 1px solid #2574ab; text-align: center;border-collapse:collapse">
+                                                                            <a class="show-on-hover" href="@Url.Action("Delete","User")/@item.Id" ng-bootbox-confirm="You are about to Reject this Enquiry. Deleted record can`t be restored.">
+                                                                                <i class="icon-trash action-icon text-danger"></i>
+                                                                                Delete
+                                                                            </a>
+                                                                        </td>
+                                                                    </tr>
+                                                                }
+                                                            </tbody>
+                                                        </table>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div> <!-- end card-body-->
+                                    </div> <!-- end card-->
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>   
+    </div>
+</section>
+
+

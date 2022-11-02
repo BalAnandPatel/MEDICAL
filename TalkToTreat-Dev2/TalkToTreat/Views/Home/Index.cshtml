@@ -1,0 +1,873 @@
+﻿@using TalkToTreat.Models;
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    List<Treatment> Treatments = new List<Treatment>();
+    Treatments = ViewBag.Treatments as List<Treatment>;
+
+    List<Doctors> Doctors = new List<Doctors>();
+    Doctors = ViewBag.Doctors as List<Doctors>;
+
+    List<Hospital> Hospitals = new List<Hospital>();
+    Hospitals = ViewBag.Hospitals;
+
+    List<string> DistinctCities = ViewBag.DistinctCities as List<string>;
+
+    int counter = 1, counterHosp = 1;
+    var CountryWiseCitiesList = ViewBag.CountryWiseCities as List<CountryWiseCities>;
+    var defaultCountry = CountryWiseCitiesList[0].Country;
+
+
+    var sortArray = CountryWiseCitiesList[0].Cities.OrderByDescending(a => a.City);
+    var defaultCity = sortArray.FirstOrDefault();
+
+    //var defaultCity = CountryWiseCitiesList[0].Cities[0];
+
+    var services = ViewBag.Services as List<Services>;
+
+    var testimonial = ViewBag.Testimonials as List<Testimonial>;
+}
+
+<script type="text/javascript">
+    var selectedCountry = '@defaultCountry';
+    var selectedCity = '@defaultCity';
+    var countryWiseCitiesList =@Html.Raw(Json.Encode(CountryWiseCitiesList));
+
+    var selectCity = function (city)
+    {
+        debugger;
+
+        selectedCity = city;
+        setCookie('selectedcity', selectedCity, 1);
+        var cityName = selectedCity.split(' ').join('_');
+        $('#selected-city').html(selectedCity);
+        $('.tab-container-area .nav-item').removeClass('active');
+        $('.tab-container-area .nav-item a').removeClass('active');
+        $('#' + cityName + '.nav-item').addClass('active');
+        $('#' + cityName + '.nav-item a').addClass('active');
+        $('.tab-pane.container').removeClass('active');
+        $('#tab_' + cityName).addClass('active');
+
+        $("#h3TopDoctor").html("Top Doctors " + cityName.replace("_", " "));
+        var currentDoctlist = $("#divDoctor_" + cityName.toLowerCase()).html();
+
+
+        if (currentDoctlist != undefined && currentDoctlist.length > 5) {
+
+            $("#owl-demo2").html(currentDoctlist);
+
+
+            var $owl = $('#owl-demo2');
+            $owl.trigger('destroy.owl.carousel');
+            // After destory, the markup is still not the same with the initial.
+            // The differences are:
+            //   1. The initial content was wrapped by a 'div.owl-stage-outer';
+            //   2. The '.owl-carousel' itself has an '.owl-loaded' class attached;
+            //   We have to remove that before the new initialization.
+            $owl.html($owl.find('.owl-stage-outer').html()).removeClass('owl-loaded');
+            //$owl.owlCarousel({
+            //    // your initial option here, again.
+            //});
+
+            $("#owl-demo2").owlCarousel({
+                pagination: false,
+                margin: 10,
+                nav: true,
+                loop: true,
+                responsive: {
+                    0: {
+                        items: 1
+                    },
+                    600: {
+                        items: 3
+                    },
+                    1000: {
+                        items: 4
+                    }
+                }
+            });
+        }
+        else {
+            $("#owl-demo2").html('');
+        }
+
+    }
+
+    var selectCountry = function (country, force)
+    {
+        $('.country').removeClass('active');
+        $('#' + country).addClass('active');
+        $('.owl-cities').hide();
+        $('#cities_' + country).show();
+        if (selectedCountry != country || force)
+        {
+            selectedCountry = country;
+            setCookie('selectedcountry', selectedCountry, 1);
+            for (var i = 0; i < countryWiseCitiesList.length; i++)
+            {
+                if (countryWiseCitiesList[i].Country == country)
+                {
+                    debugger;
+                    //selectedCity = countryWiseCitiesList[i].Cities[0].City;
+                    selectedCity = countryWiseCitiesList[i].Cities[2].City;
+                    break;
+                }
+            }
+            setTimeout(selectCity(selectedCity), 300);
+        }
+    }
+</script>
+
+<style>
+    .slider-overflow .tab-pane {
+        display: none;
+    }
+
+        .slider-overflow .tab-pane.active {
+            display: block;
+        }
+</style>
+
+<section class="banner-area-n">
+    <video autoplay muted loop id="myVideo">
+        <source src="~/images/doc-vid.mp4" type="video/mp4">
+    </video>
+    <div class="banner-area banner-area-home">
+        <div class="container">
+            <div class="row ">
+
+                <div class="col-md-12 text-center">
+                    <div class="banner-text">
+                        <h1>
+                            Endless possibilities of Medical excellence Worldwide
+                        </h1>
+                        <h4>	Choose from the choicest treatments and facilities available  </h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container container-country">
+            <div class="row tab-container-area">
+
+                <div class="col-sm-12">
+                    <div class="country-tabs">
+                        @foreach (var countryWiseCities in CountryWiseCitiesList)
+                        {
+                            <div class="text-center country" id="@countryWiseCities.Country" onclick="selectCountry('@countryWiseCities.Country')">
+                                <div class="country-selection rounded-circle">
+                                    @*<img src="~/images/india-icon.svg" />*@
+                                    <img src="~/Assets/images/country/@string.Format("{0}.png", countryWiseCities.Country)" />
+                                </div>
+                                <h4 class="country-lable">@countryWiseCities.Country</h4>
+                            </div>
+                        }
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="container container-state">
+            <div class="row tab-container-area">
+                <div class="col-md-10 cities-tab">
+                    <div class="row">
+                        <div class="col-md-12 no-p-r">
+                            @foreach (var countryWiseCities in CountryWiseCitiesList)
+                            {
+                                <div id="cities_@countryWiseCities.Country" class="nav nav-tabs top-tabs owl-carousel owl-theme owl-nav owl-cities">
+                                    @foreach (var city in countryWiseCities.Cities.OrderByDescending(a => a.City))
+                                    {
+                                        <div class="nav-item item" id='@city.City.Replace(" ", "_")'>
+                                            <a onclick="selectCity('@city.City')" class="text-center nav-link@(counter == 1 ? " active" : "" )" href='#@city.City.Replace(" ", "_")' data-toggle="tab">@city.City</a>
+                                        </div>
+
+                                        counter++;
+                                    }
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12 ">
+                    <div class="tab-content">
+                        <div class="slider-overflow">
+
+                            @foreach (var countryWiseCities in CountryWiseCitiesList)
+                            {
+                                foreach (var city in countryWiseCities.Cities)
+                                {
+                                    <article class="tab-pane container@(counterHosp == 1 ? " active" : "" )" id='tab_@city.City.Replace(" ", "_")'>
+                                        <section class="text-center">
+                                            @foreach (var hosp in city.Hospitals)
+                                            {
+                                                if (hosp.City.ToLower() == city.City.ToLower())
+                                                {
+
+                                                    <a href="/Hospitals/Detail/@hosp.Id"><img onerror="this.src='/Assets/images/hospitals/dummyhospital.jfif'" alt="@hosp.Name" src="/Assets/images/hospital/IconImage/@hosp.IconImage" style="background-color:white;" /></a>
+                                                }
+                                            }
+                                        </section>
+                                    </article>
+
+                                    counterHosp++;
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</section>
+
+<section class="treatment-cost-sec owl-top-hospitals">
+    <div class="container">
+        <div class="row ">
+            <div class="col-md-12 text-center" style="margin-bottom:15px;">
+
+                <h3 class="text-green">Treatment Packages</h3>
+                <p>Book online consultation with us and avail attractive offers</p>
+            </div>
+
+            <div class="col-md-12">
+                <div id="owl-treatment" class="owl-carousel owl-theme owl-nav">
+                    @{
+                        var currnentTreat = "";
+                        for (var i = 0; i < Treatments.Count(); i++)
+                        {
+                            if (currnentTreat != Treatments[i].Name)
+                            {
+                                currnentTreat = Treatments[i].Name;
+
+                                <div class="">
+                                    <div class="treat-box">
+                                        <div class="treat-img"><img style="" src="/Assets/Images/Treatment/@Treatments[i].Image" class="" /></div>
+                                        <div class="treat-content">
+                                            <div class="treat-head"> <a href="/Treatment/Detail/@Treatments[i].Id"><h4> @Treatments[i].Name </h4> </a></div>
+                                            <div class="treat-text-wrap">
+                                                <div class="treat-text treat-border">
+                                                    <div class="text1 pb-2"> <a href="/Treatment/Detail/@Treatments[i].SubId"> @Treatments[i].SubName</a></div>
+                                                    <div class="text2"> 
+                                                        From @(Treatments[i].MinCost > 0? "$" + Treatments[i].MinCost.ToString("0.00") : "N/A")
+                                                    </div>
+                                                </div>
+                                                @if (Treatments.Count() > i + 1 && Treatments[i].Name != null && Treatments[i + 1].Name != null && Treatments[i].Name == Treatments[i + 1].Name)
+                                                {
+                                                    <div class="treat-text">
+                                                        <div class="text1 pb-2"> <a href="/Treatment/Detail/@Treatments[i+1].SubId"> @Treatments[i + 1].SubName</a></div>
+                                                        <div class="text2"> From @(Treatments[i+1].MinCost > 0? "$" + Treatments[i+1].MinCost.ToString("0.00") : "N/A") </div>
+                                                    </div>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+
+@{ Html.RenderAction("OurServices", "Home");}
+
+<section class="treatment-sec1 Doctors-in-india">
+
+    <div class="container">
+        <div class="row">
+
+            <div class="col-md-12 text-center">
+                <h3 class="text-green" id="h3TopDoctor"> Top Doctors @(defaultCity.City) </h3>
+                <p>Thriving to provide the best possible services resulting in fast recovery.</p>
+            </div>
+            <div class="col-md-12">
+                <div id="owl-demo2" class="owl-carousel owl-theme">
+                    @*@foreach (var doctor in Doctors.Where(a => a.City.ToLower().ToString() == "noida"))*@
+
+                    @foreach (var doctor in Doctors.Where(a => a.City.ToLower().ToString() == defaultCity.City.ToString().ToLower()))
+                    {
+                        <div class="item">
+                            <div class="text-center doctor-img">
+                                @*@if (!string.IsNullOrEmpty(doctor.Image))
+                                {
+                                    <img class="grey-bord" src="~/Assets/images/Doctors/@doctor.Image" onerror="this.src='/images/Doctor-avatart-list.png'" alt="@doctor.Name">
+                                }
+                                else
+                                {
+                                    <img class="rounded-circle" src="~/images/Doctor-avatart-list.png">
+                                }*@
+
+                                @if (!string.IsNullOrEmpty(doctor.Image))
+                                {
+                                    <img class="grey-bord" src="~/Assets/images/Doctors/@doctor.Image"
+                                         onerror="this.src ='@(doctor.Gender ? "/images/Doctor-avatart-list.png" : "/images/Doctor-avatart-listF.png")'">                                   
+                                }
+                                else if (doctor.Gender)
+                                {
+                                    <img class="rounded-circle" src="~/images/Doctor-avatart-list.svg">
+                                }
+                                else
+                                {
+                                    <img class="rounded-circle" src="~/images/Doctor-avatart-listF.svg">
+                                }
+
+                            </div>
+                            <a href="/Doctors/detail/@doctor.Id">    <h4>@doctor.Name</h4> </a>
+
+                            <p>@doctor.Department</p>
+                            <p>@doctor.City</p>
+                            <h5>@doctor.Designation</h5>
+
+
+                            <a href="/Doctors/ConsultOnline/@doctor.Id" class="book-appointment"> Book Appointment </a>
+                        </div>
+                    }
+                </div>
+
+                <span style="display:none;">
+                    @foreach (var itemOfCity in Doctors.GroupBy(g => new { g.City }).Select(g => g.First()).ToList())
+                    {
+
+                        <div id="divDoctor_@itemOfCity.City.ToString().ToLower().Replace(" ","_")">
+
+                            @foreach (var doctor in Doctors.Where(a => a.City.ToLower().ToString() == itemOfCity.City.ToString().ToLower()).ToList())
+                            {
+                                <div class="item">
+                                    <div class="text-center doctor-img">
+                                        @*@if (!string.IsNullOrEmpty(doctor.Image))
+                                        {
+                                            <img class="grey-bord" src="~/Assets/images/Doctors/@doctor.Image" onerror="this.src='/images/Doctor-avatart-list.png'" alt="@doctor.Name">
+                                        }
+                                        else
+                                        {
+                                            <img class="rounded-circle" src="~/images/Doctor-avatart-list.png">
+                                        }*@
+                                        @if (!string.IsNullOrEmpty(doctor.Image))
+                                        {
+                                            <img class="grey-bord" src="~/Assets/images/Doctors/@doctor.Image"
+                                                 onerror="this.src ='@(doctor.Gender ? "/images/Doctor-avatart-list.png" : "/images/Doctor-avatart-listF.png")'">
+                                        }
+                                        else if (doctor.Gender)
+                                        {
+                                            <img class="rounded-circle" src="~/images/Doctor-avatart-list.svg">
+                                        }
+                                        else
+                                        {
+                                            <img class="rounded-circle" src="~/images/Doctor-avatart-listF.svg">
+                                        }
+                                    </div>
+                                    <a href="/Doctors/detail/@doctor.Id">    <h4>@doctor.Name</h4> </a>
+
+                                    <p>@doctor.Department</p>
+                                    <p>@doctor.City</p>
+                                    <h5>@doctor.Designation</h5>
+
+
+                                    <a href="/Doctors/ConsultOnline/@doctor.Id" class="book-appointment"> Book Appointment </a>
+                                </div>
+                            }
+                        </div>
+                    }
+                </span>
+
+            </div>
+
+            <div class="col-md-12 text-center">
+                <div class="clearfix" style="padding-bottom:15px;"></div>
+                <a class="btn btn-warning ornagebutton" href="/Doctorslist">View All Doctors</a>
+                <div class="clearfix" style="padding-bottom:20px;"></div>
+            </div>
+
+        </div>
+    </div>
+
+</section>
+
+<section class="patient-care-sec mob-hide">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center color-white">
+                <h3>How It Works? </h3>
+                <p>We care and with a commitment to provide the best possible services we make sure to make Patient Care our top most priority.</p>
+                <div class="clearfix" style="padding-bottom:20px;"></div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="how-box-p">
+
+                    <div class="how-t">Step 1</div>
+                    <div class="how-box">
+                        <h4>Get a Quote on Healthcare Procedures</h4>
+                        <div class="sep"><img src="/images/sep.png" /></div>
+                        <p>
+                            Send your quires regarding your current conditions and type of treatment through our “Get a Quote” form...
+                        </p>
+                    </div>
+                    <div class="how-ic"><img src="/images/pt1.png"></div>
+
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="how-box-p">
+                    <div class="how-t">Step 2</div>
+                    <div class="how-box">
+                        <h4>Assistance</h4>
+                        <div class="sep"><img src="/images/sep.png" /></div>
+                        <p>
+                            Provide support to resolve your queries regarding your treatment and condition solves by the reputed doctors through online consultation...
+                        </p>
+                    </div>
+                    <div class="how-ic"><img src="/images/pt2.png"></div>
+
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="how-box-p">
+                    <div class="how-t">Step 3</div>
+                    <div class="how-box">
+                        <h4>Review of Procedure</h4>
+                        <div class="sep"><img src="/images/sep.png" /></div>
+                        <p>
+                            Provide the relevant medical information and other necessary details to move forward with the treatment procedure...
+                        </p>
+                    </div>
+                    <div class="how-ic"><img src="/images/pt3.png"></div>
+
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="how-box-p">
+                    <div class="how-t">Step 4</div>
+                    <div class="how-box">
+                        <h4>Report Analysis</h4>
+                        <div class="sep"><img src="/images/sep.png" /></div>
+                        <p>
+                            Before proceeding, final report analysis with our panel doctors and hospitals...
+                        </p>
+                    </div>
+                    <div class="how-ic"><img src="/images/pt4.png"></div>
+
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="how-box-p">
+                    <div class="how-t">Step 5</div>
+                    <div class="how-box">
+                        <h4>Price Quotation</h4>
+                        <div class="sep"><img src="/images/sep.png" /></div>
+                        <p>
+                            Guaranteed best price after comparing the best three options in regards to your treatment...
+                        </p>
+                    </div>
+                    <div class="how-ic"><img src="/images/pt5.png"></div>
+
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="how-box-p">
+                    <div class="how-t">Step 6</div>
+                    <div class="how-box">
+                        <h4>Decision Making</h4>
+                        <div class="sep"><img src="/images/sep.png" /></div>
+                        <p>
+                            On shop for to choose from the most affordable customised packages and best services with for your treatment...
+                        </p>
+                    </div>
+                    <div class="how-ic"><img src="/images/pt6.png"></div>
+
+                </div>
+            </div>
+
+
+            <div class="col-md-3">
+                <div class="how-box-p">
+                    <div class="how-t">Step 7</div>
+                    <div class="how-box">
+                        <h4>Visa and Hospitalization</h4>
+                        <div class="sep"><img src="/images/sep.png" /></div>
+                        <p>
+                            Best and hassle-free assistance in Visa processing in the country and the excellent team of doctors at your service...
+                        </p>
+                    </div>
+                    <div class="how-ic"><img src="/images/pt7.png"></div>
+
+                </div>
+            </div>
+
+
+            <div class="col-md-3">
+                <div class="how-box-p">
+                    <div class="how-t">Step 8</div>
+                    <div class="how-box">
+                        <h4>Discharge and<br /> Follow up</h4>
+                        <div class="sep"><img src="/images/sep.png" /></div>
+                        <p>
+                            A warm farewell with drop assistance to avoid any discomfort
+                            Post-discharge you receive the regular follow-up from us
+                        </p>
+                    </div>
+                    <div class="how-ic"><img src="/images/pt8.png"></div>
+
+                </div>
+            </div>
+
+
+
+            <div class="clearfix"></div>
+        </div>
+    </div>
+
+</section>
+
+<section class="how-new desk-hide">
+
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center color-white">
+                <h3>How It Works? </h3>
+                <p>We care and with a commitment to provide the best possible services we make sure to make Patient Care our top most priority.</p>
+                <div class="clearfix" style="padding-bottom:20px;"></div>
+            </div>
+
+            <div id="owl-how" class="owl-carousel owl-theme">
+
+
+                <div class="">
+                    <div class="how-box-p">
+
+                        <div class="how-t">Step 1</div>
+                        <div class="how-box">
+                            <h4>Get a Quote on Healthcare Procedures</h4>
+                            <div class="sep"><img src="/images/sep.png" /></div>
+                            <p>
+                                Send your quires regarding your current conditions and type of treatment through our “Get a Quote” form...
+                            </p>
+                        </div>
+                        <div class="how-ic"><img src="/images/pt1.png"></div>
+
+                    </div>
+                </div>
+
+                <div class="">
+                    <div class="how-box-p">
+                        <div class="how-t">Step 2</div>
+                        <div class="how-box">
+                            <h4>Assistance</h4>
+                            <div class="sep"><img src="/images/sep.png" /></div>
+                            <p>
+                                Provide support to resolve your queries regarding your treatment and condition solves by the reputed doctors through online consultation...
+                            </p>
+                        </div>
+                        <div class="how-ic"><img src="/images/pt2.png"></div>
+
+                    </div>
+                </div>
+
+                <div class="">
+                    <div class="how-box-p">
+                        <div class="how-t">Step 3</div>
+                        <div class="how-box">
+                            <h4>Review of Procedure</h4>
+                            <div class="sep"><img src="/images/sep.png" /></div>
+                            <p>
+                                Provide the relevant medical information and other necessary details to move forward with the treatment procedure...
+                            </p>
+                        </div>
+                        <div class="how-ic"><img src="/images/pt3.png"></div>
+
+                    </div>
+                </div>
+
+                <div class="">
+                    <div class="how-box-p">
+                        <div class="how-t">Step 4</div>
+                        <div class="how-box">
+                            <h4>Report Analysis</h4>
+                            <div class="sep"><img src="/images/sep.png" /></div>
+                            <p>
+                                Before proceeding, final report analysis with our panel doctors and hospitals...
+                            </p>
+                        </div>
+                        <div class="how-ic"><img src="/images/pt4.png"></div>
+
+                    </div>
+                </div>
+
+                <div class="">
+                    <div class="how-box-p">
+                        <div class="how-t">Step 5</div>
+                        <div class="how-box">
+                            <h4>Price Quotation</h4>
+                            <div class="sep"><img src="/images/sep.png" /></div>
+                            <p>
+                                Guaranteed best price after comparing the best three options in regards to your treatment...
+                            </p>
+                        </div>
+                        <div class="how-ic"><img src="/images/pt5.png"></div>
+
+                    </div>
+                </div>
+
+                <div class="">
+                    <div class="how-box-p">
+                        <div class="how-t">Step 6</div>
+                        <div class="how-box">
+                            <h4>Decision Making</h4>
+                            <div class="sep"><img src="/images/sep.png" /></div>
+                            <p>
+                                On shop for to choose from the most affordable customised packages and best services with for your treatment...
+                            </p>
+                        </div>
+                        <div class="how-ic"><img src="/images/pt6.png"></div>
+
+                    </div>
+                </div>
+
+
+                <div class="">
+                    <div class="how-box-p">
+                        <div class="how-t">Step 7</div>
+                        <div class="how-box">
+                            <h4>Visa and Hospitalization</h4>
+                            <div class="sep"><img src="/images/sep.png" /></div>
+                            <p>
+                                Best and hassle-free assistance in Visa processing in the country and the excellent team of doctors at your service...
+                            </p>
+                        </div>
+                        <div class="how-ic"><img src="/images/pt7.png"></div>
+
+                    </div>
+                </div>
+
+
+                <div class="">
+                    <div class="how-box-p">
+                        <div class="how-t">Step 8</div>
+                        <div class="how-box">
+                            <h4>Discharge <br />and Follow up</h4>
+                            <div class="sep"><img src="/images/sep.png" /></div>
+                            <p>
+                                A warm farewell with drop assistance to avoid any discomfort
+                                Post-discharge you receive the regular follow-up from us
+                            </p>
+                        </div>
+                        <div class="how-ic"><img src="/images/pt8.png"></div>
+
+                    </div>
+                </div>
+
+
+
+
+            </div>
+
+
+            <div class="clearfix"></div>
+        </div>
+    </div>
+
+
+
+
+</section>
+
+<section class="treatment-sec1 testimonials" style="background:#fff;">
+
+    <div class="container">
+        <div class="row">
+
+            <div class="col-md-12 text-center">
+                <h3 class="text-green">Patient Testimonials</h3>
+                <h4>We have <span class="text-orange"> Served</span> over 5000+ Patients successfully and counting</h4>
+            </div>
+            <div class="col-md-12">
+                <div id="owl-demo3" class="owl-carousel owl-theme">
+
+                    @foreach (var testimmonialItem in testimonial)
+                    {
+                        <div class="item grey-bord testim-box">
+                            <div class="testim-img">
+                                <img src="~/Assets/images/Testimonial/@testimmonialItem.Image" />
+                            </div>
+                            <div class="testim-content">
+                                <h5>@testimmonialItem.Name</h5>
+                                <p>@testimmonialItem.Treatment</p>
+                                <p>@testimmonialItem.City</p>
+                                <span class="quotes1">
+                                    @testimmonialItem.Description.Substring(0, 70)
+                                    ...
+                                </span>
+                                <div class="test-read"><a href="/Home/Testimonial">Read Full Story</a></div>
+                            </div>
+                        </div>
+                    }
+
+                    @*<div class="item grey-bord testim-box">
+                            <div class="testim-img">
+                                <img src="~/images/testi1.png">
+                            </div>
+                            <div class="testim-content">
+                                <h5>Neha Kumari</h5>
+                                <p>Cancer Treatment</p>
+                                <p>Cambodia</p>
+                                <span class="quotes1">
+                                    They provide great service facilty consectetur adipisicing elit. Itaque rem, praesentium, iure, ipsum magnam .
+                                </span>
+
+                                <div class="test-read"><a href="#">Read Full Story</a></div>
+                            </div>
+                        </div>
+                        <div class="item grey-bord testim-box">
+                            <div class="testim-img">
+                                <img src="~/images/testi2.png">
+                            </div>
+                            <div class="testim-content">
+                                <h5>Neha Kumari</h5>
+                                <p>Cancer Treatment</p>
+                                <p>Cambodia</p>
+                                <span class="quotes1">
+                                    They provide great service facilty consectetur adipisicing elit. Itaque rem, praesentium, iure, ipsum magnam .
+                                </span>
+
+                                <div class="test-read"><a href="#">Read Full Story</a></div>
+                            </div>
+                        </div>
+                        <div class="item grey-bord testim-box">
+                            <div class="testim-img">
+                                <img src="~/images/testi3.png">
+                            </div>
+                            <div class="testim-content">
+                                <h5>Neha Kumari</h5>
+                                <p>Cancer Treatment</p>
+                                <p>Cambodia</p>
+                                <span class="quotes1">
+                                    They provide great service facilty consectetur adipisicing elit. Itaque rem, praesentium, iure, ipsum magnam .
+                                </span>
+
+                                <div class="test-read"><a href="#">Read Full Story</a></div>
+                            </div>
+                        </div>
+                        <div class="item grey-bord testim-box">
+                            <div class="testim-img">
+                                <img src="~/images/testi3.png">
+                            </div>
+                            <div class="testim-content">
+                                <h5>Neha Kumari</h5>
+                                <p>Cancer Treatment</p>
+                                <p>Cambodia</p>
+                                <span class="quotes1">
+                                    They provide great service facilty consectetur adipisicing elit. Itaque rem, praesentium, iure, ipsum magnam .
+                                </span>
+
+                                <div class="test-read"><a href="#">Read Full Story</a></div>
+                            </div>
+                        </div>*@
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+<section class="blog-ne" style="display:none">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <h3 class="text-green">Latest Healthcare Blog</h3>
+
+            </div>
+
+            <div class="col-md-3 col-xs-6">
+                <div class="blog-img"><img src="~/Assets/images/blog/blog1.jpg" /></div>
+                <div class="blog-hed"><h4>Who's who in the hospital? </h4></div>
+
+            </div>
+
+            <div class="col-md-3 col-xs-6">
+                <div class="blog-img"><img src="~/Assets/images/blog/blog2.jpg" /></div>
+                <div class="blog-hed"><h4>Who's who in the hospital? </h4></div>
+
+            </div>
+
+            <div class="col-md-3 col-xs-6">
+                <div class="blog-img"><img src="~/Assets/images/blog/blog3.jpg" /></div>
+                <div class="blog-hed"><h4>Who's who in the hospital? </h4></div>
+
+            </div>
+
+            <div class="col-md-3 col-xs-6">
+                <div class="blog-img"><img src="~/Assets/images/blog/blog4.jpg" /></div>
+                <div class="blog-hed"><h4>Who's who in the hospital? </h4></div>
+
+            </div>
+
+
+        </div>
+    </div>
+    <div class="clearfix"></div>
+</section>
+
+<section class="need-an-emergecy">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-md-8">
+                <h4>+91-9560960088</h4>
+                <h3>Need An Emergency <br /> Help? <span class="text-orange"> Call Us!</span></h3>
+            </div>
+            <div class="col-lg-6 col-md-4 text-md-right">
+                @*<a href="/Home/Register" class="btn btn-warning ornagebutton">Get a Quote</a>*@
+            </div>
+        </div>
+    </div>
+</section>
+
+@if (string.IsNullOrEmpty(Session["userdoctor"] as string))
+{
+   
+        <section class="section appoinment-sec">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-3">
+                        <div class="appoinment-content">
+                        </div>
+                    </div>
+
+                    <div class="col-lg-9">
+                        <div class="appoinment-wrap mt-5 mt-lg-0 pl-lg-5" style="border:1px solid #ccc;">
+
+                            <h3>  <span class="text-dark-green"><br /> Get a Quote   </span></h3>
+
+                            @Html.Partial("~/Views/Shared/_GetQuote.cshtml", new TalkToTreat.Models.Quote())
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    }
+
+        @Html.Partial("_OurPartners")
+
+<script>
+    selectCountry(selectedCountry, true);
+</script>
+

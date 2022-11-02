@@ -1,0 +1,292 @@
+﻿@model TalkToTreat.Models.Doctors
+@{
+    ViewBag.Title = "Doctors";
+}
+
+
+<section class="banner-area doctor-banner">
+    <div class="container">
+        <div class="row ">
+
+            <div class="col-md-6 text-left">
+                <div class="banner-text">
+
+                    <h1>
+                        Best Doctors in India
+                    </h1>
+                    <!--   <h6>We provide a wide range of creative services adipisicing elit. Autem maxime rem modi eaque, voluptate. Beatae officiis neque </h6>-->
+
+                </div>
+            </div>
+            <div class="col-md-6 text-left">
+
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<section class="listing-sec doctor-single">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-sm-4 col-md-3 col-xs-12">
+
+                <div class="doctor-img-block-profile">
+
+                    <div class="profile-img-block ">
+                        @if (!string.IsNullOrEmpty(Model.Image))
+                        {
+                            Model.Image = Model.Image.Replace("http://talktotreat.roovea.com/Assets/images/Doctors/", "");
+                        }
+
+                        @if (!string.IsNullOrEmpty(Model.Image))
+                        {
+                            <img src="~/Assets/images/Doctors/@Model.Image" 
+                                 onerror="this.src ='@(Model.Gender ? "/images/Doctor-avatart-list.png" : "/images/Doctor-avatart-listF.png")'">
+                        }
+                        else if (Model.Gender)
+                        {
+                            <img src="~/images/Doctor-avatart-list.svg">
+                        }
+                        else
+                        {
+                            <img src="~/images/Doctor-avatart-listF.svg">
+                        }
+                    </div>
+
+
+                    <div class="info-block ">
+                        <h4 class="mb-0">@Model.Name</h4>
+                        <p>@Model.Department</p>
+
+                        <ul class="list-inline mt-4 doctor-social-links">
+                            <li class="list-inline-item"><a href="#"><i class="fa fa-facebook"></i></a></li>
+                            <li class="list-inline-item"><a href="#"><i class="fa fa-twitter"></i></a></li>
+                            <li class="list-inline-item"><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                            <li class="list-inline-item"><a href="#"><i class="fa fa-instagram"></i></a></li>
+
+
+                        </ul>
+
+                        <div class="d-none d-md-block call-to-action">
+                            <font class="">Call us for Apppointment</font>
+                            <h4>+91-9560960088</h4>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sidebar-widget working-hours">
+
+
+
+                    <div class="col-lg-12" style="margin:0px; padding:0px;">
+                        <div class="skill-list">
+                            <h5 class="text-center">Medical Qualification</h5>
+                            <ul class="list-unstyled department-service">
+
+                                @Html.Raw(Model.Degree)
+
+                                @*<li> MCH (Neurosurgery) – PGIMER, Chandigarh in the year 2010</li>
+                                    <div class="nedevider"></div>
+
+                                    <li>  MS (General Surgery) – Banaras Hindu University, Varanasi in the year 2006</li>
+                                    <div class="nedevider"></div>
+
+                                    <li>MBBS – BHU, Varanasi in the year 2003</li>
+                                    <div class="clearfix"></div>*@
+
+                            </ul>
+                        </div>
+                    </div>
+
+
+                </div>
+
+
+            </div>
+            <div class="col-sm-8 col-md-9 col-xs-12">
+
+                <div class="row">
+
+
+                    <div class="col-lg-12 col-md-12">
+                        <div class="doctor-details mt-4 mt-lg-0">
+
+                            <div class="row doctor-inner-box">
+
+
+                                <h4 class="mb-0"> <a href="/Doctors/Detail/@Model.Id">Introducing to @Model.Name</a> </h4>
+                                <div class="clearfix"></div>
+
+                                <p>@Model.Department</p>
+                                <div class="clearfix"></div>
+
+                                <span class="secondary-heading-md margin5-bottom uppercase">
+                                    <img height="19" width="14" src="~/images/hospital-avtar.svg">
+                                    <a href="/hospitals/Detail/@Model.HospitalId" title="@Model.Hospital" alt="@Model.Hospital"> @Model.Hospital</a>
+                                </span>
+                                <p class="desig">
+                                    <img height="19" width="14" src="~/images/year.svg">
+                                    @Model.Designation , @Model.YearsofExp years of Experience
+                                </p>
+
+                                <div class="clearfix"></div>
+                                <div class="divider my-4"></div>
+
+                                <h6 class="doc-subhed text-green">About The Doctor</h6>
+
+                                <p>  @Model.Description </p>
+
+                                <a href="/Doctors/ConsultOnline/@Model.Id#bookapp" class="btn btn-warning ornagebutton">Book Appointment</a>
+
+                                <div class="nedevider"></div>
+                                <div class="col-lg-12" style="margin:0px; padding:0px;">
+                                    <div class="skill-list">
+                                        <h5> Work Experience</h5>
+                                        <ul class="list-unstyled department-service">
+
+                                            @Html.Raw(Model.Experience)
+
+                                            @*<li> Worked in the Department of Neuro-spine surgery unit at Q.R.G Central Hospital, Faridabad.</li>
+                                                <li> Worked in the Department of Neuro-spine surgery at Sarvodaya Hospital, Faridabad.</li>
+                                                <li>  Worked in the Department of Neurosurgery at Fortis Hospital, Noida (UP).</li>
+                                                <li> Worked in the Department of Neurosurgery at PGIMER, Chandigarh</li>
+                                                <li> Worked in the Department of Neurosurgery at Safdarjung Hospital, Delhi.</li>
+                                                <li> Worked in the Department of Neurosurgery at Guru Teg Bahadur Hospital, New Delhi</li>
+                                                <li> Currently associated with Metro Heart Institute with Multispecialty Faridabad as Consultant in Neuro     & Spine Surgery unit.</li>*@
+
+                                        </ul>
+
+
+                                        <div class="nedevider">
+                                        </div>
+                                        <div class="col-lg-12" style="margin:0px; padding:0px;">
+                                            <div class="skill-list">
+                                                <h5> Awards & Honours</h5>
+                                                <ul class="list-unstyled department-service">
+
+                                                    @Html.Raw(Model.AdditionalInfo)
+
+                                                    @*<li>   ISGCON-2003, BEST PAPER AWARD for “nitrate, nitrite and carcinoma of the gallbladder”, presented at 44th annual conference of  Indian society of gastroenterology, Chennai.</li>
+                                                        <li>  BEST INTERN AWARD for the best intern of the year 2002 in institute of Medical Sciences, BHU, Varanasi.</li>
+                                                        <li>  Invited for “International Cadaveric Workshop on Advanced MIS Technique” held on 14th july 2013 at Thialand.</li>*@
+
+                                                </ul>
+                                            </div>
+                                        </div>
+
+                                        @*<div class="nedevider"></div>
+                                            <div class="col-lg-12" style="margin:0px; padding:0px;">
+                                                <div class="skill-list">
+                                                    <h5>Professional Membership</h5>
+                                                    <ul class="list-unstyled department-service">
+                                                        <li>Member of European Board of Surgery</li>
+                                                        <li> Member of Indian Medical Association</li>
+                                                        <li> LTSI (Liver Transplant Society of India)</li>
+                                                        <li> International Liver Transplant Society.</li>
+                                                        <li>IHPBA (International Hepato-Pancreato-Biliary Association)</li>
+
+                                                    </ul>
+                                                </div>
+                                            </div>
+
+                                            <div class="nedevider"></div>
+                                            <div class="col-lg-12" style="margin:0px; padding:0px;">
+                                                <div class="skill-list">
+                                                    <h5>Research Publications</h5>
+                                                    <ul class="list-unstyled department-service">
+
+                                                        <li> Guidelines for the Management of Fever and Neutropenia in Children with Cancer and/or Undergoing Hematopoietic Stem Cell Transplantation," Journal of Clinical Oncology</li>
+                                                        <li>   Predicting microbiologically defined infection in febrile neutropenic episodes in children: global individual participant data multivariable meta-analysis. Br J Cancer</li>
+                                                        <li> Infections in acute myeloid leukemia: an analysis of 382 febrile episodes. Med Oncology.</li>
+                                                        <li>  Gupta A, Swaroop C, Agarwala S, Pandey RM, Bakhshi S. Randomized controlled trial comparing oral amoxicillin-clavulanate and ofloxacin with intravenous ceftriaxone and amikacin as outpatient therapy in paediatric low-risk febrile neutropenia. J Pediatr Hematol Oncol.</li>
+
+                                                    </ul>
+                                                </div>
+                                            </div>*@
+
+
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--
+                                            <div class="row">
+                                                <div class="col-lg-12">
+                                                    <div class="section-title">
+                                                        <h3>My Educational Qualifications</h3>
+                                                        <div class="divider my-4"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <div class="edu-block ">
+                                                        <span class="h6 text-muted">Year(2005-2007) </span>
+                                                        <h4 class="mb-3 title-color">MBBS, M.D at University of Wyoming</h4>
+                                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi doloremque harum, mollitia, soluta maxime porro veritatis fuga autem impedit corrupti aperiam sint, architecto, error nesciunt temporibus! Vel quod, dolor aliquam!</p>
+                                                    </div>
+
+                                                    <div class="edu-block">
+                                                        <span class="h6 text-muted">Year(2007-2009) </span>
+                                                        <h4 class="mb-3 title-color">M.D. of Netherland Medical College</h4>
+                                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi doloremque harum, mollitia, soluta maxime porro veritatis fuga autem impedit corrupti aperiam sint, architecto, error nesciunt temporibus! Vel quod, dolor aliquam!</p>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-lg-6">
+                                                    <div class="edu-block ">
+                                                        <span class="h6 text-muted">Year(2009-2010) </span>
+                                                        <h4 class="mb-3 title-color">MBBS, M.D at University of Japan</h4>
+                                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi doloremque harum, mollitia, soluta maxime porro veritatis fuga autem impedit corrupti aperiam sint, architecto, error nesciunt temporibus! Vel quod, dolor aliquam!</p>
+                                                    </div>
+
+                                                    <div class="edu-block">
+                                                        <span class="h6 text-muted">Year(2010-2011) </span>
+                                                        <h4 class="mb-3 title-color">M.D. of Canada Medical College</h4>
+                                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi doloremque harum, mollitia, soluta maxime porro veritatis fuga autem impedit corrupti aperiam sint, architecto, error nesciunt temporibus! Vel quod, dolor aliquam!</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="row">
+                                                <div class="col-lg-12">
+                                                    <h3>My skills</h3>
+                                                    <div class="divider my-4"></div>
+                                                    <p>@Model.ShortDescription</p>
+                                                </div>
+                                                <div class="col-lg-4">
+                                                    <div class="skill-list">
+                                                        <h5>Expertise area</h5>
+                                                        <ul class="list-unstyled department-service">
+                                                            <li><i class="icofont-check mr-2"></i>International Drug Database</li>
+                                                            <li><i class="icofont-check mr-2"></i>Stretchers and Stretcher Accessories</li>
+                                                            <li><i class="icofont-check mr-2"></i>Cushions and Mattresses</li>
+                                                            <li><i class="icofont-check mr-2"></i>Cholesterol and lipid tests</li>
+                                                            <li><i class="icofont-check mr-2"></i>Critical Care Medicine Specialists</li>
+                                                            <li><i class="icofont-check mr-2"></i>Emergency Assistance</li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+
+
+                            ---------->
+                        </div>
+
+
+
+
+                    </div>
+
+                </div>
+            </div>
+
+</section>
+
+

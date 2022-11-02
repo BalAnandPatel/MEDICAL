@@ -1,0 +1,992 @@
+
+---------------------------------------------------------------------------------------------
+18July2022
+---------------------------------------------------------------------------------------------
+-- exec [GetAllDoctorsList] null,7    
+ALTER PROCEDURE [dbo].[GetAllDoctorsList]      
+		 @SearchValue nvarchar(255),      
+		 @pagenum int       
+AS      
+BEGIN           
+		if(@pagenum=0)      
+			set @pagenum=1  
+			
+		declare @pageno int      
+		set @pageno = 10*@pagenum;      
+        
+        
+		 with Docs as (            
+		 SELECT   D.Id,Name, Department, Designation,Image, Hospital,City            
+		 FROM   [Doctors] D         
+		 where   (
+				  D.Name like '%' + @SearchValue + '%'  
+				  or D.Department like '%' + @SearchValue 
+				  or D.Hospital like '%' + @SearchValue 
+				  or D.City like '%' + @SearchValue 
+				  or D.Country like '%' + @SearchValue 
+				  or  isnull(@SearchValue,'')='') )
+
+		 ,Summary as (       
+        
+		 select Count(1) TotalRecord             
+		 from Docs            
+		)      
+      
+		SELECT A.*,TotalRecord      
+		FROM     Docs A,Summary S
+		ORDER BY A.Name ASC      
+       
+		OFFSET (@pagenum-1)*10 ROWS FETCH NEXT 10 ROWS ONLY      
+END  
+--------------------------------------------------------------------------------------------------------------
+GO
+--------------------------------------------------------------------------------------------------------------
+ALTER procedure [dbo].[procJsonUpsertDoctor_New]                     
+		 @DoctorId uniqueidentifier,                           
+		 @DoctorJson nvarchar(max),                          
+		 @SavedBy nvarchar(100),
+		 @Name nvarchar(200),
+		 @Department nvarchar(500),
+		 @IsActive bit,
+		 @EmailId nvarchar(255),                            
+		 @Salt nvarchar(500),
+		 @Designation nvarchar(500),
+		 @UserName nvarchar(500),                              
+		 @ShortDescription nvarchar(MAX),
+		 @Description nvarchar(MAX), 
+		 @Password nvarchar(500),                               
+		 @City nvarchar(500), 
+		 @PostCode nvarchar(500), 
+		 @PhoneNumber nvarchar(500), 
+		 @MobileNumber  nvarchar(500),      
+		 @Image nvarchar(500), 
+		 @Hospital nvarchar(500), 
+		 @YearsofExp int, 
+		 @Degree nvarchar(500), 
+		 @CustomNo nvarchar(100),
+		 @Award nvarchar(MAX)
+AS                
+BEGIN                                       
+			declare @Isvalid bit=1,@MessageCode int,@Message nvarchar(100) ,@AllUpdatedProducts nvarchar(max)                           
+			declare  @emptyGuid uniqueidentifier='00000000-0000-0000-0000-000000000000' ,@Country nvarchar(100) , @State  nvarchar(100)     
+         
+ 
+  Select @Country=Countryname, @State=Statename from City where Cityname=@City 
+  set @UserName = isnull(@UserName,@EmailId)  
+
+ if(@DoctorId = @emptyGuid)        
+ begin        
+		  set @DoctorId= newid()        
+      
+			--- insert into the product                              
+		insert into Doctors
+			(ID, Name, Department, Designation, ShortDescription, Description, City, State, Country, PostCode, 
+			 PhoneNumber, MobileNumber, Created, CreatedBy, LastUpdated, LastUpdatedBy, CustomNo, IsActive, Image, 
+			 Hospital, YearsofExp, Degree, Username, Salt, Password, Award)     
+        values(@DoctorId, @Name, @Department, @Designation, @ShortDescription, @Description, @City, @State, @Country, @PostCode, 
+		       @PhoneNumber, @MobileNumber, getutcdate(), @SavedBy,  getutcdate(), @SavedBy, @CustomNo, @IsActive, @Image, 
+			   @Hospital, @YearsofExp, @Degree , @Username, @Salt, @Password, @Award)            
+        
+		  Set @Message='Successfully Created'      
+  end        
+  Else      
+  Begin      
+		  Update Doctors 
+			set Name=@Name ,Department=@Department, Designation=@Designation, ShortDescription=@ShortDescription, 
+				Description=@Description,City=@City, State=@State, Country=@Country, PostCode=@PostCode,
+				PhoneNumber=@PhoneNumber, MobileNumber=@MobileNumber,  LastUpdated= getutcdate(), LastUpdatedBy=@SavedBy,       
+		        CustomNo=@CustomNo, IsActive=@IsActive, 
+				Image=case when Isnull(@Image,'')>'' then @Image else Image End, 
+				Hospital=@Hospital, YearsofExp=@YearsofExp, Degree  =@Degree, 
+				UserName= case when isnull(UserName,'')='' then @username else UserName End ,  
+				Password= case when isnull(Password,'')='' then @Password else Password End    ,  
+				Salt= case when isnull(Salt,'')='' then @Salt else Salt End,  
+			    Award = @Award
+		  where  ID = @DoctorId        
+
+		  Set @Message='Successfully Updated'      
+  End      
+                                
+  select @DoctorId RecordId,@Isvalid IsValid,@MessageCode MessageCode,@Message Message                         
+End
+--------------------------------------------------------------------------------------------------------------
+GO
+--------------------------------------------------------------------------------------------------------------
+ALTER procedure [dbo].[procJsonUpsertTreatment_New]                   
+		 @TreatmentId uniqueidentifier,                         
+		 @TreatmentJson nvarchar(max),                        
+		 @SavedBy nvarchar(100),
+		 @Name nvarchar(200), 
+		 @IsActive bit,  
+		 @Description nvarchar(MAX),   
+		 @Image nvarchar(500), 
+		 @Cost Money,
+		 @ShortDescription nvarchar(MAX)
+AS              
+BEGIN                                     
+		
+		declare @Isvalid bit=1,@MessageCode int,@Message nvarchar(100)                         
+		 declare  @emptyGuid uniqueidentifier='00000000-0000-0000-0000-000000000000'    
+        
+	 if(@TreatmentId = @emptyGuid)      
+	  begin      
+			  set @TreatmentId= newid()   
+  
+			  insert into Treatment
+				( ID,         Name,  Description,   Created,     CreatedBy, LastUpdated,  LastUpdatedBy,   IsActive, Image,    Code,                   Cost, ShortDescription)   
+              values
+			   (@TreatmentId, @Name, @Description,  getutcdate(), @SavedBy,  getutcdate(), @SavedBy,       @IsActive, @Image,	REPLACE(@Name,' ','-'), @Cost, @ShortDescription )
+			  
+					
+   
+			  Set @Message='Successfully Created'    
+	   end      
+	   Else    
+	   Begin    
+				Update Treatment set 
+					Name = @Name ,
+					Code = REPLACE(@Name,' ','-'), 
+					Description = @Description,  
+					LastUpdated = getutcdate(), 
+					LastUpdatedBy = @SavedBy,  
+					Cost = @Cost,
+					ShortDescription = @ShortDescription
+				where  ID = @TreatmentId      
+				Set @Message='Successfully Updated'    
+	   End                    
+	   
+	   select @TreatmentId RecordId,@Isvalid IsValid,@MessageCode MessageCode,@Message Message                       
+
+End
+--------------------------------------------------------------------------------------------------------------
+GO
+--------------------------------------------------------------------------------------------------------------
+-- exec [GetAllTreatmentList] null,0      
+ALTER PROCEDURE [dbo].[GetAllTreatmentList]      
+ @SearchValue nvarchar(255),      
+ @pagenum int       
+AS      
+BEGIN           
+if(@pagenum=0)      
+		 set @pagenum=1      
+		 declare @pageno int      
+		 set @pageno = 10*@pagenum;      
+        
+		 with Docs as (            
+		 SELECT   D.Id,Name, Isnull(Cost,0) Cost, Code, Description,Image, IsActive,ShortDescription              
+		 FROM   Treatment D         
+		 where   (D.Name like '%' + @SearchValue + '%'   or  isnull(@SearchValue,'')='') ),
+		 
+		 Summary as (select Count(1) TotalRecord from Docs )      
+      
+		SELECT A.*,TotalRecord  FROM  Docs A,Summary S ORDER BY A.Name ASC       
+		OFFSET (@pagenum-1)*10 ROWS FETCH NEXT 10 ROWS ONLY      
+END 
+
+---------------------------------------------------------------------------------------------------------------
+GO
+----------------------------------------------------------------------------------------19july2022----------------------
+-- exec [GetAllTreatmentList] null,0      
+ALTER PROCEDURE [dbo].[GetAllTreatmentList]      
+ @SearchValue nvarchar(255),      
+ @pagenum int       
+AS      
+BEGIN           
+if(@pagenum=0)      
+		 set @pagenum=1      
+		 declare @pageno int      
+		 set @pageno = 10*@pagenum;      
+        
+		 with Docs as (            
+		 SELECT   D.Id,Name, Isnull(Cost,0) Cost, Code, Description,Image, IsActive,ShortDescription              
+		 FROM   Treatment D         
+		 where ParentId <>'00000000-0000-0000-0000-000000000000' and  (D.Name like '%' + @SearchValue + '%'   or  isnull(@SearchValue,'')='') ),
+		 
+		 Summary as (select Count(1) TotalRecord from Docs )      
+      
+		SELECT A.*,TotalRecord  FROM  Docs A,Summary S ORDER BY A.Name ASC       
+		OFFSET (@pagenum-1)*10 ROWS FETCH NEXT 10 ROWS ONLY      
+END 
+---------------------------------------------------------------------------------------------------------------
+GO
+--------------------------------------------------------------------------------------------------------------
+-- exec [GetAllTreatmentListMaster] null,0      
+CREATE PROCEDURE [dbo].[GetAllTreatmentListMaster]      
+ @SearchValue nvarchar(255),      
+ @pagenum int       
+AS      
+BEGIN           
+if(@pagenum=0)      
+		 set @pagenum=1      
+		 declare @pageno int      
+		 set @pageno = 10*@pagenum;      
+        
+		 with Docs as (            
+		 SELECT   D.Id,Name, Isnull(Cost,0) Cost, Code, Description,Image, IsActive,ShortDescription              
+		 FROM   Treatment D         
+		 where ParentId ='00000000-0000-0000-0000-000000000000' and  (D.Name like '%' + @SearchValue + '%'   or  isnull(@SearchValue,'')='') ),
+		 
+		 Summary as (select Count(1) TotalRecord from Docs )      
+      
+		SELECT A.*,TotalRecord  FROM  Docs A,Summary S ORDER BY A.Name ASC       
+		OFFSET (@pagenum-1)*10 ROWS FETCH NEXT 10 ROWS ONLY      
+END 
+---------------------------------------------------------------------------------------------------------------
+GO
+--------------------------------------------------------------------------------------------------------------
+ALTER procedure [dbo].[procSearchObject]      
+(      
+  @SearchType int,      
+  @SearchText nvarchar(100) 
+)      
+as      
+ If(@SearchType=1) -- for Hospital      
+ Begin 
+	  Select distinct   Cast(ID as nvarchar(100)) as RecordId,  Name,  Description, City     
+	  From Hospital      
+	  --Where (Name like  @SearchText + '%')      
+	  Order By Name      
+ End      
+ If(@SearchType=2) -- for TreatMent      
+ Begin      
+	  Select distinct   Cast(ID as nvarchar(100)) as RecordId,  Name,  Description, '' City     
+	  From TreatMent      
+	  --Where (Name like  @SearchText + '%')      
+	  Order By Name     
+ End   
+  If(@SearchType=3) -- for City      
+ Begin      
+	  Select distinct   Cast(Cityname as nvarchar(100)) as RecordId,Cityname+', '+Statename  Name,CountryName  Description, '' City  ,Statename,CityName   
+	  From CITY      
+	  --Where (Name like  @SearchText + '%')      
+	  Order By Statename,CityName     
+ End  
+ If(@SearchType=4) -- for TreatMent Matster     
+ Begin      
+	  Select 
+		distinct  Cast(ID as nvarchar(100)) as RecordId,  
+		Name
+	  From TreatMent      
+	  Where ParentId ='00000000-0000-0000-0000-000000000000'      
+	  Order By Name     
+ End   
+---------------------------------------------------------------------------------------------------------------
+GO
+----------------------------------------------------------------------------------------------------------------
+ALTER procedure [dbo].[procJsonUpsertTreatment_New]                   
+		 @TreatmentId uniqueidentifier,                         
+		 @TreatmentJson nvarchar(max),                        
+		 @SavedBy nvarchar(100),
+		 @Name nvarchar(200), 
+		 @IsActive bit,  
+		 @Description nvarchar(MAX),   
+		 @Image nvarchar(500), 
+		 @Cost Money,
+		 @ShortDescription nvarchar(MAX),
+		 @ParentId uniqueidentifier
+AS              
+BEGIN                                     
+		
+		declare @Isvalid bit=1,@MessageCode int,@Message nvarchar(100)                         
+		 declare  @emptyGuid uniqueidentifier='00000000-0000-0000-0000-000000000000'    
+        
+	 if(@TreatmentId = @emptyGuid)      
+	  begin      
+			  set @TreatmentId= newid()   
+  
+			  insert into Treatment
+				( ID,         Name,  Description,   Created,     CreatedBy, LastUpdated,  LastUpdatedBy,   IsActive, Image,    Code,                   Cost, ShortDescription,ParentId)   
+              values
+			   (@TreatmentId, @Name, @Description,  getutcdate(), @SavedBy,  getutcdate(), @SavedBy,       @IsActive, @Image,	REPLACE(@Name,' ','-'), @Cost, @ShortDescription,@ParentId )
+			  
+					
+   
+			  Set @Message='Successfully Created'    
+	   end      
+	   Else    
+	   Begin    
+				Update Treatment set 
+					Name = @Name ,
+					Code = REPLACE(@Name,' ','-'), 
+					Description = @Description,  
+					LastUpdated = getutcdate(), 
+					LastUpdatedBy = @SavedBy,  
+					Cost = @Cost,
+					ShortDescription = @ShortDescription,
+					ParentId = @ParentId,
+					IsActive = @IsActive
+				where  ID = @TreatmentId      
+				Set @Message='Successfully Updated'    
+	   End                    
+	   
+	   select @TreatmentId RecordId,@Isvalid IsValid,@MessageCode MessageCode,@Message Message                       
+
+End
+---------------------------------------------------------------------------------------------------------------
+GO
+--------------------------------------------------------------------------------------20july2022--------------------------
+--GetUserByIdentifier 'ak@gg.com'    
+CREATE procedure [dbo].[GetUserByIdentifier]                  
+(                  
+	@UserName varchar(500)                
+)                  
+                  
+as   
+Begin
+		Select 
+				[ID],
+				[iid], 
+				[Title], 
+				[FirstName], 
+				[MiddleName], 
+				[LastName], 
+				[UserName], 
+				[Email], 
+				[Password], 
+				[Salt], 
+				[IsDeleted], 
+				[PhoneNo], 
+				[Gender], 
+				[NewsletterSubscribe], 
+				[PhotoUrl], 
+				[Created], 
+				[CreatedBy], 
+				[LastUpdated],    
+				[LastUpdatedBy], 
+				[IsValidated], [Postcode], 
+				[Country]  , 
+				SU.PatientCondition, 
+				SU.Image, SU.PatientAge     
+		 From SiteUser SU          
+		 Where SU.[UserName]=@UserName 
+End
+
+---------------------------------------------------------------------------------------------------------------
+GO
+-----------------------------------------------------------------------------25july2022------------------------
+	Alter table Enquiry 
+	add SiteUserId uniqueidentifier
+---------------------------------------------------------------------------------------------------------------
+GO
+----------------------------------------------------------------------------------------------------------------
+	Alter table Enquiry 
+    ADD FOREIGN KEY(SiteUserId) REFERENCES SiteUser(ID)
+---------------------------------------------------------------------------------------------------------------
+GO
+----------------------------------------------------------------------------------------------------------------
+ALTER procedure [dbo].[procInsertEnquiry]                     
+(                                             
+		 @Name nvarchar(100),                      
+		 @Email nvarchar(255),        
+		 @Age Int,      
+		 @Detail nvarchar(max)=null,                    
+		 @PhoneNo  nvarchar(20)=null,                                
+		 @Country nvarchar(20)=null,                                 
+		 @City nvarchar(20)=null,                        
+		 @IpAddress nvarchar(30)='' ,    
+		 @DoctorId  uniqueidentifier ,  
+		 @AppointMentDate datetime,   
+		 @AppointMentType  nvarchar(255),  
+		 @Gender nvarchar(100),  
+		 @UserId uniqueidentifier  
+)                    
+as                    
+ Begin            
+ if(@AppointMentDate<getutcdate())
+ begin
+ set @AppointMentDate=getutcdate()
+ end
+  Declare @IsValid bit, @IsExistingUser bit,@IId numeric(18,0),@UserSourceType int, @SocialUser bit                    
+                     
+      INSERT INTO dbo.Enquiry(ID,Name,Age,Detail,Email,PhoneNo,Created,CreatedBy,LastUpdated,LastUpdatedBy,Country,City,IpAddress, DoctorId,AppointMentDate , AppointMentType, Gender, SiteUserId)                    
+         values (NEWID(),@Name,@Age,@Detail,@Email, @PhoneNo,GETUTCDATE(),@Email,GETUTCDATE(),@Email,@Country,@City,@IpAddress, @DoctorId,@AppointMentDate , @AppointMentType, @Gender, @UserId)                    
+                                
+      select @isValid = 1                     
+      Select @IId= @@IDENTITY            
+                              
+END                       
+Select  isnull(@isValid,1) as IsValid,  isnull(@IId,0) IId                      
+
+---------------------------------------------------------------------------------------------------------------
+GO
+----------------------------------------------------------------------------------------------26july2022------------------          
+ SET QUOTED_IDENTIFIER ON
+GO
+-- exec [GetAllAppointment] null,1        
+ALTER PROCEDURE [dbo].[GetServices]        
+AS        
+BEGIN        
+	
+		Select 
+				Id ,
+				Isnull(Name,'') Name, 
+				Isnull(ShortDescription,'')ShortDescription,
+				Isnull(Description,'') Description,
+				'https://talktotreat.com/Assets/images/services/'+Isnull(Image,'') Image,
+				Isnull(IsActive,0) IsActive
+				--https://talktotreat.com/Assets/images/services/consult-video.png
+		from TblServices
+End
+---------------------------------------------------------------------------------------------------------------
+GO
+----------------------------------------------------------------------------------------------------------------    
+ALTER PROCEDURE [dbo].[GetAllHospitalts]                    
+as                   
+BEGIN                    
+		 SELECT 
+					ID, 
+					Name, 
+					ShortDescription, 
+					Description,
+					NumberOfBeds, 
+					EstablishmentYesr ,
+					Type,   
+					City, 
+					State, 
+					Country, 
+					PostCode, 
+					PhoneNumber, 
+					MobileNumber, 
+					Created, 
+					CreatedBy, 
+					LastUpdated, 
+					LastUpdatedBy, 
+					CustomNo,          
+					IsActive, 
+					Code, 
+					Infrastructure, 
+					RegNo ,
+					Spacialities,      
+					case when isnull(Image,'')='' 
+						then 'https://talktotreat.com/Assets/images/hospitals/dummyhospital.jfif' 
+						else 'https://talktotreat.com/Assets/images/hospitals/'+ Image end Image,       
+					case when isnull(Image,'')='' 
+						then 'https://talktotreat.com/Assets/images/hospitals/dummyhospital.jfif' 
+						else 'https://talktotreat.com/Assets/images/hospitals/'+ IconImage end IconImage   
+			FROM [Hospital]                     
+END  
+---------------------------------------------------------------------------------------------------------------
+GO
+----------------------------------------------------------------------------------------------------------------  
+ALTER PROCEDURE [dbo].[GetAllTreatments]      
+as     
+BEGIN      
+		 SELECT 
+			[ID]
+			,[Name]
+			,[Created]
+			,[CreatedBy]
+			,[LastUpdated]
+			,[LastUpdatedBy]
+			,[Cost]
+			,[IsActive]
+			,'https://talktotreat.com/Assets/images/disease/'+ Image [Image]
+			,[Code]
+			,[Description]
+			,[ShortDescription]
+			,[ParentId]
+		 FROM treatment       
+END
+---------------------------------------------------------------------------------------------------------------
+GO
+----------------------------------------------------------------------------------------------------------------
+ALTER PROCEDURE [dbo].[GetAllDoctors]          
+as         
+BEGIN          
+			SELECT 
+					ID,
+					Name,
+					Department,
+					Designation,
+					ShortDescription,
+					Description,
+					City,
+					State,
+					Country,
+					PostCode,
+					PhoneNumber,
+					MobileNumber,
+					Created,CreatedBy,    
+					LastUpdated,
+					LastUpdatedBy,
+					CustomNo,
+					IsActive,
+					Isnull(Image,'https://talktotreat.com/Assets/images/Doctors/Doctor-avatart-list.svg') Image,
+					Hospital,
+					YearsofExp,
+					Degree,
+					ConsultationFee Cost,
+					Award          
+			FROM [Doctors]										          
+END
+---------------------------------------------------------------------------------------------------------------
+GO
+----------------------------------------------------------------------------------------------------------------
+-- exec [GetAllHospitalList] null,0        
+ALTER PROCEDURE [dbo].[GetAllHospitalList]        
+		 @SearchValue nvarchar(255),        
+		 @pagenum int         
+AS        
+BEGIN             
+		if(@pagenum=0)        
+		set @pagenum=1        
+		declare @pageno int        
+		  set @pageno = 10*@pagenum;        
+          
+          
+		;with Docs as (              
+			 SELECT   
+					H.Id,
+					Name, 
+					Description,
+					ShortDescription,
+					City,
+					Country,
+					IsActive,
+					'https://talktotreat.com/Assets/Images/Hospitals/'+ Image Image, 
+					Code, 
+					ISNULL(MobileNumber ,PhoneNumber) PhoneNumber              
+			 FROM   Hospital H           
+			 where   (H.Name like @SearchValue + '%'   or  isnull(@SearchValue,'')='') ),Summary as (         
+          
+			 select Count(1) TotalRecord               
+			 from Docs              
+		)        
+        
+		SELECT A.*,TotalRecord        
+		FROM     Docs A,Summary S         
+        
+		ORDER BY A.Name ASC        
+         
+		OFFSET (@pagenum-1)*10 ROWS FETCH NEXT 10 ROWS ONLY        
+END 
+--------------------------------------------------------------------------------------------------------------
+GO
+----------------------------------------------------------------------------------------------------------------
+ALTER PROCEDURE [dbo].[GetAllTreatments]      
+as     
+BEGIN      
+		 SELECT 
+			[ID]
+			,[Name]
+			,[Created]
+			,[CreatedBy]
+			,[LastUpdated]
+			,[LastUpdatedBy]
+			,[Cost]
+			,[IsActive]
+			,'https://talktotreat.com/Assets/images/disease/'+ Image [Image]
+			,[Code]
+			,[Description]
+			,[ShortDescription]
+			,[ParentId]
+		 FROM treatment       
+END
+--------------------------------------------------------------------------------------------------------------
+GO
+----------------------------------------------------------------------------------------------------------------
+--exec[GetDoctorsBySearch] 'man'
+ALTER PROCEDURE [dbo].[GetDoctorsBySearch]  (
+@Search Nvarchar(255)
+)        
+as         
+BEGIN          
+		 SELECT 
+				Top 10 
+					ID,
+					Name,
+					Department,
+					Designation,
+					ShortDescription,
+					Description,
+					City,
+					State,
+					Country,
+					PostCode,
+					PhoneNumber,
+					MobileNumber,
+					Created,
+					CreatedBy,    
+					LastUpdated,
+					LastUpdatedBy,
+					CustomNo,
+					IsActive,
+					Isnull(Image,'https://talktotreat.com/Assets/images/Doctors/Doctor-avatart-list.svg') Image,
+					Hospital,
+					YearsofExp,
+					Degree,
+					ConsultationFee Cost,
+					Award          
+		FROM [Doctors] 
+		where Name like '%'+@Search+'%'
+		Order by Name
+END
+---------------------------------------------------------------------------------------------------------------------
+GO
+----------------------------------------------------------------------------------------------------------------------
+-- exec [GetAllAppointment] null,1        
+ALTER PROCEDURE [dbo].[GetServices]        
+AS        
+BEGIN        
+	
+		Select 
+				Id ,
+				Isnull(Name,'') Name, 
+				Isnull(ShortDescription,'')ShortDescription,
+				Isnull(Description,'') Description,
+				'https://talktotreat.com/Assets/images/services/'+Isnull(Image,'') Image,
+				Isnull(IsActive,0) IsActive
+				--https://talktotreat.com/Assets/images/services/consult-video.png
+		from TblServices
+End
+----------------------------------------------------------------------------------------------------------------------
+GO
+----------------------------------------------------------------------------------------------27July2022--------------
+Alter table Uservallet add IsDeleted  bit default 0
+----------------------------------------------------------------------------------------------------------------------
+GO
+----------------------------------------------------------------------------------------------------------------------
+ALTER procedure [dbo].[procDeleteObject]                 
+ @ObjectId uniqueidentifier,                       
+ @ObjectType int                
+ WITH RECOMPILE            
+AS            
+BEGIN                                   
+declare @Isvalid bit=1,@MessageCode int,@Message nvarchar(100)                       
+declare  @emptyGuid uniqueidentifier='00000000-0000-0000-0000-000000000000'  
+ if(@ObjectId!=@emptyGuid)  
+ begin 
+	  if(@ObjectType=1)  
+		 begin
+			Delete from Doctors where id=@ObjectId
+		 End
+	  else  if(@ObjectType=2)  
+		 begin
+			Delete from Treatment where id=@ObjectId
+		 End
+	  else  if(@ObjectType=3)  
+		 begin
+			Delete from Hospital where id=@ObjectId
+		 End
+	  else  if(@ObjectType=4)  
+		 begin
+			--Delete from Uservallet where id=@ObjectId
+			update Uservallet set IsDeleted =1  where id=@ObjectId
+		 End
+ End                        
+select @ObjectId RecordId,@Isvalid IsValid,@MessageCode MessageCode,@Message Message                     
+End
+
+----------------------------------------------------------------------------------------------------------------------
+GO
+----------------------------------------------------------------------------------------------------------------------
+ALTER procedure [dbo].[procGetUserValletBy]              
+(              
+  @UserId uniqueidentifier            
+)              
+              
+as                  
+Begin
+	 Select ID,UserID,iid,FileName,FileType,Description,FileUrl,Created,CreatedBy    
+	 From Uservallet        
+	 Where UserId=@UserId and  ISNULL(IsDeleted,0) = 0   
+End
+----------------------------------------------------------------------------------------------------------------------
+GO
+---------------------------------------------------------28july2022-------------------------------------------------------------
+ALTER PROCEDURE [dbo].[GetAllAppointmentByUser]      
+	@SearchValue nvarchar(255),      
+	@pagenum int      
+AS      
+BEGIN      
+      
+	if(@pagenum=0)      
+		set @pagenum=1          
+	declare @pageno int      
+	  set @pageno = 10*@pagenum;      
+      
+	with Appointments as (            
+		 SELECT  
+				E.Id,E.Iid,E.Email,isnull(D.ConsultationFee,0) ConsultationFee,Isnull(D.Image,'') Image, 
+				E.Name,E.Age,Isnull(E.Detail,'') Detail,DoctorId,Isnull(E.PhoneNo,'') Phone,E.Created,E.CreatedBy,
+				E.LastUpdated,E.LastUpdatedby, E.AppointmentDate,      
+				Isnull(E.Gender,'') Gender, D.Name DoctorName , Isnull(E.IsReplied,0) IsReplied , 
+				Isnull(ER.Body,'') Body,Isnull(ER.Subject,'') Subject             
+		 FROM  [Doctors] D,  Enquiry E   Left join   EnquiryResponse ER on E.ID=ER.EnquiryId    
+		 where  E.DoctorId=D.ID and    E.Email = @SearchValue  and CAST(AppointMentDate as date) <= CAST(GETDATE() as date)    
+	 ),Summary as (       
+	 select Count(1) TotalRecord             
+	 from Appointments            
+	)
+	
+	SELECT   
+					Id, Iid,  Name FullName,Age PatientAge, Detail, Phone MobileNo,Email EmailId,DoctorId, Created, 
+					CreatedBy, LastUpdated, LastUpdatedby,    
+					AppointmentDate , Gender, DoctorName,TotalRecord  , IsReplied ,Body,Subject ,ConsultationFee,Image    
+	FROM     Appointments A,Summary S        
+	ORDER BY A.Created DESC        
+	OFFSET (@pagenum-1)*10 ROWS FETCH NEXT 10 ROWS ONLY      
+      
+END 
+
+----------------------------------------------------------------------------------------------------------------------
+GO
+----------------------------------------------------------------------------------------------------------------------
+
+CREATE PROCEDURE [dbo].[GetAllAppointmentByUserFuture]      
+	@SearchValue nvarchar(255),      
+	@pagenum int      
+AS      
+BEGIN      
+      
+	if(@pagenum=0)      
+		set @pagenum=1          
+	declare @pageno int      
+	  set @pageno = 10*@pagenum;      
+      
+	with Appointments as (            
+		 SELECT  
+				E.Id,E.Iid,E.Email,isnull(D.ConsultationFee,0) ConsultationFee,Isnull(D.Image,'') Image, 
+				E.Name,E.Age,Isnull(E.Detail,'') Detail,DoctorId,Isnull(E.PhoneNo,'') Phone,E.Created,E.CreatedBy,
+				E.LastUpdated,E.LastUpdatedby, E.AppointmentDate,      
+				Isnull(E.Gender,'') Gender, D.Name DoctorName , Isnull(E.IsReplied,0) IsReplied , 
+				Isnull(ER.Body,'') Body,Isnull(ER.Subject,'') Subject             
+		 FROM  [Doctors] D,  Enquiry E   Left join   EnquiryResponse ER on E.ID=ER.EnquiryId    
+		 where  E.DoctorId=D.ID and    E.Email = @SearchValue  and CAST(AppointMentDate as date) > CAST(GETDATE() as date)    
+	 ),Summary as (       
+	 select Count(1) TotalRecord             
+	 from Appointments            
+	)
+	
+	SELECT   
+					Id, Iid,  Name FullName,Age PatientAge, Detail, Phone MobileNo,Email EmailId,DoctorId, Created, 
+					CreatedBy, LastUpdated, LastUpdatedby,    
+					AppointmentDate , Gender, DoctorName,TotalRecord  , IsReplied ,Body,Subject ,ConsultationFee,Image    
+	FROM     Appointments A,Summary S        
+	ORDER BY A.Created DESC        
+	OFFSET (@pagenum-1)*10 ROWS FETCH NEXT 10 ROWS ONLY      
+      
+END 
+
+----------------------------------------------------------------------------------------------------------------------
+GO
+-----------------------------------------------------------------------------29july2022-----------------------------------------
+alter table EnquiryResponse add Status Int
+
+----------------------------------------------------------------------------------------------------------------------
+GO
+----------------------------------------------------------------------------------------------------------------------
+-- exec [GetAllAppointment] null,1    
+ALTER PROCEDURE [dbo].[GetAppointmentDetail]    
+ @Id nvarchar(50)   
+AS    
+BEGIN    
+      
+		 SELECT  
+				E.Id,E.Iid,E.Email EmailId, E.Name FullName,E.Age PatientAge,Isnull(E.Detail,'') Detail,
+				DoctorId,Isnull(E.PhoneNo,'') MobileNo,E.Created,E.CreatedBy,E.LastUpdated,E.LastUpdatedby, 
+				E.AppointmentDate,    
+				Isnull(E.Gender,'') Gender, D.Name DoctorName , Isnull(E.IsReplied,0) IsReplied , 
+				Isnull(ER.Body,'') Body,Isnull(ER.Subject,'') Subject,
+				ER.Status
+		 FROM  [Doctors] D ,Enquiry E  Left join   
+				EnquiryResponse ER on E.ID=ER.EnquiryId     
+		 where  E.DoctorId=D.ID and E.Id =cast(@Id as Uniqueidentifier)    
+    
+END    
+----------------------------------------------------------------------------------------------------------------------
+GO
+----------------------------------------------------------------------------------------------------------------------
+ALTER procedure [dbo].[procUpsertEnquiryReply_New]                             
+	 @AppointmentId uniqueidentifier,                                   
+	 @AppointmentJson nvarchar(max),                                  
+	 @SavedBy nvarchar(100),    
+	 @EmailId nvarchar(500),    
+	 @Title nvarchar(50), --Subject    
+	 @DoctorId  uniqueidentifier,    
+	 @Body nvarchar(max),
+	 @Status Int
+AS                        
+BEGIN                                               
+		declare @Isvalid bit=1,@MessageCode int,@Message nvarchar(100),@IsDoctorsRemark bit,      
+		  @emptyGuid uniqueidentifier='00000000-0000-0000-0000-000000000000'              
+                 
+		 declare  @AppointmentIId int,@IsActive bit, @ShortDescription nvarchar(MAX), @EnquiryReplyId  uniqueidentifier            
+   
+		 if(not @DoctorId=@emptyGuid and not @DoctorId is null)      
+		 begin      
+		   set @IsDoctorsRemark=1      
+		 End      
+      
+		  Select @AppointmentIId=IID from Enquiry where  ID = @AppointmentId            
+               
+		  set @EnquiryReplyId= newid()                
+             
+		  Update Enquiry set IsReplied=1,  LastUpdated= getutcdate(), LastUpdatedBy=@SavedBy,EnquiryReplyId= @EnquiryReplyId                                  
+		  where  ID = @AppointmentId                 
+                         
+			Insert into  dbo.EnquiryResponse
+				(ID,EnquiryId,EnquiryIid,EmailId ,Body,Subject,Created,CreatedBy ,LastUpdated ,LastUpdatedBy, IsDoctorsRemark,Status)              
+			values(@EnquiryReplyId,@AppointmentId,@AppointmentIId, @EmailId, @Body,@Title,  getutcdate(), @SavedBy,  getutcdate(), @SavedBy, @IsDoctorsRemark , @Status)              
+                          
+		  Set @Message='Successfully Created'              
+                                        
+		select @AppointmentId RecordId,@Isvalid IsValid,@AppointmentIId MessageCode,@Message Message                                   
+End  
+----------------------------------------------------------------------------------------------------------------------
+GO
+---------------------------------------------------------------------------------01Aug2022------------------------------------
+
+alter table Enquiry add IsCancel bit default 0 , CancelRegion varchar(max)
+
+
+----------------------------------------------------------------------------------------------------------------------
+GO
+-------------------------------------------------------------------------------------02Aug2022---------------------------------
+ALTER PROCEDURE [dbo].[GetAllAppointmentByUser]      
+	@SearchValue nvarchar(255),      
+	@pagenum int      
+AS      
+BEGIN      
+      
+	if(@pagenum=0)      
+		set @pagenum=1          
+	declare @pageno int      
+	  set @pageno = 10*@pagenum;      
+      
+	with Appointments as (            
+		 SELECT  
+				E.Id,E.Iid,E.Email,isnull(D.ConsultationFee,0) ConsultationFee,Isnull(D.Image,'') Image, 
+				E.Name,E.Age,Isnull(E.Detail,'') Detail,DoctorId,Isnull(E.PhoneNo,'') Phone,E.Created,E.CreatedBy,
+				E.LastUpdated,E.LastUpdatedby, E.AppointmentDate,      
+				Isnull(E.Gender,'') Gender, D.Name DoctorName , Isnull(E.IsReplied,0) IsReplied , 
+				Isnull(ER.Body,'') Body,Isnull(ER.Subject,'') Subject,
+				E.IsCancel
+		 FROM  [Doctors] D,  Enquiry E   Left join   EnquiryResponse ER on E.ID=ER.EnquiryId    
+		 where  E.DoctorId=D.ID and    E.Email = @SearchValue  and CAST(AppointMentDate as date) <= CAST(GETDATE() as date)    
+	 ),Summary as (       
+	 select Count(1) TotalRecord             
+	 from Appointments            
+	)
+	
+	SELECT   
+					Id, Iid,  Name FullName,Age PatientAge, Detail, Phone MobileNo,Email EmailId,DoctorId, Created, 
+					CreatedBy, LastUpdated, LastUpdatedby,    
+					AppointmentDate , Gender, DoctorName,TotalRecord  , IsReplied ,Body,Subject ,ConsultationFee,Image,
+					IsCancel
+	FROM     Appointments A,Summary S        
+	ORDER BY A.Created DESC        
+	OFFSET (@pagenum-1)*10 ROWS FETCH NEXT 10 ROWS ONLY
+END 
+----------------------------------------------------------------------------------------------------------------------
+GO
+----------------------------------------------------------------------------------------------------------------------
+ALTER PROCEDURE [dbo].[GetAllAppointmentByUserFuture]   
+	--GetAllAppointmentByUserFuture 'govind@brickredsys.com',0
+	@SearchValue nvarchar(255),      
+	@pagenum int      
+AS      
+BEGIN      
+      
+	if(@pagenum=0)      
+		set @pagenum=1          
+	declare @pageno int      
+	  set @pageno = 10*@pagenum;      
+      
+	with Appointments as (            
+		 SELECT  
+				E.Id,E.Iid,E.Email,isnull(D.ConsultationFee,0) ConsultationFee,Isnull(D.Image,'') Image, 
+				E.Name,E.Age,Isnull(E.Detail,'') Detail,DoctorId,Isnull(E.PhoneNo,'') Phone,E.Created,E.CreatedBy,
+				E.LastUpdated,E.LastUpdatedby, E.AppointmentDate,      
+				Isnull(E.Gender,'') Gender, D.Name DoctorName , Isnull(E.IsReplied,0) IsReplied , 
+				Isnull(ER.Body,'') Body,Isnull(ER.Subject,'') Subject,
+				E.IsCancel
+		 FROM  [Doctors] D,  Enquiry E   Left join   EnquiryResponse ER on E.ID=ER.EnquiryId    
+		 where  E.DoctorId=D.ID and    E.Email = @SearchValue  and CAST(AppointMentDate as date) > CAST(GETDATE() as date)    
+	 ),Summary as (       
+	 select Count(1) TotalRecord             
+	 from Appointments            
+	)
+	
+	SELECT   
+					Id, Iid,  Name FullName,Age PatientAge, Detail, Phone MobileNo,Email EmailId,DoctorId, Created, 
+					CreatedBy, LastUpdated, LastUpdatedby,    
+					AppointmentDate , Gender, DoctorName,TotalRecord  , IsReplied ,Body,Subject ,ConsultationFee,Image,
+					IsCancel
+	FROM     Appointments A,Summary S        
+	ORDER BY A.Created DESC        
+	OFFSET (@pagenum-1)*10 ROWS FETCH NEXT 10 ROWS ONLY      
+      
+END 
+----------------------------------------------------------------------------------------------------------------------
+GO
+----------------------------------------------------------------------------------------------------------------------
+CREATE procedure [dbo].[procUpdateCancelRequest]                       
+ @AppointmentId uniqueidentifier,                             
+ @IsCancel bit,                            
+ @CancelRegion nvarchar(max)        
+AS                  
+BEGIN                                         
+       
+	Update Enquiry 
+	set 
+	IsCancel =@IsCancel,
+	CancelRegion = @CancelRegion
+	where ID = @AppointmentId	
+
+End  
+----------------------------------------------------------------------------------------------------------------------
+GO
+----------------------------------------------------------------------------------------------------------------------
+ALTER PROCEDURE [dbo].[GetAllAppointment_20220425]      
+ @SearchValue nvarchar(255),      
+ @pagenum int,
+ @FromDate datetime,
+ @ToDate datetime
+AS      
+BEGIN      
+      
+				if(@pagenum=0)      
+					set @pagenum=1       
+ 
+
+				declare @pageno int      
+				  set @pageno = 10*@pagenum;      
+      
+				;with Appointments as (            
+				 SELECT  
+								E.Id,E.Iid,E.Email, E.Name,E.Age,Isnull(E.Detail,'') Detail,DoctorId,
+								Isnull(E.PhoneNo,'') Phone,E.Created,E.CreatedBy,E.LastUpdated,E.LastUpdatedby, 
+								E.AppointmentDate, Isnull(E.Gender,'') Gender, D.Name DoctorName , 
+								Isnull(E.IsReplied,0) IsReplied , Isnull(ER.Body,'') Body,Isnull(ER.Subject,'') Subject ,  
+								row_number() over (Partition by E.ID order by ER.created desc)  RowNumber,
+								E.IsCancel,E.CancelRegion
+				 FROM  [Doctors] D,  Enquiry E   Left join   EnquiryResponse ER on E.ID=ER.EnquiryId    
+				 where  E.DoctorId=D.ID and (
+						E.Name like '%' + @SearchValue + '%'   
+						  or E.Email like '%' + @SearchValue 
+						  or D.City like '%' + @SearchValue 
+						  or E.Country like '%' + @SearchValue  
+						  or D.Name like '%' + @SearchValue
+						  or D.Hospital like '%' + @SearchValue 		
+						or  isnull(@SearchValue,'')='') 
+						 and E.AppointmentDate between  @FromDate and @ToDate 
+				 ),Summary as (       
+				 select Count(1) TotalRecord             
+				 from Appointments  where    RowNumber=1       
+				) 
+				
+				SELECT   
+							Id, Iid,  Name FullName,Age PatientAge, Detail, Phone MobileNo,Email EmailId,
+							DoctorId, Created, CreatedBy, LastUpdated, LastUpdatedby,    
+							AppointmentDate , Gender, DoctorName,TotalRecord  , IsReplied ,Body,Subject,
+							IsCancel, CancelRegion
+				FROM     Appointments A,Summary S   where    A.RowNumber=1       
+				ORDER BY A.Created DESC        
+				OFFSET (@pagenum-1)*10 ROWS FETCH NEXT 10 ROWS ONLY      
+      
+END      
+
+----------------------------------------------------------------------------------------------------------------------
+GO
+----------------------------------------------------------------------------------------------------------------------

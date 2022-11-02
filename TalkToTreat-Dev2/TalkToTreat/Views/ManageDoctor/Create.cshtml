@@ -1,0 +1,142 @@
+﻿@model TalkToTreat.Models.Doctors
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+    
+<!-- Include Bootstrap Datepicker -->
+ <script src="~/Assets/js/jquery.js"></script> 
+
+
+
+
+
+@using (Html.BeginForm("UpdateDoctor", "ManageDoctor", FormMethod.Post,  new { enctype = "multipart/form-data" }))
+{
+    <div class="content-page">
+        <div class="content">
+            <!-- Start Content-->
+            <div class="container-fluid">
+                <!-- start page title -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="page-title-box">
+                            <h4 class="page-title">Add / Edit Doctor</h4>
+                        </div>
+                    </div>
+                </div>
+                <!-- end page title -->
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="card-box">
+                            @Html.HiddenFor(model => model.Id)
+                            <div class="form-group mb-3">
+                                <label for="product-name">Doctor Name <span class="text-danger">*</span></label>
+                                @Html.TextBoxFor(model => model.Name, new { @class = "form-control", placeholder = "e.g : Dr XYZ", required = true })
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="product-name">Department <span class="text-danger">*</span></label>
+                                @Html.TextBoxFor(model => model.Department, new { @class = "form-control", placeholder = "e.g : Nurology", required = true })
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="product-name">Designation <span class="text-danger">*</span></label>
+                                @Html.TextBoxFor(model => model.Designation, new { @class = "form-control", placeholder = "Director", required = true })
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="product-name">Moblie no <span class="text-danger">*</span></label>
+                                @Html.TextBoxFor(model => model.MobileNumber, new { @class = "form-control", placeholder = "e.g : 9876543210",  })
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="product-name">Educational Qualification <span class="text-danger">*</span></label>
+                                @Html.TextBoxFor(model => model.Degree, new { @class = "form-control", placeholder = "MBBS", required = true })
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label for="product-price">Additional Info</label>
+                                @Html.TextAreaFor(model => model.AdditionalInfo, new { @class = "form-control", placeholder = "Awards and Recognition", rows = "3" })
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label for="product-price">Description  </label>
+                                @Html.TextAreaFor(model => model.Description, new { @class = "form-control", placeholder = "Enter Description", rows = "3", required = true })
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="product-price">Short Description  </label>
+                                @Html.TextAreaFor(model => model.ShortDescription, new { @class = "form-control", placeholder = "Awards and Recognition", rows = "3" })
+                            </div>
+
+
+                        </div> <!-- end card-box -->
+                    </div> <!-- end col -->
+
+                    <div class="col-lg-6">
+                        <div class="card-box">
+                            <label for="product-price">Doctor Images</label>
+                            <div class="fallback">
+                                <input name="file" type="file" id="file" />
+                            </div>
+                            @if (Model.Image != null && Model.Image != "")
+                            {
+                                <img src="~/Assets/images/Doctors/@Model.Image" width="100"  />
+                            }
+                        </div>
+
+                        <div class="card-box">
+                            <div class="form-group mb-3">
+                                <label for="product-name">Gender</label>
+                                @Html.RadioButtonFor(s => s.Gender, true) Male
+                                @Html.RadioButtonFor(s => s.Gender, false) Female
+                            </div>
+                           
+
+                            <div class="form-group mb-3">
+                                <label for="product-meta-title">Hospital</label>
+                                @Html.DropDownList("Hospital", new SelectList(ViewBag.HospitalList, "value", "Text", Model.Hospital), "Select Hospital", new { @class = "form-control", required = true, style = "width: 100%" })
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="product-name">Years of Exp <span class="text-danger">*</span></label>
+                                @Html.TextBoxFor(model => model.YearsofExp, new { @class = "form-control", placeholder = "1-50", required = true, min = 1, type = "number" })
+                            </div>
+                         
+                        </div>
+
+                        <div class="card-box">
+                            <div class="form-group mb-3">
+                                <label for="product-name">Email Id <span class="text-danger">*</span></label>
+                                @Html.TextBoxFor(model => model.Username, new { @class = "form-control", placeholder = "abhinav@gmail.com" })
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="product-name">Password <span class="text-danger">*</span></label>
+                                @Html.TextBoxFor(model => model.Password, new { @class = "form-control", placeholder = "123456"  })
+                            </div>
+                        </div>
+
+                        <div class="card-box">
+                            <div class="form-group mb-3">
+                                <label for="product-name">Is Active</label>
+                                @Html.CheckBoxFor(model => model.IsActive)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer Start -->
+        <footer class="footer">
+            <div class="container-fluid">
+                <div class="col-12">
+                    <div class="text-center mb-3">
+                        <a href="/ManageDoctor/Doctorlist" class="btn w-sm btn-light waves-effect">Cancel</a>
+                        <button type="submit" class="btn w-sm btn-success waves-effect waves-light">Save</button>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+}
+
+
+
+

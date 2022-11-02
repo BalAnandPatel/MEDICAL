@@ -1,0 +1,315 @@
+﻿<!DOCTYPE html>
+<html lang="zxx">
+@{
+    string Name = "";
+    string username = "";
+    string userid = "";
+    string user_image = "";
+    if (Session["userdetails"] != null)
+    {
+        string userdetails = null;
+        string[] details = null;
+        userdetails = Session["userdetails"].ToString();
+        details = userdetails.Split('(', '&', '#', '$', ')');
+        Name = details[10];
+        username = details[5];
+        userid = details[0];
+        user_image = details[15];
+    }
+
+}
+<head>
+    @*@Styles.Render("~/Content/css")
+        @Scripts.Render("~/bundles/modernizr")*@
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="description" content="Orbitor,business,company,agency,modern,bootstrap4,tech,software">
+    <meta name="author" content="takhtotreat.com">
+
+    <title>Talk to Treat- Health & Care Medical template</title>
+
+    <link href="~/AdminAssets/css/icons.min.css" rel="stylesheet" type="text/css" />
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="~/AdminAssets/images/favicon.ico">
+
+    <!-- bootstrap.min css -->
+    <link rel="stylesheet" href="~/Assets/plugins/bootstrap/css/bootstrap.min.css">
+    <!-- Icon Font Css -->
+    <link rel="stylesheet" href="~/Assets/plugins/icofont/icofont.min.css">
+    <!-- Slick Slider  CSS -->
+    <link rel="stylesheet" href="~/Assets/plugins/slick-carousel/slick/slick.css">
+    <link rel="stylesheet" href="~/Assets/plugins/slick-carousel/slick/slick-theme.css">
+
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="~/Assets/css/style.css">
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({ pageLanguage: 'en' }, 'google_translate_element');
+        }
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+</head>
+
+<body id="top">
+    <div class="text-right" id="google_translate_element"></div>
+    <header>
+        <div class="header-top-bar">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-6">
+                        <div class="text-lg-left top-left mt-2 mt-lg-0">
+                            <a href="/Home/Index">
+                                <img src="~/Assets/images/logo.png" alt="" height="40px" width="55px" class="img-fluid">
+
+                                <span class="h4 text-white" >Talk to Treat</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-2">
+                        <ul class="top-bar-info list-inline-item pl-0 mb-0">
+                            <li class="list-inline-item"><a href="mailto:support@talktotreat.com"><i class="icofont-support-faq mr-2"></i>support@talktotreat.com</a></li>
+
+                        </ul>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="text-lg-right top-right-bar mt-2 mt-lg-0">
+                            <a href="tel:+23-345-67890">
+                                <span>Call Now : </span>
+                                <span class="h4">823-4565-13456</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <nav class="navbar navbar-expand-lg navigation" id="navbar">
+            <div class="container">
+
+
+                <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarmain" aria-controls="navbarmain" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="icofont-navigation-menu"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarmain">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="/Home/Index">Home</a>
+                        </li>
+                        <li class="nav-item"><a class="nav-link" href="/Home/About">About</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/Doctorslist">Doctors</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/Hospitalslist">Hospitals</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/Home/service">Services</a></li>
+
+                        @*<li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="department.html" id="dropdown02" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Department <i class="icofont-thin-down"></i></a>
+                                <ul class="dropdown-menu" aria-labelledby="dropdown02">
+                                    <li><a class="dropdown-item" href="department.html">Departments</a></li>
+                                    <li><a class="dropdown-item" href="department-single.html">Department Single</a></li>
+                                </ul>
+                            </li>
+
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="doctor.html" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Doctors <i class="icofont-thin-down"></i></a>
+                                <ul class="dropdown-menu" aria-labelledby="dropdown03">
+                                    <li><a class="dropdown-item" href="doctor.html">Doctors</a></li>
+                                    <li><a class="dropdown-item" href="doctor-single.html">Doctor Single</a></li>
+                                    <li><a class="dropdown-item" href="/Home/Register">Appoinment</a></li>
+                                </ul>
+                            </li>
+
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="blog-sidebar.html" id="dropdown05" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Blog <i class="icofont-thin-down"></i></a>
+                                <ul class="dropdown-menu" aria-labelledby="dropdown05">
+                                    <li><a class="dropdown-item" href="blog-sidebar.html">Blog with Sidebar</a></li>
+
+                                    <li><a class="dropdown-item" href="blog-single.html">Blog Single</a></li>
+                                </ul>
+                            </li>*@
+                        @if (Session["userdetails"] != null)
+                        {
+                            <li class="dropdown notification-list">
+                                <a class="nav-link dropdown-toggle nav-user mr-0 waves-effect waves-light" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                                    <i class="fe-user"></i>
+                                    <span class="pro-user-name ml-1">
+                                        @Name <i class="mdi mdi-chevron-down"></i>
+                                    </span>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right profile-dropdown text-left">
+                                    <!-- item-->
+                                    <div class="dropdown-header noti-title">
+                                        <a href="~/User/Index" class="text-overflow m-0">
+                                            <i class="fe-info"></i>
+                                            <span>Profile</span>
+                                        </a>
+                                    </div>
+                                    <div class="dropdown-divider"></div>
+                                    <!-- item-->
+                                    <div class="dropdown-header">
+                                        <a href="~/User/Healthwallet" class="text-overflow m-0">
+                                            <i class="fe-file"></i>
+                                            <span>Health Wallet</span>
+                                        </a>
+                                    </div>
+                                    <div class="dropdown-divider"></div>
+                                    <div class="dropdown-header">
+                                        <a href="~/User/AppointmentList" class="text-overflow m-0">
+                                            <i class="fe-inbox"></i>
+                                            <span>Appointment</span>
+                                        </a>
+                                    </div>
+                                    <div class="dropdown-divider"></div>
+                                    <!-- item-->
+                                    <div class="dropdown-header">
+                                        <a href="~/Login/Logout" class="text-overflow m-0">
+                                            <i class="fe-log-out"></i>
+                                            <span>Logout</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item"><a class="nav-link" href="/Home/Register">Register</a></li>
+                            <li class="nav-item"><a class="nav-link" href="/Home/login">Login</a></li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container body-content">
+        @RenderBody()
+    </div>
+
+    <footer class="footer section gray-bg">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mr-auto col-sm-6">
+                    <div class="widget mb-5 mb-lg-0">
+                        <div class="logo mb-4">
+                            <img src="~/Assets/images/logo.png" alt="" class="img-fluid">
+                        </div>
+                        <p>Tempora dolorem voluptatum nam vero assumenda voluptate, facilis ad eos obcaecati tenetur veritatis eveniet distinctio possimus.</p>
+
+                        <ul class="list-inline footer-socials mt-4">
+                            <li class="list-inline-item"><a href="https://www.facebook.com/takhtotreat"><i class="icofont-facebook"></i></a></li>
+                            <li class="list-inline-item"><a href="https://twitter.com/takhtotreat"><i class="icofont-twitter"></i></a></li>
+                            <li class="list-inline-item"><a href="https://www.pinterest.com/takhtotreat/"><i class="icofont-linkedin"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-lg-2 col-md-6 col-sm-6">
+                    <div class="widget mb-5 mb-lg-0">
+                        <h4 class="text-capitalize mb-3">Department</h4>
+                        <div class="divider mb-4"></div>
+
+                        <ul class="list-unstyled footer-menu lh-35">
+                            <li><a href="#">Surgery </a></li>
+                            <li><a href="#">Wome's Health</a></li>
+                            <li><a href="#">Radiology</a></li>
+                            <li><a href="#">Cardioc</a></li>
+                            <li><a href="#">Medicine</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-lg-2 col-md-6 col-sm-6">
+                    <div class="widget mb-5 mb-lg-0">
+                        <h4 class="text-capitalize mb-3">Support</h4>
+                        <div class="divider mb-4"></div>
+
+                        <ul class="list-unstyled footer-menu lh-35">
+                            <li><a href="#">Terms & Conditions</a></li>
+                            <li><a href="#">Privacy Policy</a></li>
+                            <li><a href="#">Company Support </a></li>
+                            <li><a href="#">FAQuestions</a></li>
+                            <li><a href="#">Company Licence</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="widget widget-contact mb-5 mb-lg-0">
+                        <h4 class="text-capitalize mb-3">Get in Touch</h4>
+                        <div class="divider mb-4"></div>
+
+                        <div class="footer-contact-block mb-4">
+                            <div class="icon d-flex align-items-center">
+                                <i class="icofont-email mr-3"></i>
+                                <span class="h6 mb-0">Support Available for 24/7</span>
+                            </div>
+                            <h4 class="mt-2"><a href="tel:+23-345-67890">Support@talktotreat.com</a></h4>
+                        </div>
+
+                        <div class="footer-contact-block">
+                            <div class="icon d-flex align-items-center">
+                                <i class="icofont-support mr-3"></i>
+                                <span class="h6 mb-0">Mon to Fri : 08:30 - 18:00</span>
+                            </div>
+                            <h4 class="mt-2"><a href="tel:+23-345-67890">+23-456-6588</a></h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-btm py-4 mt-5">
+                <div class="row align-items-center justify-content-between">
+                    <div class="col-lg-6">
+                        <div class="copyright">
+                            &copy; Copyright Reserved to <span class="text-color">Talk to Treat</span> by <a href="https://Roovea.com/" target="_blank">Roovea</a>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="subscribe-form text-lg-right mt-5 mt-lg-0">
+                            <form action="#" class="subscribe">
+                                <input type="text" class="form-control" placeholder="Your Email address">
+                                <a href="#" class="btn btn-main-2 btn-round-full">Subscribe</a>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-4">
+                        <a class="backtop js-scroll-trigger" href="#top">
+                            <i class="icofont-long-arrow-up"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    @*@Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")
+        @RenderSection("scripts", required: false)*@
+
+
+
+    <!--
+    Essential Scripts
+    =====================================-->
+    <!-- Main jQuery -->
+    <script src="~/Assets/plugins/jquery/jquery.js"></script>
+    <!-- Bootstrap 4.3.2 -->
+    <script src="~/Assets/plugins/bootstrap/js/popper.js"></script>
+    <script src="~/Assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <!-- Slick Slider -->
+    <script src="~/Assets/plugins/slick-carousel/slick/slick.min.js"></script>
+    <!-- Counterup -->
+    <script src="~/Assets/plugins/counterup/jquery.waypoints.min.js"></script>
+    <script src="~/Assets/plugins/shuffle/shuffle.min.js"></script>
+    <script src="~/Assets/plugins/counterup/jquery.counterup.min.js"></script>
+    <!-- Google Map -->
+    <script src="~/Assets/plugins/google-map/map.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAkeLMlsiwzp6b3Gnaxd86lvakimwGA6UA&callback=initMap"></script>
+
+    <script src="~/Assets/js/script.js"></script>
+    <script src="~/Assets/js/contact.js"></script>
+    <script src="~/AdminAssets/libs/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+
+</body>
+</html>

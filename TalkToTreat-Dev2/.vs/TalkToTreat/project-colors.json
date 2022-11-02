@@ -1,0 +1,36 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "30a5eda3-746b-471d-8383-420dae54a698": {
+      "ProjectGuid": "30a5eda3-746b-471d-8383-420dae54a698",
+      "DisplayName": "TalkToTreat",
+      "ColorIndex": 0
+    },
+    "e672a4e9-2d98-4bfb-b880-d308afb03e68": {
+      "ProjectGuid": "e672a4e9-2d98-4bfb-b880-d308afb03e68",
+      "DisplayName": "BaseApiApp",
+      "ColorIndex": 1
+    },
+    "6bfa2837-e6f5-4579-a616-dea93212ccc8": {
+      "ProjectGuid": "6bfa2837-e6f5-4579-a616-dea93212ccc8",
+      "DisplayName": "TalkToTreatService",
+      "ColorIndex": 2
+    },
+    "244d72d0-f421-49f3-8369-973332f354a7": {
+      "ProjectGuid": "244d72d0-f421-49f3-8369-973332f354a7",
+      "DisplayName": "BaseApiApp.Framework",
+      "ColorIndex": 3
+    },
+    "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3": {
+      "ProjectGuid": "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3",
+      "DisplayName": "Miscellaneous Files",
+      "ColorIndex": -1
+    },
+    "9361aff5-46fd-4ddd-abb5-2d6a9c9535c1": {
+      "ProjectGuid": "9361aff5-46fd-4ddd-abb5-2d6a9c9535c1",
+      "DisplayName": "BaseApiApp.Entities",
+      "ColorIndex": 4
+    }
+  },
+  "NextColorIndex": 5
+}

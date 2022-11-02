@@ -1,0 +1,55 @@
+﻿@model List<TalkToTreat.Models.Testimonial>
+    @{
+    ViewBag.Title = "Testimonial";
+    }
+
+
+    <section class="banner-area doctor-banner services-banner">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 text-left">
+                    <div class="banner-text">
+                        <h1>
+                            Testimonial
+                        </h1>
+                    </div>
+                </div>
+                <div class="col-md-6 text-left">
+
+                </div>
+            </div>
+        </div>
+    </section>
+    @foreach (var testimonial in Model)
+    {
+    <section class="listing-sec hospital" id="@testimonial.ID.ToString()">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-sm-12 col-md-12 col-xs-12">
+
+                    <div class="row doctor-inner-box services-box">
+                        <div class="col-md-2 text-center">
+                            <img class="testi-in" src="~/Assets/images/Testimonial/@Path.GetFileName(testimonial.Image)" />
+                        </div>
+                        <div class="col-md-10">
+                            <h3>@testimonial.Name </h3>
+                            <p>@testimonial.Treatment</p>
+                            <p>@testimonial.City</p>
+                            <p>  @Html.Raw(testimonial.Description) </p>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </section>
+    }
+
+
+
+
+    
+
+

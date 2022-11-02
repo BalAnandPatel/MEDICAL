@@ -1,0 +1,278 @@
+﻿<!DOCTYPE html>
+<html>
+
+@{
+    string userType = "";
+    string username = "";
+    string userid = "";
+    string user_image = "";
+    if (Session["adminuserdetails"] != null)
+    {
+        string userdetails = null;
+        string[] details = null;
+        userdetails = Session["adminuserdetails"].ToString();
+        details = userdetails.Split('(', '@', '#', '$', ')');
+        userType = details[10];
+        username = details[5];
+        userid = details[0];
+        user_image = details[15];
+    }
+
+}
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Talk to Treat Admin</title>
+    <link rel="shortcut icon" href="~/AdminAssets/images/favicon.ico">
+
+    <!-- Plugins css-->
+    <link href="~/AdminAssets/libs/select2/select2.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/AdminAssets/libs/summernote/summernote-bs4.css" rel="stylesheet" type="text/css" />
+    <link href="~/AdminAssets/libs/dropzone/dropzone.min.css" rel="stylesheet" type="text/css" />
+
+    <!-- App css -->
+    <link href="~/AdminAssets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/AdminAssets/css/icons.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/AdminAssets/css/app.min.css" rel="stylesheet" type="text/css" />
+
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+
+
+
+    <link href="~/AdminAssets/libs/bootstrap-datepicker/bootstrap-datepicker.min.css" rel="stylesheet" />
+
+
+    @*@Styles.Render("~/Content/css")
+        @Scripts.Render("~/bundles/modernizr")*@
+</head>
+<body>
+
+    <!-- Begin page -->
+    <div id="wrapper">
+
+        <!-- Topbar Start -->
+        <div class="navbar-custom">
+            <ul class="list-unstyled topnav-menu float-right mb-0">
+
+
+                <li class="dropdown notification-list">
+                    <a class="nav-link dropdown-toggle nav-user mr-0 waves-effect waves-light" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                        @if (user_image != null && user_image != "")
+                        {
+                            <img src="/@user_image" alt="user-image" class="rounded-circle">
+                        }
+                        else
+                        {
+                            <img src="~/Assets/images/team/user-4.jpg" alt="user-image" class="rounded-circle">
+                        }
+                        <span class="pro-user-name ml-1">
+                            @username <i class="mdi mdi-chevron-down"></i>
+                        </span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right profile-dropdown ">
+                        <!-- item-->
+                        <div class="dropdown-header noti-title">
+                            <h6 class="text-overflow m-0">Welcome !</h6>
+                        </div>
+
+                        <!-- item-->
+                        @*<a href="/UserMaster/Update?user_id=@userid" class="dropdown-item notify-item">
+                            <i class="fe-user"></i>
+                            <span>Update Profile</span>
+                        </a>*@
+
+
+                        <div class="dropdown-divider"></div>
+
+                        <!-- item-->
+                        <a href="~/Login/Logout" class="dropdown-item notify-item">
+                            <i class="fe-log-out"></i>
+                            <span>Logout</span>
+                        </a>
+
+                    </div>
+                </li>
+            </ul>
+
+            <!-- LOGO -->
+            <div class="logo-box">
+                <a href="/home/Index" class="logo text-center">
+                    <span class="logo-lg">
+                        <img src="~/AdminAssets/images/logo.png" alt="" height="45">
+                        <!-- <span class="logo-lg-text-light">NIDM</span> -->
+                    </span>
+                    <span class="logo-sm">
+                        <!-- <span class="logo-sm-text-dark">N</span> -->
+                        <img src="~/AdminAssets/images/logo.png" alt="" height="24">
+                    </span>
+                </a>
+            </div>
+        </div>
+        <!-- end Topbar -->
+        <!-- ========== Left Sidebar Start ========== -->
+        <div class="left-side-menu">
+
+            <div class="slimscroll-menu">
+
+                <!--- Sidemenu -->
+                <div id="sidebar-menu">
+
+                    <ul class="metismenu" id="side-menu">
+                        @{
+                            if (userType == "admin")
+                            {
+
+                                <li>
+                                    <a href="~/AdminHome/index">
+                                        <i class="fe-airplay"></i>
+                                        <span>Dashboard</span>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="javascript: void(0);">
+                                        <i class="fe-pocket"></i>
+                                        <span> Manage Enquiry </span>
+                                        <span class="menu-arrow"></span>
+                                    </a>
+                                    <ul class="nav-second-level" aria-expanded="false">
+                                        <li>
+                                            <a href="~/ManageEnquiry/EnquiryList">Enquiry List</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="javascript: void(0);">
+                                        <i class="fe-sidebar"></i>
+                                        <span> Manage Hospital </span>
+                                        <span class="menu-arrow"></span>
+                                    </a>
+                                    <ul class="nav-second-level" aria-expanded="false">
+                                        <li>
+                                            <a href="/ManageHospital/Create">Add New Hospital</a>
+                                        </li>
+                                        <li>
+                                            <a href="/ManageHospital/HospitalList">Hospital List</a>
+                                        </li>
+                                    </ul>
+                                </li>
+
+                                <li>
+                                    <a href="javascript: void(0);">
+                                        <i class="fe-award"></i>
+                                        <span> Manage Treatment </span>
+                                        <span class="menu-arrow"></span>
+                                    </a>
+                                    <ul class="nav-second-level" aria-expanded="false">
+
+                                        <li>
+                                            <a href="/ManageTreatment/CreateMaster">Add Main Treatment</a>
+                                        </li>
+                                        <li>
+                                            <a href="/ManageTreatment/TreatmentListMaster">Main Treatments List</a>
+                                        </li>
+
+                                        <li>
+                                            <a href="/ManageTreatment/Create">Add Treatment</a>
+                                        </li>
+                                        <li>
+                                            <a href="/ManageTreatment/TreatmentList">Treatments List</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="javascript: void(0);">
+                                        <i class="fe-users"></i>
+                                        <span>Manage Doctors</span>
+                                        <span class="menu-arrow"></span>
+                                    </a>
+                                    <ul class="nav-second-level" aria-expanded="false">
+                                        <li>
+                                            <a href="/ManageDoctor/Create">Add new Doctor</a>
+                                        </li>
+                                        <li>
+                                            <a href="/ManageDoctor/Doctorlist">Doctors List</a>
+                                        </li>
+                                        <li>
+                                            <a href="/ManageDoctor/AppointmentList">Appointment List</a>
+                                        </li>
+                                    </ul>
+                                </li>
+
+                                <li style="display:none;" >
+                                    <a href="javascript: void(0);">
+                                        <i class="fe-users"></i>
+                                        <span>Manage Master</span>
+                                        <span class="menu-arrow"></span>
+                                    </a>
+                                    <ul class="nav-second-level" aria-expanded="false">
+                                        <li>
+                                            <a href="/ManageDoctor/Create">Country</a>
+                                        </li>
+                                        <li>
+                                            <a href="/ManageDoctor/Doctorlist">State</a>
+                                        </li>
+                                        <li>
+                                            <a href="/ManageDoctor/AppointmentList">City</a>
+                                        </li>
+                                    </ul>
+                                </li>
+
+                            }
+                        }
+                    </ul>
+
+                </div>
+                <!-- End Sidebar -->
+
+                <div class="clearfix"></div>
+
+            </div>
+            <!-- Sidebar -left -->
+
+        </div>
+        <!-- Left Sidebar End -->
+        <!-- ============================================================== -->
+        <!-- Start Page Content here -->
+        <!-- ============================================================== -->
+        <div>
+            @RenderBody()
+        </div>
+
+
+        <!-- ============================================================== -->
+        <!-- End Page content -->
+        <!-- ============================================================== -->
+
+
+    </div>
+    <!-- END wrapper -->
+    <!-- Right Sidebar -->
+     
+    <!-- /Right-bar -->
+    <!-- Right bar overlay-->
+    <div class="rightbar-overlay"></div>
+
+    <!-- App js -->
+    <script src="~/AdminAssets/js/vendor.min.js"></script>
+
+    <!-- Summernote js -->
+    <script src="~/AdminAssets/libs/summernote/summernote-bs4.min.js"></script>
+    <!-- Select2 js-->
+    <script src="~/AdminAssets/libs/select2/select2.min.js"></script>
+    <!-- Dropzone file uploads-->
+    <script src="~/AdminAssets/libs/dropzone/dropzone.min.js"></script>
+
+    <!-- Init js -->
+    <script src="~/AdminAssets/js/pages/add-product.init.js"></script>
+
+    <!-- App js -->
+    <script src="~/AdminAssets/js/app.min.js"></script>
+
+</body>
+</html>
+<script src="~/AdminAssets/libs/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+
+
+

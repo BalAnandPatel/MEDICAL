@@ -1,0 +1,100 @@
+﻿@using BaseApiApp.Entities.Enum;
+
+@model TalkToTreat.Models.Appointment
+
+@{
+    ViewBag.Title = "AppointmentList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    string Searchvalue = "";
+    if (ViewBag.Searchvalue != null)
+    {
+        Searchvalue = ViewBag.Searchvalue;
+    }
+}
+<section class="banner-area doctor-banner hospital">
+    <div class="container">
+        <div class="row ">
+
+            <div class="col-md-6 text-left">
+                <div class="banner-text">
+                    <h3>My Appoitment List</h3>
+                    
+                </div>
+            </div>
+
+            <div class="col-md-6 text-left">
+
+            </div>
+        </div>
+    </div>
+
+</section>
+<section class="section appoinmentlist outerappointmentlist">
+    <div class="container ">
+        <div class="row">
+            <div class="col-md-12">
+
+                <div class="content-page">
+                    <div class="content">
+                        <!-- Start Content-->
+                        <div class="container-fluid">
+                            <!-- start page title -->
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="page-title-box">
+                                        <table style="width: 100%; background-color: transparent;border:none;color:none;">
+                                            <tr>
+                                                <td style="text-align: left;border:none;color:none;background-color:none">
+                                                    Subject : @Model.Subject
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    Message : @Model.Body
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+
+                                                    @{
+
+                                                        AppointmentStatus foo = (AppointmentStatus)Model.Status;
+                                                    }
+
+                                                    Appointment Status  : @foo.ToString()
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="row">
+                                <div class="col-12">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+<div class="modal fade" id="ModalPopUp" role="dialog">
+    <div class="modal-dialog err-pop" style="">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Reply</h3>
+                <button id="DivClose" type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body" style="text-align:center;">
+                <textarea></textarea>
+            </div>
+        </div>
+    </div>
+</div>

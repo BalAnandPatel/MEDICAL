@@ -1,0 +1,32 @@
+﻿@model TalkToTreat.Models.Menu
+
+<div class="container-fluid megamenu">
+    <div class="row">
+
+
+        @*@foreach (var item in Model.Items)*@
+        @foreach (var item in Model.Items.OrderByDescending(a=>a.Items.Count))
+        {
+
+            <div class="card col-md-4">
+                <div class="card-header">
+                    <div class="mb-0">
+                        <a class="float-left nav-link" href="/Treatment/Detail/@item.Id">
+                            <h6><strong>@item.Title</strong></h6>
+                        </a>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <ul class="nav flex-column ml-3">
+                        @foreach (var subItem in item.Items)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" href="/Treatment/Detail/@subItem.Id">@subItem.Title</a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        }
+    </div>
+</div>

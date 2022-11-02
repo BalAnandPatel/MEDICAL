@@ -1,0 +1,24 @@
+﻿@model TalkToTreat.Models.Quote
+@{
+    ViewBag.Title = "Get A Quote";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="banner-area doctor-banner">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-9 text-left">
+                <div class="appoinment-wrap mt-lg-0 pl-lg-5" style="border:1px solid #ccc;"> 
+                        <h3><span class="text-dark-green">Get A Quote</span></h3>
+                        @*<h2>We serve you with best quality hospitals</h2>*@
+                        <p style="color:coral;text-align:center"><b>@ViewBag.Invalid</b></p>
+                        <div class="appointment-form" style="padding:5PX; background-color:white; ">
+                            @Html.Partial("~/Views/Shared/_GetQuote.cshtml", new TalkToTreat.Models.Quote())
+                        </div>                    
+                </div>
+            </div>
+            <div class="col-md-3 text-left">               
+            </div>
+        </div>
+    </div>
+</section>
